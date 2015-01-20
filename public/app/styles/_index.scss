@@ -42,6 +42,7 @@
       color: #292929;
       line-height: 40px;
       text-transform: uppercase;
+      font-weight: normal;
     }
     .text {
       @include column-count(2);
