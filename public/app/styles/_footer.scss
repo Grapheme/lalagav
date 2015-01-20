@@ -1,0 +1,86 @@
+footer {
+  margin-top: 80px;
+  margin-bottom: 80px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0 62px;
+  a {
+    color: inherit;
+    text-decoration: none;
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+  .left {
+    float: left;
+    .c {
+      background: url('../images/bg-copyright.svg') center center no-repeat;
+      background-size: cover;
+      width: 246px;
+      height: 112px;
+      box-sizing: border-box;
+      font-family: Ubuntu-Light;
+      font-size: 12px;
+      color: #443522;
+      letter-spacing: 1px;
+      line-height: 20px;
+      text-transform: uppercase;
+      padding-left: 42px;
+      padding-top: 16px;
+      float: left;
+    }
+    .links {
+      background: url('../images/bg-links.svg') center center no-repeat;
+      background-size: cover;
+      float: left;
+      width: 270px;
+      height: 112px;
+      font-family: Ubuntu-Light;
+      font-size: 12px;
+      color: #292929;
+      letter-spacing: 1px;
+      line-height: 20px;
+      box-sizing: border-box;
+      padding-left: 47px;
+      padding-top: 22px;
+      margin-left: 50px;
+      @include max-screen(1020px) {
+        margin-left: 20px;
+      }
+      @include max-screen(950px) {
+        margin-left: 10px;
+      }
+      a {
+        display: block;
+        color: inherit;
+      }
+    }
+  }
+  .right {
+    float: right;
+    .socials {
+      margin-top: 26px;
+      a {
+        margin-left: 26px;
+        @include max-screen(986px) {
+          margin-left: 14px;
+        }
+        @include max-screen(950px) {
+          margin-left: 8px;
+        }
+      }
+    }
+    .grphm {
+      font-family: Ubuntu-Light;
+      font-size: 12px;
+      color: #292929;
+      letter-spacing: 1px;
+      line-height: 20px;
+      float: right;
+      text-transform: uppercase;
+      margin-top: 17px;
+    }
+  }
+}

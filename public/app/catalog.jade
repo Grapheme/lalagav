@@ -1,0 +1,101 @@
+extends layout
+
+block content
+  form.filters(action="catalog-purge.html")
+    .group
+      .title Тематика
+      label
+        input(type="checkbox", value="new", name="theme")
+        .label NEW
+      label 
+        input(type="checkbox", value="helloween", name="theme")
+        .label Хэллоуин
+      label
+        input(type="checkbox", value="new_year", name="theme")
+        .label Новый год
+      label
+        input(type="checkbox", value="8mart", name="theme")
+        .label 8 марта
+      label
+        input(type="checkbox", value="23february",  name="theme")
+        .label 23 февраля
+    
+    .group 
+      .title Тип
+      label
+        input(type="radio", value="dress", name="type")
+        .label Платье
+      label 
+        input(type="radio", value="shirt", name="type")
+        .label Рубашка
+      label
+        input(type="radio", value="pants", name="type")
+        .label Штаны
+      label
+        input(type="radio", value="underwear", name="type")
+        .label Нижнее
+      label
+        input(type="radio", value="outerwear",  name="type")
+        .label Верхняя
+      
+    .group 
+      .title Сезон
+      label
+        input(type="checkbox", value="spring", name="season")
+        .label Весна
+      label 
+        input(type="checkbox", value="summer", name="season")
+        .label Лето
+      label
+        input(type="checkbox", value="fall", name="season")
+        .label Осень
+      label
+        input(type="checkbox", value="winter", name="season")
+        .label Зима
+  
+  .catalog-list
+    .goods-list
+      a.unit(href="catalog-detail.html")
+        .mask
+          img(src="images/mask-main-slider.svg")
+        .visual(style="background-image:url('http://dummyimage.com/752x456');")
+          .text
+            p НАЦИОНАЛЬНЫЙ КОСТЮМ РУЧНОЙ РАБОТЫ В ТРЕХ ОСНОВНЫХ РОССИЙСКИХ ЦВЕТА
+            .price 600 РУБ. -
+      a.unit.new(href="catalog-detail.html")
+        .mask
+          img(src="images/mask-main-slider.svg")
+        .visual(style="background-image:url('http://dummyimage.com/752x456');")
+          .text
+            p НАЦИОНАЛЬНЫЙ КОСТЮМ РУЧНОЙ РАБОТЫ В ТРЕХ ОСНОВНЫХ РОССИЙСКИХ ЦВЕТА СНОВНЫХ РОССИЙСКИХ ЦВЕТА
+            .price 600 РУБ. -
+      a.unit(href="catalog-detail.html")
+        .mask
+          img(src="images/mask-main-slider.svg")
+        .visual(style="background-image:url('http://dummyimage.com/752x456');")
+          .text
+            p НАЦИОНАЛЬНЫЙ КОСТЮМ РУЧНОЙ РАБОТЫ В ТРЕХ ОСНОВНЫХ РОССИЙСКИХ ЦВЕТА
+            .price 600 РУБ. -
+      a.unit(href="catalog-detail.html")
+        .mask
+          img(src="images/mask-main-slider.svg")
+        .visual(style="background-image:url('http://dummyimage.com/752x456');")
+          .text
+            p НАЦИОНАЛЬНЫЙ КОСТЮМ РУЧНОЙ РАБОТЫ В ТРЕХ ОСНОВНЫХ РОССИЙСКИХ ЦВЕТА СНОВНЫХ РОССИЙСКИХ ЦВЕТА
+            .price 600 РУБ. -
+      a.unit(href="catalog-detail.html")
+        .mask
+          img(src="images/mask-main-slider.svg")
+        .visual(style="background-image:url('http://dummyimage.com/752x456');")
+          .text
+            p НАЦИОНАЛЬНЫЙ КОСТЮМ РУЧНОЙ РАБОТЫ В ТРЕХ ОСНОВНЫХ РОССИЙСКИХ ЦВЕТА
+            .price 600 РУБ. -
+      a.unit(href="catalog-detail.html")
+        .mask
+          img(src="images/mask-main-slider.svg")
+        .visual(style="background-image:url('http://dummyimage.com/752x456');")
+          .text
+            p НАЦИОНАЛЬНЫЙ КОСТЮМ РУЧНОЙ РАБОТЫ В ТРЕХ ОСНОВНЫХ РОССИЙСКИХ ЦВЕТА СНОВНЫХ РОССИЙСКИХ ЦВЕТА
+            .price 600 РУБ. -
+      .clrfx
+    include includes/paginator.jade

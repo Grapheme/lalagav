@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="213px" height="75px" viewBox="0 0 213 75" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.2.2 (9983) - http://www.bohemiancoding.com/sketch -->
+    <title>фон кнопки</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path id="path-1" d="M70.0285341,1.46893867 C112.299158,0.21348125 158.710023,-3.00511691 194.460209,12.3903976 C230.210396,27.785912 211.381452,63.5443335 159.767231,68.0966425 C108.15301,72.6489515 49.5635752,79.3243105 25.0115307,68.1374704 C0.459486179,56.9506303 -5.09059173,35.8413664 5.33623967,23.1315332 C15.7630711,10.4217001 27.7579105,2.7243961 70.0285341,1.46893867 Z"></path>
+    </defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="товар" sketch:type="MSArtboardGroup" transform="translate(-730.000000, -453.000000)">
+            <g id="карта-товара" sketch:type="MSLayerGroup" transform="translate(62.000000, 177.000000)">
+                <g id="кнопка-купить" transform="translate(668.000000, 276.000000)">
+                    <g id="фон-кнопки">
+                        <use fill="#F6A623" fill-rule="evenodd" sketch:type="MSShapeGroup" transform="translate(106.500000, 37.000000) scale(-1, 1) translate(-106.500000, -37.000000) " xlink:href="#path-1"></use>
+                        <use fill="none" xlink:href="#path-1"></use>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

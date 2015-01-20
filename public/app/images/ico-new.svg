@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="56px" height="56px" viewBox="0 0 56 56" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.2.2 (9983) - http://www.bohemiancoding.com/sketch -->
+    <title>Fill 192 + NEW 2</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Home-4" sketch:type="MSArtboardGroup" transform="translate(-81.000000, -1073.000000)">
+            <g id="новинки" sketch:type="MSLayerGroup" transform="translate(61.000000, 1072.000000)">
+                <g id="контент" transform="translate(1.000000, 0.000000)">
+                    <g id="товар-3" transform="translate(0.515641, 1.000000)">
+                        <g id="Fill-192-+-NEW-2" transform="translate(18.484359, 0.000000)">
+                            <path d="M28,0 C12.537,0 0,10.97075 0,24.5 C0,32.23325 4.10375,39.1195 10.5,43.60825 L10.5,56 L22.76575,48.55725 C24.46325,48.83725 26.20975,49 28,49 C43.463,49 56,38.031 56,24.5 C56,10.97075 43.463,0 28,0" id="Fill-192" fill="#F28A19" sketch:type="MSShapeGroup" transform="translate(28.000000, 28.000000) scale(-1, 1) translate(-28.000000, -28.000000) "></path>
+                            <text id="NEW-2" opacity="0.9" fill="#FFFFFF" sketch:type="MSTextLayer" font-family="Ubuntu" font-size="16" font-weight="normal" sketch:alignment="middle">
+                                <tspan x="10.176" y="29">NEW</tspan>
+                            </text>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

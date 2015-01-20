@@ -1,0 +1,66 @@
+.info-text {
+  width: 100%;
+  position: relative;
+  background: url('../images/bg-yellow-top.svg') no-repeat top,
+              url('../images/bg-yellow-bottom.svg') no-repeat bottom;
+  background-color: #FFE9BF;
+  background-size: contain;
+  min-height: 520px;
+  padding-top: 130px;
+  padding-bottom: 160px;
+  box-sizing: border-box;
+  margin-bottom: 84px;
+  &:before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 2px;
+    background: white;
+    content: '';
+    display: block;
+  }
+  &:after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 2px;
+    background: white;
+    content: '';
+    display: block;
+  }
+  .text-wrapper {
+    width: 766px;
+    margin: 0 auto;
+    @include max-screen(1020px) {
+      width: 600px;
+    }
+    h1 {
+      font-family: Novito;
+      font-size: 35px;
+      color: #292929;
+      line-height: 40px;
+      text-transform: uppercase;
+    }
+    .text {
+      @include column-count(2);
+      @include column-width(372px);
+      @include column-gap(18);
+      p {
+        margin-top: 0;
+        font-family: Ubuntu-Light;
+        font-size: 16px;
+        color: #666666;
+        line-height: 18px;
+      }
+    }
+    .visual-dog {
+      position: absolute;
+      bottom: -84px;
+      right: 40px;
+      width: 332px;
+      height: 239px;
+    }
+  }
+}

@@ -1,0 +1,65 @@
+.slider-wrapper {
+  width: 100%;
+  position: relative;
+  margin-top: 60px;
+  overflow: hidden;
+  margin-bottom: 89px;
+  .mask {
+    position: relative;
+    z-index: 100;
+    img {
+      display: block;
+      width: 100%;
+    }
+    .dots {
+      width: 100%;
+      text-align: center;
+      position: absolute;
+      bottom: 32px;
+      a {
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        background: #292929;
+        border-radius: 25px;
+        margin: 0 12px;
+        &.active {
+          background: white;
+        }
+        &:hover {
+          background: white;
+        }
+      }
+    }
+  }
+  .slider-holder {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border: 1px solid white;
+    .slider-list {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      width: 100%;
+      height: 100%;
+      li {
+        width: 100%;
+        height: 100%;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: absolute;
+        opacity: 0;
+        @include filter(blur(40px) saturate(200%));
+        transition: all .7s ease;
+        &.active {
+          opacity: 1;
+          @include filter(blur(0px));
+        }
+      }
+    }
+  }
+}

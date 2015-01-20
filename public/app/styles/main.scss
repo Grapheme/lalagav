@@ -1,0 +1,61 @@
+// bower:scss
+@import "../../bower_components/normalize-scss/_normalize.scss";
+@import "../../bower_components/bower-bourbon/_bourbon.scss";
+// endbower
+@import "media-queries";
+
+@mixin filter( $var ) {
+  -webkit-filter: $var;
+  -moz-filter: $var;
+  -ms-filter: $var;
+  -o-filter: $var;
+  filter: $var;
+}
+
+html {
+  height: 100%;
+  position: relative;
+}
+
+body {
+  min-width: 900px;
+  max-width: 1280px;
+  padding: 0 62px;
+  box-sizing: border-box;
+  min-height: 100%;
+  position: relative;
+  margin: 0 auto;
+  padding-bottom: 278px;
+}
+
+.clrfx {
+  clear: both;
+}
+
+.btn {
+  background: url('../images/btn-bg.svg');
+  background-size: 100% 100%;
+  min-width: 213px;
+  min-height: 74px;
+  box-sizing: border-box;
+  text-align: center;
+  font-family: Novito;
+  font-size: 50px;
+  color: #FFFFFF;
+  line-height: 57px;
+  text-transform: uppercase;
+  padding-top: 10px;
+  display: inline-block;
+  text-decoration: none;
+  &:hover {
+    background-image: url('../images/btn-bg-hover.svg');
+  }
+}
+
+@import 'header';
+@import 'footer';
+@import 'slider';
+@import 'index';
+@import 'catalog';
+@import 'blog';
+@import 'regular';

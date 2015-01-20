@@ -1,0 +1,13 @@
+{
+  "name": "gastal",
+  "private": true,
+  "dependencies": {
+    "jquery": "#^1",
+    "modernizr": "~2.8.1",
+    "normalize-scss": "~3.0.2",
+    "bower-bourbon": "~3.1.8"
+  },
+  "devDependencies": {
+    "sass-mediaqueries": "~1.4.0"
+  }
+}

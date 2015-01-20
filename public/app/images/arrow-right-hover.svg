@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="36px" height="78px" viewBox="0 0 36 78" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.2.2 (9983) - http://www.bohemiancoding.com/sketch -->
+    <title>стрелка вправо при ховере</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path id="path-1" d="M14.0793694,28.0513209 L26.1647955,38.9035402 L14.0112596,49.8169194"></path>
+    </defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="товар" sketch:type="MSArtboardGroup" transform="translate(-1159.000000, -882.000000)">
+            <g id="похожие-товары" sketch:type="MSLayerGroup" transform="translate(85.000000, 755.000000)">
+                <g id="стрелка-вправо-при-ховере" transform="translate(1074.000000, 127.000000)">
+                    <path d="M34.8621124,25.6662756 C35.4579196,41.1201334 36.9853821,58.0876357 29.6790736,71.1576652 C22.3727651,84.2276947 5.40275362,77.3439587 3.24234683,58.4741441 C1.08194003,39.6043295 -2.08601074,18.1844233 3.22297098,9.20835976 C8.5319527,0.232296228 18.5498572,-1.79677519 24.5816116,2.01520474 C30.6133659,5.82718467 34.2663051,10.2124179 34.8621124,25.6662756 Z" id="появляется-только-при-ховере" fill="#F28A19" sketch:type="MSShapeGroup"></path>
+                    <g id="Path-3">
+                        <use stroke="none" sketch:type="MSShapeGroup" xlink:href="#path-1"></use>
+                        <use stroke="#FFFFFF" stroke-width="1" xlink:href="#path-1"></use>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
