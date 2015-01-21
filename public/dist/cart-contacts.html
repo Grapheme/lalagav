@@ -29,40 +29,29 @@
       </div>
       <div class="clrfx"></div>
     </header>
-    <form action="cart-pet-data.html" class="cart-detail">
+    <form action="cart-contacts.html" class="cart-detail">
       <h1>Оформление заказа</h1>
-      <div class="bar top"><a class="active">Товары в корзине</a><img src="images/ico-paginator-right.svg"><a>Данные питомца</a><img src="images/ico-paginator-right.svg"><a>Контактные данные</a><img src="images/ico-paginator-right.svg"><a>Способ оплаты</a><img src="images/ico-paginator-right.svg"><a>Подтверждение</a></div>
-      <table class="cart-goods-list">
-        <tr>
-          <td class="margin"></td>
-          <td class="visual-wrapper"><a href="catalog-detail.html" class="unit">
-              <div class="mask"><img src="images/mask-main-slider.svg"></div></a>
-            <div style="background-image:url('http://dummyimage.com/752x456');" class="visual"></div>
-          </td>
-          <td class="title"><a href="catalog-detail.html">Платье тайландское</a></td>
-          <td class="count">
-            <input value="1" name="id-8">
-          </td>
-          <td class="current-total"><span class="number">1 600</span>&nbsp;руб.-</td>
-          <td class="del"><a href=""><img src="/images/ico-cross-red.svg"></a></td>
-          <td class="margin"></td>
-        </tr>
-        <tr>
-          <td class="margin"></td>
-          <td class="visual-wrapper"><a href="catalog-detail.html" class="unit">
-              <div class="mask"><img src="images/mask-main-slider.svg"></div></a>
-            <div style="background-image:url('http://dummyimage.com/752x456');" class="visual"></div>
-          </td>
-          <td class="title"><a href="catalog-detail.html">Платье тайландское</a></td>
-          <td class="count">
-            <input value="2" name="id-6">
-          </td>
-          <td class="current-total"><span class="number">1 600</span>&nbsp;руб.-</td>
-          <td class="del"><a href=""><img src="images/ico-cross-red.svg"></a></td>
-          <td class="margin"></td>
-        </tr>
-      </table>
-      <div class="total"><span class="number">4 600</span>&nbsp;руб.-</div>
+      <div class="bar top"><a href="cart-goods.html">Товары в корзине</a><img src="images/ico-paginator-right.svg"><a href="cart-pet-data.html">Данные питомца</a><img src="images/ico-paginator-right.svg"><a class="active">Контактные данные</a><img src="images/ico-paginator-right.svg"><a>Способ оплаты</a><img src="images/ico-paginator-right.svg"><a>Подтверждение</a></div>
+      <div class="common-form-wrapper">
+        <div class="common-form pet-data">
+          <label>
+            <div class="label">Имя, Фамилия</div>
+            <input>
+          </label>
+          <label>
+            <div class="label">E-mail</div>
+            <input>
+          </label>
+          <label>
+            <div class="label">Адрес доставки</div>
+            <input>
+          </label>
+          <label>
+            <div class="label">Телефон</div>
+            <input>
+          </label>
+        </div>
+      </div>
       <div class="bar bottom"><a href="catalog.html" class="back">Вернуться в каталог</a>
         <button type="submit" class="btn">Далее</button>
         <div class="clrfx"></div>

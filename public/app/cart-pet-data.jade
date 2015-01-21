@@ -1,0 +1,40 @@
+extends layout
+
+block content
+  form.cart-detail(action='cart-contacts.html')
+    h1 Оформление заказа
+    .bar.top
+      a(href="cart-goods.html") Товары в корзине
+      img(src="images/ico-paginator-right.svg")
+      a.active Данные питомца
+      img(src="images/ico-paginator-right.svg")
+      a Контактные данные
+      img(src="images/ico-paginator-right.svg")
+      a Способ оплаты
+      img(src="images/ico-paginator-right.svg")
+      a Подтверждение
+    
+    .common-form-wrapper
+      .common-form.pet-data
+        p.
+          Для того чтобы "костюмчик сидел" мы рекомендуем снять мерки с вашего питомца.<br>
+          Да, это займет немного времени, но позволит нам выполнить заказ идеально!
+          
+        p
+         a.new-window(href="images/how-to.jpg") Как правильно снять мерки с питомца
+        
+        p.
+          Пожалуйста укажите размеры питомцев в свободной форме или используйте представлнеую заготовку:
+        textarea(name="metrics").
+          Порода:
+          Пол:
+          Обхват шеи:
+          Обхват груди:
+          Длина спины:
+          Обхват передней лапы:
+          От шеи до передней лапы:
+          Между передними лапами:
+    .bar.bottom
+      a.back(href="catalog.html") Вернуться в каталог
+      button.btn(type="submit") Далее
+      .clrfx

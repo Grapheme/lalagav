@@ -1,0 +1,35 @@
+extends layout
+
+block content
+  form.cart-detail(action='cart-contacts.html')
+    h1 Оформление заказа
+    .bar.top
+      a(href="cart-goods.html") Товары в корзине
+      img(src="images/ico-paginator-right.svg")
+      a(href="cart-pet-data.html")Данные питомца
+      img(src="images/ico-paginator-right.svg")
+      a.active Контактные данные
+      img(src="images/ico-paginator-right.svg")
+      a Способ оплаты
+      img(src="images/ico-paginator-right.svg")
+      a Подтверждение
+    
+    .common-form-wrapper
+      .common-form.pet-data
+        label
+          .label Имя, Фамилия
+          input
+        label
+          .label E-mail
+          input
+        label
+          .label Адрес доставки
+          input
+        label
+          .label Телефон
+          input
+    
+    .bar.bottom
+      a.back(href="catalog.html") Вернуться в каталог
+      button.btn(type="submit") Далее
+      .clrfx
