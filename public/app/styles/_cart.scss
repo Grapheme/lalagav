@@ -233,6 +233,13 @@
           box-sizing: border-box;
           font-size: 86%;
         }
+        textarea {
+          width: 376px;
+          display: inline-block;
+          margin-left: 16px;
+          vertical-align: top;
+          height: 100px;
+        }
       }
       textarea {
         width: 100%;
@@ -246,7 +253,137 @@
       .pet-data {
       
       }
+      .pay-types {
+        margin-left: -65px;
+        width: 800px;
+        margin-top: 60px;
+        label {
+          font-family: Ubuntu-Light;
+          color: #292929;
+          letter-spacing: 0.7px;
+          line-height: 20px;
+          display: inline-block;
+          width: 264px;
+          text-align: center;
+          vertical-align: top;
+          
+          input[type="radio"]{
+            position: absolute;
+            opacity: 0;
+            &:checked+.label-wrapper{
+              opacity: 1;
+            }
+          }
+          .label-wrapper {
+            opacity: 0.6;
+            &:hover {
+              opacity: 1;
+            }
+          }
+          .ico {
+            height: 50px;
+            margin-bottom: 20px;
+          }
+          .label {
+            width: auto;
+            display: block;
+          }
+          .title {
+            font-size: 16px;
+          }
+          .desc {
+            font-size: 12px;
+            letter-spacing: 0.53px;
+            line-height: 15px;
+            text-align: center;
+            margin-top: 12px;
+          }
+          input {
+            width: auto;
+          }
+        }
+      }
     } 
   }
-  
+  .confirmation {
+    width: 378px;
+    margin: 0 auto;
+    section {
+      font-family: Ubuntu-Light;
+      font-size: 14px;
+      color: #292929;
+      line-height: 16px;
+      margin-bottom: 50px;
+      h3 {
+        font-family: Ubuntu;
+        font-size: 20px;
+        color: #292929;
+        line-height: 24px;
+        font-weight: normal;
+        margin: 17px 0;
+      }
+      .row {
+        margin: 10px 0;
+        clear: both;
+        .key {
+          display: inline-block;
+          vertical-align: middle;
+        }
+        .val {
+          display: inline-block;
+          vertical-align: middle;
+          text-align: right;
+        }
+      }
+      &.consist {
+        .row {
+          margin: 10px 0;
+          .key {
+            width: 250px;
+          }
+          .val {
+            width: 125px;
+          }
+        }
+      }
+      &.contacts {
+        .row {
+          margin-bottom: 20px;
+          .key {
+            width: 94px;
+            vertical-align: top;
+          }
+          .val {
+            width: 275px;
+            vertical-align: top;
+            text-align: left;
+          }
+        }
+      }
+      &.total-conf {
+        h3 {
+          float: left;
+          &.numbers {
+            float: right;
+          }
+        }
+        .key {
+          float: left;
+        }
+        .val {
+          float: right;
+        }
+      }
+    }
+    a {
+      &.btn {
+        &.final {
+          width: 283px;
+          height: 97px;
+          padding-top: 21px;
+          margin-top: 66px;
+        }
+      }
+    }
+  }
 }

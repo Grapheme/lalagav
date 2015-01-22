@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  form.cart-detail(action='cart-contacts.html')
+  form.cart-detail(action='cart-pay.html')
     h1 Оформление заказа
     .bar.top
       a(href="cart-goods.html") Товары в корзине
@@ -15,7 +15,7 @@ block content
       a Подтверждение
     
     .common-form-wrapper
-      .common-form.pet-data
+      .common-form
         label
           .label Имя, Фамилия
           input
@@ -24,7 +24,7 @@ block content
           input
         label
           .label Адрес доставки
-          input
+          textarea
         label
           .label Телефон
           input

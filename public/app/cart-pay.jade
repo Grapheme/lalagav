@@ -1,0 +1,61 @@
+extends layout
+
+block content
+  form.cart-detail(action='cart-confirm.html')
+    h1 Оформление заказа
+    .bar.top
+      a(href="cart-goods.html") Товары в корзине
+      img(src="images/ico-paginator-right.svg")
+      a(href="cart-pet-data.html")Данные питомца
+      img(src="images/ico-paginator-right.svg")
+      a(href="cart-contacts.html") Контактные данные
+      img(src="images/ico-paginator-right.svg")
+      a.active Способ оплаты
+      img(src="images/ico-paginator-right.svg")
+      a Подтверждение
+    
+    .common-form-wrapper
+      .common-form
+        p.
+          Мастерская &laquo;Ляля гав&raquo; осуществляет доставку
+          товара почтой в&nbsp;любой регион России.
+          Отправка заказа производится в&nbsp;течение 3 дней.
+          При заказе одновременно трех и&nbsp;более моделей пересылка осуществляется бесплатно.
+        .pay-types
+          label
+            input(type="radio" name="pay_type" value=1)
+            .label-wrapper
+              .ico 
+                img(src="images/ico-visa.svg")
+              .label
+                .title Электронный платеж
+                .desc.
+                  - Доставка по всей России<br>
+                  - Стоимость 150 руб<br>
+                  - Предоплата
+          label
+            input(type="radio" name="pay_type" value=2)
+            .label-wrapper
+              .ico
+                img(src="images/ico-russiapost.svg")
+              .label
+                .title Наложенный платеж
+                .desc.
+                  - Доставка по всей России<br>
+                  - Стоимость 123 руб
+          label
+            input(type="radio" name="pay_type" value=3)
+            .label-wrapper
+              .ico
+                img(src="images/ico-curier.svg")
+              .label
+                .title Курьер (наличный платеж)
+                .desc.
+                  - Доставка по г. Ростов-на-Дону<br>
+                  - Стоимость 100 руб<br>
+                  - Доставка до двери
+    
+    .bar.bottom
+      a.back(href="catalog.html") Вернуться в каталог
+      button.btn(type="submit") Далее
+      .clrfx
