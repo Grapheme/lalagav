@@ -114,10 +114,15 @@ class DicLib extends BaseController {
         if (!is_array($key))
             $key = (array)$key;
 
+        #Helper::tad(get_class($collection));
+
+        #dd($collection);
+        $single_mode = false;
+
         if (get_class($collection) == 'DicVal') {
 
             $temp = $collection;
-
+            $single_mode = true;
             $collection = new Collection();
             $collection->put(0, $temp);
         }
@@ -200,6 +205,9 @@ class DicLib extends BaseController {
                 $collection->put($o, $obj);
             }
         }
+
+        if ($single_mode)
+            $collection = $collection[0];
 
         return $collection;
     }

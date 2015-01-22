@@ -14,4 +14,4 @@
 <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
 {{ HTML::stylemod(Config::get('site.theme_path').'/styles/main.css') }}
-{{ HTML::scriptmod('js/vendor/modernizr-2.6.2.min.js') }}
+{{ HTML::scriptmod(Config::get('site.theme_path').'/scripts/vendor/modernizr.js') }}

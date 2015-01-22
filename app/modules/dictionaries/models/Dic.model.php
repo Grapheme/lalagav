@@ -29,6 +29,8 @@ class Dic extends BaseModel {
 		'name' => 'required',
 	);
 
+    #public $all_dicval_relations = ['meta', 'fields', 'textfields', 'seo', 'related_dicvals'];
+
 
     /**
      * Связь возвращает все записи словаря со всеми полями; с сортировкой.
@@ -278,7 +280,7 @@ class Dic extends BaseModel {
      * @param bool $paginate - false / (int)10
      * @return $this|Collection|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Collection|\Illuminate\Pagination\Paginator|static|static[]
      */
-    public static function valuesBySlug($slug, Closure $conditions = NULL, $with = 'all', $extract = true, $unset = false, $paginate = false) {
+    public static function valuesBySlug($slug, Closure $conditions = NULL, $with = 'all', $extract = true, $unset = true, $paginate = false) {
 
         $return = new Collection();
 
@@ -351,7 +353,7 @@ class Dic extends BaseModel {
      * @param bool $unset
      * @return $this|Collection|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|null|static
      */
-    public static function valuesBySlugs($slug, $val_slug, $with = 'all', $extract = true, $unset = false) {
+    public static function valueBySlugs($slug, $val_slug, $with = 'all', $extract = true, $unset = true) {
 
         $return = new Collection();
 
@@ -392,7 +394,7 @@ class Dic extends BaseModel {
      * @param bool $unset
      * @return $this|Collection|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|null|static
      */
-    public static function valuesBySlugAndId($slug, $val_id, $with = 'all', $extract = true, $unset = false) {
+    public static function valueBySlugAndId($slug, $val_id, $with = 'all', $extract = true, $unset = true) {
 
         $return = new Collection();
 
@@ -433,7 +435,7 @@ class Dic extends BaseModel {
      * @param bool $unset
      * @return $this|Collection|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|null|static
      */
-    public static function valuesBySlugAndIds($slug, $val_ids, $with = 'all', $extract = true, $unset = false) {
+    public static function valuesBySlugAndIds($slug, $val_ids, $with = 'all', $extract = true, $unset = true) {
 
         $return = new Collection();
 

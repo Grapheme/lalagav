@@ -28,7 +28,10 @@ class ApplicationController extends BaseController {
     public function getBlogPost($slug) {
 
         $post = Dic::valueBySlugs('blog', $slug);
-        Helper::tad($post);
+        #Helper::ta($post);
+        $post = DicLib::loadImages($post, 'image_id');
+        #Helper::tad($post);
+        return View::make(Helper::layout('blog-post'), compact('post'));
     }
 
 }

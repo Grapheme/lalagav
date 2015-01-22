@@ -59,10 +59,11 @@ $blog = DicLib::loadImages($blog, 'image_id');
                     </a>
 
                     <div class="text">
-                        <a href="blog-detail.html" class="title">
+                        <a href="{{ URL::route('blog-post', $post->slug) }}" class="title">
                             <h2>{{ $post->name }}</h2>
                         </a>
-                        <time datetime="{{ $post->created_at->format('Y-m-d') }}">{{ Helper::rdate('j M Y', $post->created_at) }}
+                        <time datetime="{{ $post->created_at->format('Y-m-d') }}">
+                            {{ Helper::rdate('j M Y', $post->created_at) }}
                             г.
                         </time>
                         <div class="desc">
