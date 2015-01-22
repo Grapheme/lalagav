@@ -152,6 +152,7 @@ class Page extends BaseModel {
 
         ## Extract blocks
         if (isset($this->blocks)) {
+            $blocks = new Collection();
             foreach ($this->blocks as $b => $block) {
                 if (isset($block->meta) && 1) {
                     if ($block->meta->name)
@@ -162,9 +163,12 @@ class Page extends BaseModel {
                     if ($unset)
                         unset($block->meta);
                 }
-                $this->blocks[$block->slug] = $block;
-                if ($b != $block->slug || $b === 0)
-                    unset($this->blocks[$b]);
+                #$this->blocks[$block->slug] = $block;
+                $blocks[$block->slug] = $block;
+                unset($this->relations['blocks']);
+                $this->relations['blocks'] = $blocks;
+                #if ($b != $block->slug || $b === 0)
+                #    unset($this->blocks[$b]);
             }
         }
 

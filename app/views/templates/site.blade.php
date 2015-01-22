@@ -1,6 +1,6 @@
 <?
 /**
- * MENU_PLACEMENTS: main_menu=Основное меню
+ * MENU_PLACEMENTS: main_menu=Основное меню|footer_menu=Меню в подвале
  */
 ?>
 @if (@is_object($page->meta->seo))
