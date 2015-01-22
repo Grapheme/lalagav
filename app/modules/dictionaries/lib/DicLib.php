@@ -23,7 +23,8 @@ class DicLib extends BaseController {
      */
     public static function extracts($elements, $field = null, $unset = false, $extract_ids = true) {
 
-        $return = new Collection;
+        #$return = new Collection;
+        $return = [];
         #Helper::dd($return);
         foreach ($elements as $e => $element) {
 
@@ -51,7 +52,25 @@ class DicLib extends BaseController {
 
             $return[($extract_ids ? $element->id : $e)] = $element;
         }
-        return $return;
+
+        #return $return;
+
+        /**
+         * Определяем, с чем мы работаем - с Коллекцией или с Пагинатором
+         */
+        ## Collection / Paginator
+        $classname = last(explode('\\', '\\'.get_class($elements)));
+        #Helper::tad($classname);
+        if ($classname == 'Collection') {
+
+            $elements->__construct($return);
+
+        } elseif ($classname == 'Paginator') {
+
+            $elements->setItems($return);
+        }
+
+        return $elements;
     }
 
     /**
@@ -183,7 +202,6 @@ class DicLib extends BaseController {
         }
 
         return $collection;
-
     }
 
 

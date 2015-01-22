@@ -6,7 +6,7 @@
 <header>
     <nav>
         <ul>
-            <li><a href="index.html" class="active"><img src="{{ Config::get('site.theme_path') }}/images/logo_light.svg" class="logo"></a></li>
+            <li><a href="{{ URL::route('mainpage') }}" class="active"><img src="{{ Config::get('site.theme_path') }}/images/logo_light.svg" class="logo"></a></li>
         </ul>
 
         {{ Menu::placement('main_menu') }}

@@ -12,9 +12,7 @@ class ApplicationController extends BaseController {
 
         Route::group(array(), function() {
 
-            Route::any('/ajax/request-call', array('as' => 'ajax.request-call', 'uses' => __CLASS__.'@postRequestCall'));
-            Route::any('/ajax/send-message', array('as' => 'ajax.send-message', 'uses' => __CLASS__.'@postSendMessage'));
-            Route::any('/ajax/architects-competition', array('as' => 'ajax.architects-competition', 'uses' => __CLASS__.'@postArchitectsCompetition'));
+            Route::get('/blog/{slug}', array('as' => 'blog-post', 'uses' => __CLASS__.'@getBlogPost'));
         });
     }
 
@@ -27,21 +25,10 @@ class ApplicationController extends BaseController {
 	}
 
 
-    public function postRequestCall() {
+    public function getBlogPost($slug) {
 
-        #
-    }
-
-
-    public function postSendMessage() {
-
-        #
-    }
-
-
-    public function postArchitectsCompetition() {
-
-        #
+        $post = Dic::valueBySlugs('blog', $slug);
+        Helper::tad($post);
     }
 
 }
