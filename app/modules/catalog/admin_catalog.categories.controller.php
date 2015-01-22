@@ -233,6 +233,7 @@ class AdminCatalogCategoriesController extends BaseController {
         $input['active'] = @$input['active'] ? 1 : NULL;
 
         #Helper::dd($input);
+        #Helper::tad($input);
 
         $json_request['responseText'] = "<pre>" . print_r($_POST, 1) . "</pre>";
         #return Response::json($json_request,200);

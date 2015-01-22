@@ -66,12 +66,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-ide-helper.git",
-                "reference": "03cc70759b2d8d03bd6886d9964eff81a8720bdb"
+                "reference": "073d90b7913cba4f2b6162a89d0700e22e292190"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/03cc70759b2d8d03bd6886d9964eff81a8720bdb",
-                "reference": "03cc70759b2d8d03bd6886d9964eff81a8720bdb",
+                "url": "https://api.github.com/repos/barryvdh/laravel-ide-helper/zipball/073d90b7913cba4f2b6162a89d0700e22e292190",
+                "reference": "073d90b7913cba4f2b6162a89d0700e22e292190",
                 "shasum": ""
             },
             "require": {
@@ -121,7 +121,7 @@
                 "phpstorm",
                 "sublime"
             ],
-            "time": "2014-09-15 15:20:52"
+            "time": "2014-12-20 14:18:35"
         },
         {
             "name": "classpreloader/classpreloader",

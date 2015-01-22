@@ -23,7 +23,7 @@ class CatalogOrderProduct extends BaseModel {
     }
 
     public function info() {
-        return $this->belongsTo('CatalogProduct', 'product_id', 'id');
+        return $this->belongsTo('CatalogProduct', 'product_id', 'id')->withTrashed();
     }
 
     public function scopeAttributess() {

@@ -13,7 +13,82 @@
 
 @section('content')
 
-    {{ $page->block('slider') }}
+    <div class="slider-wrapper">
+        <div class="mask"><img src="images/mask-main-slider.svg">
+            <div class="dots"><a href=""></a><a href=""></a><a href=""></a></div>
+        </div>
+        <div class="slider-holder">
+            <ul class="slider-list">
+                <li style="background-image:url('images/slide-1.jpg');"></li>
+                <li style="background-image:url('http://newsinphoto.ru/wp-content/uploads/2011/01/dogs_1801.jpg');"></li>
+                <li style="background-image:url('http://www.formydogs.ru/pics/DSC_0587z.jpg');"></li>
+            </ul>
+        </div>
+    </div>
+    <div class="goods-list"><a href="catalog-detail.html" class="unit">
+            <div class="mask"><img src="images/mask-main-slider.svg"></div>
+            <div style="background-image:url('http://dummyimage.com/752x456');" class="visual">
+                <div class="text">
+                    <p>НАЦИОНАЛЬНЫЙ КОСТЮМ РУЧНОЙ РАБОТЫ В ТРЕХ ОСНОВНЫХ РОССИЙСКИХ ЦВЕТА</p>
+                    <div class="price">600 РУБ. -</div>
+                </div>
+            </div></a><a href="catalog-detail.html" class="unit new">
+            <div class="mask"><img src="images/mask-main-slider.svg"></div>
+            <div style="background-image:url('http://dummyimage.com/752x456');" class="visual">
+                <div class="text">
+                    <p>НАЦИОНАЛЬНЫЙ КОСТЮМ РУЧНОЙ РАБОТЫ В ТРЕХ ОСНОВНЫХ РОССИЙСКИХ ЦВЕТА СНОВНЫХ РОССИЙСКИХ ЦВЕТА</p>
+                    <div class="price">600 РУБ. -</div>
+                </div>
+            </div></a><a href="catalog-detail.html" class="unit">
+            <div class="mask"><img src="images/mask-main-slider.svg"></div>
+            <div style="background-image:url('http://dummyimage.com/752x456');" class="visual">
+                <div class="text">
+                    <p>НАЦИОНАЛЬНЫЙ КОСТЮМ РУЧНОЙ РАБОТЫ В ТРЕХ ОСНОВНЫХ РОССИЙСКИХ ЦВЕТА</p>
+                    <div class="price">600 РУБ. -</div>
+                </div>
+            </div></a><a href="catalog-detail.html" class="unit">
+            <div class="mask"><img src="images/mask-main-slider.svg"></div>
+            <div style="background-image:url('http://dummyimage.com/752x456');" class="visual">
+                <div class="text">
+                    <p>НАЦИОНАЛЬНЫЙ КОСТЮМ РУЧНОЙ РАБОТЫ В ТРЕХ ОСНОВНЫХ РОССИЙСКИХ ЦВЕТА СНОВНЫХ РОССИЙСКИХ ЦВЕТА</p>
+                    <div class="price">600 РУБ. -</div>
+                </div>
+            </div></a><a href="catalog-detail.html" class="unit">
+            <div class="mask"><img src="images/mask-main-slider.svg"></div>
+            <div style="background-image:url('http://dummyimage.com/752x456');" class="visual">
+                <div class="text">
+                    <p>НАЦИОНАЛЬНЫЙ КОСТЮМ РУЧНОЙ РАБОТЫ В ТРЕХ ОСНОВНЫХ РОССИЙСКИХ ЦВЕТА</p>
+                    <div class="price">600 РУБ. -</div>
+                </div>
+            </div></a><a href="catalog-detail.html" class="unit">
+            <div class="mask"><img src="images/mask-main-slider.svg"></div>
+            <div style="background-image:url('http://dummyimage.com/752x456');" class="visual">
+                <div class="text">
+                    <p>НАЦИОНАЛЬНЫЙ КОСТЮМ РУЧНОЙ РАБОТЫ В ТРЕХ ОСНОВНЫХ РОССИЙСКИХ ЦВЕТА СНОВНЫХ РОССИЙСКИХ ЦВЕТА</p>
+                    <div class="price">600 РУБ. -</div>
+                </div>
+            </div></a>
+        <div class="clrfx"></div>
+    </div>
+    <div class="info-text">
+        <div class="text-wrapper">
+            <h1>Интернет магазин - лялягав</h1>
+            <div class="text">
+                <p>
+                    Далеко-далеко за словесными горами в стране гласных и согласных живут
+                    рыбные тексты. Вдали от всех живут они в буквенных домах на берегу
+                    Семантика большого языкового океана. Маленький ручеек Даль журчит по
+                    всей стране и обеспечивает ее всеми необходимыми правилами.
+                </p>
+                <p>
+                    Далеко-далеко за словесными горами в стране гласных и согласных живут
+                    рыбные тексты. Вдали от всех живут они в буквенных домах на берегу
+                    Семантика большого языкового океана. Маленький ручеек Даль журчит по
+                    всей стране и обеспечивает ее всеми необходимыми правилами.
+                </p>
+            </div><img src="images/visual-dog.png" class="visual-dog">
+        </div>
+    </div>
 
 @stop
 

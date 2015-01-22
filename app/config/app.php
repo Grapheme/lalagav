@@ -10,7 +10,7 @@ return array(
 	'use_scripts_local' => FALSE,
 	
 	'default_page_title' => 'CMS DEV',
-	'template' => 'default',
+	'template' => 'site',
     'welcome_page_tpl' => 'templates.site.index', #'guests.welcome',
 
 
@@ -22,7 +22,7 @@ return array(
 
     'locales' => array(
         'ru' => 'Русский',
-        'en' => 'English',
+        #'en' => 'English',
     ),
 	'locale' => 'ru',
 

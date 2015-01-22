@@ -68,6 +68,8 @@ class CreateCatalogTables extends Migration {
                 $table->text('settings')->nullable();
                 $table->integer('lft')->unsigned()->nullable()->index();
                 $table->integer('rgt')->unsigned()->nullable()->index();
+
+                $table->softDeletes();
                 $table->timestamps();
             });
             echo(' + ' . $this->table . PHP_EOL);
@@ -89,6 +91,8 @@ class CreateCatalogTables extends Migration {
                 $table->string('price')->nullable()->index();
 
                 $table->text('settings')->nullable();
+
+                $table->softDeletes();
                 $table->timestamps();
 
                 $table->unique(array('product_id', 'language'), 'product_id_language');
@@ -107,12 +111,15 @@ class CreateCatalogTables extends Migration {
                 $table->increments('id');
                 $table->integer('category_id')->unsigned()->index();
                 $table->smallInteger('active')->unsigned()->default(0)->index();
-                $table->string('slug')->nullable()->unique();
+                $table->string('slug')->nullable()->index();
 
                 $table->text('settings')->nullable();
                 $table->integer('lft')->unsigned()->nullable()->index();
                 $table->integer('rgt')->unsigned()->nullable()->index();
+
                 $table->timestamps();
+
+                $table->unique(array('category_id', 'slug'), 'attributes_groups_category_id_slug_language');
             });
             echo(' + ' . $this->table . PHP_EOL);
         } else {

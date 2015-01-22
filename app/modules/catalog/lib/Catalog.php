@@ -354,4 +354,11 @@ class Catalog extends BaseController {
         return true;
     }
 
+
+
+    /*
+    public static function create_order(array $array) {
+
+    }
+    */
 }

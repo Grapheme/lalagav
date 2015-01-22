@@ -1,10 +1,18 @@
 <?php
+/**
+ * Soft Delete
+ * http://stackoverflow.com/questions/22426165/laravel-soft-delete-posts
+ */
+use Illuminate\Database\Eloquent\SoftDeletingTrait; // <-- This is required
 
 class CatalogProduct extends BaseModel {
 
 	protected $guarded = array();
 
 	public $table = 'catalog_products';
+
+    #protected $softDelete = true;
+    use SoftDeletingTrait; // <-- Use This Insteaf Of protected $softDelete = true;
 
     protected $fillable = array(
         'active',
@@ -52,7 +60,7 @@ class CatalogProduct extends BaseModel {
     * @return \Illuminate\Database\Eloquent\Relations\HasMany
     */
     public function metas() {
-        return $this->hasMany('CatalogProductMeta', 'product_id', 'id');
+        return $this->hasMany('CatalogProductMeta', 'product_id', 'id')->withTrashed();
     }
 
     /**
@@ -63,6 +71,7 @@ class CatalogProduct extends BaseModel {
     public function meta() {
         return $this->hasOne('CatalogProductMeta', 'product_id', 'id')
             ->where('language', Config::get('app.locale'))
+            ->withTrashed()
             ;
     }
 
