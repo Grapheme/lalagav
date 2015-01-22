@@ -46,6 +46,7 @@ footer {
       padding-left: 47px;
       padding-top: 22px;
       margin-left: 50px;
+      list-style: none;
       @include max-screen(1020px) {
         margin-left: 20px;
       }

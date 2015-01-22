@@ -31,4 +31,34 @@ $(function() {
     });
   }
   
+  var $buyBtn = $('.catalog-detail .btn.buy');
+  var $visual = $('.catalog-detail .slider-wrapper');
+  var $cart = $('header .cart');
+  
+  $buyBtn.click(function(e){
+    e.preventDefault();
+    var $clone = $visual.clone();
+    var pos = $visual.position();
+    var cartPos = $cart.position();
+    $clone.width($visual.width());
+    //$clone.height($visual.height());
+    $clone.addClass('fly').insertBefore($visual);
+    $clone.css({
+      top: pos.top,
+      left: pos.left
+    });
+    setTimeout(function(){
+      $clone.css({
+        top: 0-($clone.height()/2),
+        left: cartPos.left-($clone.width()/2)
+      }).addClass('end');
+      setTimeout(function(){
+        var number = parseInt($cart.find('.count').text());
+        $cart.find('.count').text(number+=1);
+        $clone.remove();
+      }, 500);
+    }, 1)
+    
+  });
+  
 });
