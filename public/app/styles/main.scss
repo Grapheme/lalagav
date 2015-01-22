@@ -47,11 +47,13 @@ body {
   padding-top: 10px;
   display: inline-block;
   text-decoration: none;
+  border: none;
   &:hover {
     background-image: url('../images/btn-bg-hover.svg');
   }
 }
 
+@import 'fonts';
 @import 'header';
 @import 'footer';
 @import 'slider';
@@ -59,3 +61,4 @@ body {
 @import 'catalog';
 @import 'blog';
 @import 'regular';
+@import 'cart';

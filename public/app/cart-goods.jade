@@ -1,0 +1,53 @@
+extends layout
+
+block content
+  form.cart-detail(action='cart-pet-data.html')
+    h1 Оформление заказа
+    .bar.top
+      a.active Товары в корзине
+      img(src="images/ico-paginator-right.svg")
+      a Данные питомца
+      img(src="images/ico-paginator-right.svg")
+      a Контактные данные
+      img(src="images/ico-paginator-right.svg")
+      a Способ оплаты
+      img(src="images/ico-paginator-right.svg")
+      a Подтверждение
+    table.cart-goods-list
+      tr
+        td.margin
+        td.visual-wrapper
+          a.unit(href="catalog-detail.html")
+            .mask
+              img(src="images/mask-main-slider.svg")
+          .visual(style="background-image:url('http://dummyimage.com/752x456');")
+        td.title
+          a(href="catalog-detail.html") Платье тайландское
+        td.count
+          input(value="1" name="id-8")
+        td.current-total <span class="number">1 600</span>&nbsp;руб.-
+        td.del
+          a(href="")
+            img(src="/images/ico-cross-red.svg")
+        td.margin
+      tr
+        td.margin
+        td.visual-wrapper
+          a.unit(href="catalog-detail.html")
+            .mask
+              img(src="images/mask-main-slider.svg")
+          .visual(style="background-image:url('http://dummyimage.com/752x456');")
+        td.title
+          a(href="catalog-detail.html") Платье тайландское
+        td.count
+          input(value="2" name="id-6")
+        td.current-total <span class="number">1 600</span>&nbsp;руб.-
+        td.del
+          a(href="")
+            img(src="images/ico-cross-red.svg")
+        td.margin
+    .total <span class="number">4 600</span>&nbsp;руб.-
+    .bar.bottom
+      a.back(href="catalog.html") Вернуться в каталог
+      button.btn(type="submit") Далее
+      .clrfx
