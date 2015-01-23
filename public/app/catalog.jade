@@ -99,3 +99,12 @@ block content
             .price 600 РУБ. -
       .clrfx
     include includes/paginator.jade
+  .popup-bg
+    .vertical-fix
+    .popup.order-final
+      a.close(href="")
+        img(src="images/ico-cross-red.svg")
+      .title ВАШ ЗАКАЗ УСПЕШНО ОТПРАВЛЕН!
+      a.print(href="invoice-print.html", target="_blank")
+        .link Распечатать данные заказа
+        img.paw(src="images/ico-paw.svg")

@@ -1,0 +1,59 @@
+extends layout
+
+block content
+  br
+  br
+  br
+  .cart-detail(action='cart-confirm.html')
+    .confirmation
+      section.consist
+        h3 Состав заказа
+        .row
+          .key Платье тайландское:
+          .val 1 шт. Х 1 600 РУБ.-
+        .row
+          .key Национальный костюм в трех основных Россиских цвета:
+          .val 2 шт. Х 1 600 РУБ.-
+      section.contacts
+        h3 Контактные данные
+        .row
+          .key ФИО:
+          .val Жужам Махмудахмадинеджад Махмудахмадинеджадович
+        .row
+          .key E-mail:
+          .val Махмудахмад@Yandex.ru
+        .row
+          .key Адрес:
+          .val Россия, г. Ростов-на-Дону, ул. Каспийская д.35 кв. 9
+        .row
+          .key Телефон:
+          .val +7(928)172-39-29
+      section.pet-data
+        h3 Данные питомца
+        .row.
+            Порода: Красный гигант<br>
+            Пол: Кобель<br>
+            Обхват шеи: 900<br>
+            Обхват груди: 670<br>
+            Длина спины: 6<br>
+            Обхват передней лапы: 3,5<br>
+            От шеи до передней лапы: 0<br>
+            Между передними лапами: хвост<br>
+      section.total-conf
+        h3 Ваш заказ
+        h3.numbers 4 923 руб.-
+        .row
+          .key Сумма заказа
+          .val 4 800 руб.-
+        .row
+          .key Доставка и обслуживание
+          .val 123 руб.-
+  style.
+    header, footer {
+      display:none;
+    }
+    body {
+      padding-bottom: 50px;
+    }
+  script.
+    window.print();
