@@ -199,7 +199,7 @@ class PublicPagesController extends BaseController {
             $slug = false;
             $page = $page->where('id', $url);
             $page = $page
-                ->with('meta', 'blocks.meta', 'seo')
+                ->with(['meta', 'blocks.meta', 'seo'])
                 ->first();
 
             #Helper::tad($page);
@@ -233,7 +233,7 @@ class PublicPagesController extends BaseController {
 
                 $page = $this->page
                     ->where('id', $page_seo->unit_id)
-                    ->with('meta', 'blocks.meta', 'seo')
+                    ->with(['meta', 'blocks.meta', 'seo'])
                     ->first()
                     #->page
                 ;
@@ -254,7 +254,7 @@ class PublicPagesController extends BaseController {
                 ## Search page in pages by slug
                 $page = $page
                     ->where('slug', $url)
-                    ->with('meta', 'blocks.meta', 'seo')
+                    ->with(['meta', 'blocks.meta', 'seo'])
                     ->first();
                 #Helper::tad($page);
 
@@ -281,7 +281,7 @@ class PublicPagesController extends BaseController {
 
             $page = $page
                 ->where('start_page', 1)
-                ->with('meta', 'blocks.meta', 'seo')
+                ->with(['meta', 'blocks.meta', 'seo'])
                 ->first();
 
         }

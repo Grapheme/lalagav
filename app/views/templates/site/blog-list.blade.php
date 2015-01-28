@@ -8,23 +8,25 @@
 /**
  * Settings
  */
-$per_page = 1;
+$per_page = 5;
 $page = (int)Input::get('page') ?: 1;
 
 /**
  * Total posts
  */
+/*
 $total_posts = Dic::valuesBySlugCount('blog', function ($query) {
     $query->where('dic_id', 0);
 });
-#Helper::tad($total_posts);
+Helper::tad($total_posts);
+*/
 
 /**
  * Get posts of the current page, with pagination
  */
 $blog = Dic::valuesBySlug('blog', function ($query) use ($per_page, $page) {
     $query->skip(($page - 1) * $per_page)->take($per_page);
-}, ['fields', 'textfields'], true, true, $per_page);
+}, ['fields', 'textfields'], true, true, false, $per_page);
 $blog = DicLib::loadImages($blog, 'image_id');
 #Helper::tad($blog);
 #dd($blog);
@@ -75,11 +77,7 @@ $blog = DicLib::loadImages($blog, 'image_id');
             @endforeach
         @endif
 
-        <div class="paginator">
-            <a href="?page-prev"><img src="{{ Config::get('site.theme_path') }}/images/ico-paginator-left.svg"></a>
-            {{ $blog->links() }}
-            <a href="?page-next"><img src="{{ Config::get('site.theme_path') }}/images/ico-paginator-right.svg"></a>
-        </div>
+        {{ $blog->links() }}
 
         <div class="paginator">
             <a href="?page-prev"><img src="{{ Config::get('site.theme_path') }}/images/ico-paginator-left.svg"></a>

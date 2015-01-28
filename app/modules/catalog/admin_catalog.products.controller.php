@@ -256,11 +256,10 @@ class AdminCatalogProductsController extends BaseController {
 
         Allow::permission($this->module['group'], 'categories_edit');
 
-
         /**
          * Выборка одного товара со всеми данными, для вывода
          */
-        #/*
+        /*
         $element = CatalogProduct::where('id', $id)
             ->with(
                 'seo', 'meta', 'attributes_groups.meta', 'attributes_groups.attributes.meta'
@@ -278,15 +277,24 @@ class AdminCatalogProductsController extends BaseController {
 
 
         $element = CatalogProduct::where('id', $id)
+            /*
             ->with(
                 'category', 'seos',
                 'metas', 'meta',
                 'attributes_groups.meta', 'attributes_groups.attributes.meta'
             )
+            #*/
             ->with(
-                array('attributes_groups.attributes.values' => function($query) use ($id) {
-                    $query->where('product_id', $id);
-                })
+                array(
+                    #/*
+                    'category', 'seos',
+                    'metas', 'meta',
+                    'attributes_groups.meta', 'attributes_groups.attributes.meta',
+                    #*/
+                    'attributes_groups.attributes.values' => function($query) use ($id) {
+                        $query->where('product_id', $id);
+                    }
+                )
             )
             ->first();
 
@@ -295,9 +303,10 @@ class AdminCatalogProductsController extends BaseController {
 
         $element->extract(1);
 
-        if (is_object($element) && is_object($element->meta))
+        if (is_object($element) && isset($element->meta) && is_object($element->meta))
             $element->name = $element->meta->name;
 
+        #Helper::smartQueries(1);
         #Helper::tad($element);
 
         /**

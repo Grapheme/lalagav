@@ -26,32 +26,53 @@ class DicLib extends BaseController {
         #$return = new Collection;
         $return = [];
         #Helper::dd($return);
+
         foreach ($elements as $e => $element) {
 
             #Helper::ta($e);
             #Helper::ta($element);
+            #echo "<hr/>\n";
             #dd($element);
+
+            $temp_element = clone $element;
+            #Helper::ta($temp_element);
 
             if (isset($field) && $field != '') {
 
-                $el = is_object($element) ? @$element->$field : @$element[$field];
+                $el = is_object($temp_element) ? @$temp_element->$field : @$temp_element[$field];
 
                 if (is_object($el)) {
                     $el->extract($unset);
                 }
-                if (is_object($element)) {
-                    $element->$field = $el;
+                if (is_object($temp_element)) {
+                    $temp_element->$field = $el;
                 } else {
-                    $element[$field] = $el;
+                    $temp_element[$field] = $el;
                 }
 
             } else {
 
-                $element->extract($unset);
+                #Helper::ta($temp_element);
+
+                $temp_element->extract($unset);
+                #Helper::ta($temp_element);
+                #echo "<hr/>\n";
             }
 
-            $return[($extract_ids ? $element->id : $e)] = $element;
+            #Helper::ta($temp_element);
+            #echo "<hr/>\n";
+
+            $return[($extract_ids ? $temp_element->id : $e)] = $temp_element;
+            unset($temp_element);
+            unset($element);
         }
+
+        /*
+        Helper::ta("<hr/>");
+        Helper::ta($elements);
+        Helper::ta($return);
+        die;
+        #*/
 
         #return $return;
 
@@ -114,23 +135,39 @@ class DicLib extends BaseController {
         if (!is_array($key))
             $key = (array)$key;
 
-        #Helper::tad(get_class($collection));
+        #Helper::ta(get_class($collection));
+        #Helper::tad($collection instanceof Collection);
 
+        #Helper::ta((int)($collection instanceof \Illuminate\Pagination\Paginator));
         #dd($collection);
+        #var_dump($collection);
+
         $single_mode = false;
+        $paginator_mode = false;
 
-        if (get_class($collection) == 'DicVal') {
+        if ($collection instanceof Collection) {
 
-            $temp = $collection;
+            ## all ok
+
+        } elseif ($collection instanceof \Illuminate\Pagination\Paginator) {
+
+            $paginator_mode = true;
+            $paginator = clone $collection;
+            $collection = $collection->getItems();
+
+        } else {
+
             $single_mode = true;
+            $temp = $collection;
             $collection = new Collection();
             $collection->put(0, $temp);
         }
 
-        #Helper::dd($collection);
+        #Helper::tad($collection);
+        #dd($collection);
 
         if (!count($collection) || !count($key))
-            return false;
+            return $collection;
 
         $images_ids = array();
         /**
@@ -143,7 +180,8 @@ class DicLib extends BaseController {
              */
             $work_obj = $field ? $obj->$field : $obj;
 
-            #Helper::dd($work_obj);
+            #dd($work_obj->$key[0]);
+            #dd($work_obj);
 
             /**
              * Перебираем все переданные ключи с ID изображений
@@ -171,6 +209,8 @@ class DicLib extends BaseController {
         }
 
 
+        #dd($collection);
+
         if (count($images)) {
 
             /**
@@ -186,8 +226,9 @@ class DicLib extends BaseController {
                 /**
                  * Перебираем все переданные ключи с ID изображений
                  */
-                foreach ($key as $attr)
-                    if (is_numeric($work_obj->$attr)) {
+                foreach ($key as $attr) {
+
+                    if (is_object($work_obj) && is_numeric($work_obj->$attr)) {
 
                         if (@$images[$work_obj->$attr]) {
 
@@ -197,17 +238,37 @@ class DicLib extends BaseController {
                             $work_obj->setAttribute($attr, $image);
                         }
                     }
+                }
 
                 if ($field) {
                     $obj->$field = $work_obj;
+                #} else {
+                #    $obj = $work_obj;
                 }
 
-                $collection->put($o, $obj);
+                if (is_object($collection))
+                    $collection->put($o, $obj);
+                else
+                    $collection[$o] = $obj;
             }
         }
 
-        if ($single_mode)
+        #dd($single_mode);
+
+        if ($paginator_mode) {
+
+            $paginator->setItems($collection);
+            $collection = $paginator;
+
+        } else if ($single_mode) {
+
             $collection = $collection[0];
+        }
+
+        #Helper::tad($collection);
+        #dd($collection);
+        #var_dump($collection);
+        #Helper::ta('<hr/>');
 
         return $collection;
     }
@@ -231,18 +292,38 @@ class DicLib extends BaseController {
         if (!is_array($key))
             $key = (array)$key;
 
-        if (get_class($collection) == 'DicVal') {
+        #Helper::ta(get_class($collection));
+        #Helper::tad($collection instanceof Collection);
 
+        #Helper::ta((int)($collection instanceof \Illuminate\Pagination\Paginator));
+        #dd($collection);
+
+        $single_mode = false;
+        $paginator_mode = false;
+
+        if ($collection instanceof Collection) {
+
+            ## all ok
+
+        } elseif ($collection instanceof \Illuminate\Pagination\Paginator) {
+
+            $paginator_mode = true;
+            $paginator = clone $collection;
+            $collection = $collection->getItems();
+
+        } else {
+
+            $single_mode = true;
             $temp = $collection;
-
             $collection = new Collection();
             $collection->put(0, $temp);
         }
 
-        #Helper::dd($collection);
+        #Helper::tad($collection);
+        #dd($collection);
 
         if (!count($collection) || !count($key))
-            return false;
+            return $collection;
 
         $ids = array();
         /**
@@ -255,13 +336,19 @@ class DicLib extends BaseController {
              */
             $work_obj = $field ? $obj->$field : $obj;
 
-            #Helper::dd($work_obj);
+            #Helper::ta($work_obj);
+            #continue;
+            #dd($work_obj);
 
             /**
              * Перебираем все переданные ключи с ID
              */
-            foreach ($key as $attr)
-                if (is_numeric($work_obj->$attr)) {
+            foreach ($key as $attr) {
+
+                #var_dump($work_obj);
+                #continue;
+
+                if (is_object($work_obj) && is_numeric($work_obj->$attr)) {
 
                     /**
                      * Собираем ID - в общий список и в список с разбиением по ключу
@@ -269,10 +356,11 @@ class DicLib extends BaseController {
                     $ids_attr[$attr][] = $work_obj->$attr;
                     $ids[] = $work_obj->$attr;
                 }
+            }
         }
         #Helper::dd($images_ids);
         #Helper::d($images_ids_attr);
-
+        #die;
 
         $objects = [];
         if (count($ids)) {
@@ -315,12 +403,25 @@ class DicLib extends BaseController {
                 }
 
                 #$collection->relations[$o] = $obj;
-                $collection->put($o, $obj);
+                if (is_object($collection))
+                    $collection->put($o, $obj);
+                else
+                    $collection[$o] = $obj;
             }
         }
 
-        return $collection;
+        if ($paginator_mode) {
 
+            $paginator->setItems($collection);
+            $collection = $paginator;
+
+        } else if ($single_mode)
+            $collection = $collection[0];
+
+        #Helper::tad($collection);
+        #dd($collection);
+
+        return $collection;
     }
 
 

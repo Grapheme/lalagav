@@ -1,8 +1,10 @@
 <?php
 
 class BaseModel extends Eloquent {
-	
-	public static $errors = array();
+
+    use \SleepingOwl\WithJoin\WithJoinTrait;
+
+    public static $errors = array();
 
     public function rules() {
         #Helper::dd(static::$rules);

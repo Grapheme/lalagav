@@ -188,6 +188,31 @@ class CatalogCategory extends BaseModel {
         }
         $this->attributes_count = $count;
 
+
+
+        ## Extract products
+        if (isset($this->products)) {
+
+            $products = new Collection();
+
+            foreach ($this->products as $p => $product) {
+
+                $product->extract($unset);
+                $products[$product->id] = $product;
+            }
+
+            $products = DicLib::loadImages($products, ['image_id']);
+            $products = DicLib::loadGallery($products, ['gallery_id']);
+
+            #dd($products);
+
+            $this->relations['products'] = $products;
+            #unset($products);
+        }
+
+
+
+
         return $this;
     }
 }

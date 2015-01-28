@@ -8,7 +8,8 @@
  *
  */
 class Catalog extends BaseController {
-	
+
+
 	public function __construct(){
 		##
 	}
@@ -356,9 +357,31 @@ class Catalog extends BaseController {
 
 
 
-    /*
-    public static function create_order(array $array) {
+    public static function get_products() {
 
+        /*
+        $products = (new CatalogProduct)
+            ->with('meta')
+            ->references('meta')
+            #->orderBy('meta.name', 'ASC')
+            ->get();
+        #*/
+
+        $products = (new CatalogProduct)
+            ->with('meta')
+            ->references('meta')
+            ->orderBy('meta.name', 'desc')
+            ->get()
+        ;
+        #die;
+
+        #Helper::smartQueries(1);
+        #die;
+
+        #$products = DicLib::extracts($products, null, true, false);
+
+        Helper::tad($products);
+
+        return $products;
     }
-    */
 }

@@ -22,9 +22,10 @@ class CatalogAttribute extends BaseModel {
 
 
     public function attributes_group() {
-        return $this->belongsTo('CatalogAttributeGroup', 'attributes_group_id', 'id')
-            ->orderBy('lft', 'ASC')
-            ;
+        return $this->belongsTo('CatalogAttributeGroup', 'attributes_group_id', 'id');
+    }
+    public function group() {
+        return $this->attributes_group();
     }
 
     public function products() {
@@ -34,6 +35,7 @@ class CatalogAttribute extends BaseModel {
     }
 
     public function values() {
+        #dd($this);
         return $this->hasMany('CatalogAttributeValue', 'attribute_id', 'id');
     }
 
@@ -89,6 +91,18 @@ class CatalogAttribute extends BaseModel {
 
             if ($unset)
                 unset($this->relations['meta']);
+        }
+
+
+        if (isset($this->values)) {
+            #Helper::ta($this->values);
+
+            $values = new Collection();
+            foreach ($this->values as $value) {
+                $values[$value->language] = $value;
+            }
+            unset($this->relations['values']);
+            $this->relations['values'] = $values;
         }
 
 

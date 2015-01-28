@@ -8,6 +8,8 @@ else
     $value = NULL;
 ?>
 
+{{ Helper::ta_($attribute) }}
+
 @include($module['gtpl'] . 'attributes.' . $attribute->type)
 
 @if (0)

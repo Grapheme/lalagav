@@ -268,6 +268,9 @@ class Dic extends BaseModel {
     }
 
 
+
+
+
     /**
      * Возвращает записи в словаре по его системному имени, имеет множество настроек.
      * Вторым параметром передается функция-замыкание с доп. условиями выборки, аналогичная по синтаксису доп. условия при вызове связи.
@@ -280,7 +283,7 @@ class Dic extends BaseModel {
      * @param bool $paginate - false / (int)10
      * @return $this|Collection|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Collection|\Illuminate\Pagination\Paginator|static|static[]
      */
-    public static function valuesBySlug($slug, Closure $conditions = NULL, $with = 'all', $extract = true, $unset = true, $paginate = false) {
+    public static function valuesBySlug($slug, Closure $conditions = NULL, $with = 'all', $extract = true, $unset = true, $extract_ids = false, $paginate = false) {
 
         $return = new Collection();
 
@@ -307,7 +310,7 @@ class Dic extends BaseModel {
         $values = $paginate ? $values->paginate((int)$paginate) : $values->get();
 
         if (count($values) && $extract)
-            $values = DicLib::extracts($values, null, $unset, true);
+            $values = DicLib::extracts($values, null, $unset, $extract_ids);
 
         return $values;
     }

@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "96fc9b861342cf6d8d8e51d14c1a6007",
+    "hash": "87edbbd93a823f741b74b83ea581ef6b",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -1188,6 +1188,53 @@
             "time": "2014-06-20 16:35:16"
         },
         {
+            "name": "sleeping-owl/with-join",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sleeping-owl/with-join.git",
+                "reference": "2318cb189c66f8e01c442f7d18824f9e0b7a76ff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sleeping-owl/with-join/zipball/2318cb189c66f8e01c442f7d18824f9e0b7a76ff",
+                "reference": "2318cb189c66f8e01c442f7d18824f9e0b7a76ff",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": ">=4.1",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "illuminate/database": ">=4.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "SleepingOwl\\WithJoin": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sleeping Owl",
+                    "email": "owl.sleeping@yahoo.com"
+                }
+            ],
+            "description": "Package to convert Eloquent BelongsTo subqueries into one query with left join.",
+            "keywords": [
+                "activerecord",
+                "eloquent",
+                "join",
+                "laravel",
+                "with"
+            ],
+            "time": "2015-01-23 10:42:17"
+        },
+        {
             "name": "sngrl/string-blade-compiler",
             "version": "dev-master",
             "source": {
@@ -2210,7 +2257,8 @@
     "stability-flags": {
         "intervention/image": 20,
         "barryvdh/laravel-debugbar": 20,
-        "sngrl/string-blade-compiler": 20
+        "sngrl/string-blade-compiler": 20,
+        "sleeping-owl/with-join": 20
     },
     "prefer-stable": false,
     "platform": [],

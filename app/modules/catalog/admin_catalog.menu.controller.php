@@ -80,7 +80,7 @@ class AdminCatalogMenuController extends BaseController {
             if (Input::get('category'))
                 $menu_child[] = array(
                     'title' => 'Атрибуты',
-                    'link' => self::$group . '/attributes?category=' . Input::get('category'),
+                    'link' => self::$group . '/attributes?category=' . @(int)Input::get('category'),
                     'class' => 'fa-puzzle-piece',
                 );
 

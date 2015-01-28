@@ -90,7 +90,9 @@ class AdminCatalogAttributesController extends BaseController {
         if (NULL !== ($cat_id = Input::get('category'))) {
 
             $root_category = CatalogCategory::where('id', $cat_id)
-                ->with('meta', 'attributes_groups.meta', 'attributes_groups.attributes.meta')
+                ->with('meta')
+                ->with('attributes_groups.meta')
+                ->with('attributes_groups.attributes.meta')
                 ->first()
             ;
 
@@ -116,7 +118,8 @@ class AdminCatalogAttributesController extends BaseController {
         if (NULL !== ($cat_id = Input::get('category'))) {
 
             $root_category = CatalogCategory::where('id', $cat_id)
-                ->with('meta', 'attributes_groups.meta')
+                ->with('meta')
+                ->with('attributes_groups.meta')
                 ->first()
             ;
 
