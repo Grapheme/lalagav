@@ -24,7 +24,7 @@ $(function() {
   };
   
   function attachAListner() {
-    $catList.find('.paginator a').click(function(e){
+    $catList.find('.pagination a').click(function(e){
       var url = $(this).attr('href');
       postFilters(url);
       e.preventDefault();
@@ -60,5 +60,21 @@ $(function() {
     }, 1)
     
   });
+  
+  var hash = window.location.hash || null;
+  
+  if(hash) {
+    if (hash.split('#')[1]==='order-final') {
+      $('.popup-bg').show();
+      $('.popup.order-final').show();
+      $('.popup.order-final .close').click(function(e){
+        e.preventDefault();
+        $('.popup.order-final').fadeOut(200, function(){
+          $('.popup-bg').slideUp(300);
+        })
+      });
+    }
+  }
+  
   
 });

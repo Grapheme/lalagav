@@ -1,4 +1,19 @@
 .paginator
+  a(href='?page-prev')
+    img(src='images/ico-paginator-left.svg')
+  ul.pagination
+    li.disabled
+      span «
+    li.active
+      span 1
+    li
+      a(href='http://lalagav.dev/blog?page=2') 2
+    li
+      a(href='http://lalagav.dev/blog?page=2', rel='next') »
+  a(href='?page-next')
+    img(src='images/ico-paginator-right.svg')
+    
+.paginator
   a(href="?page-prev")
     img(src='images/ico-paginator-left.svg')
   a.active(href="?page-1") 1
