@@ -24,7 +24,7 @@ $(function() {
   };
   
   function attachAListner() {
-    $catList.find('.paginator a').click(function(e){
+    $catList.find('.pagination a').click(function(e){
       var url = $(this).attr('href');
       postFilters(url);
       e.preventDefault();
