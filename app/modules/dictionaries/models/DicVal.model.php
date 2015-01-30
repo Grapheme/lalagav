@@ -259,7 +259,7 @@ class DicVal extends BaseModel {
         return
             $query
                 ->with('metas')
-                ->with('allfields', 'alltextfields')
+                ->with(['allfields', 'alltextfields'])
                 ->with('seos')
             ;
     }
@@ -288,7 +288,9 @@ class DicVal extends BaseModel {
      */
     public function scopeWith_versions($query) {
 
-        return $query->with('versions', 'original_version.versions');
+        return $query
+            ->with(['versions', 'original_version.versions'])
+        ;
     }
 
 
