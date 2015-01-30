@@ -13,7 +13,7 @@ class ApplicationController extends BaseController {
         Route::group(array(), function() {
 
             Route::get('/blog/{slug}', array('as' => 'blog-post', 'uses' => __CLASS__.'@getBlogPost'));
-            Route::post('/catalog/purge', array('as' => 'catalog-purge', 'uses' => __CLASS__.'@postCatalogPurge'));
+            Route::any('/catalog/purge', array('as' => 'catalog-purge', 'uses' => __CLASS__.'@postCatalogPurge'));
             Route::get('/catalog/{slug}', array('as' => 'catalog-detail', 'uses' => __CLASS__.'@getCatalogDetail'));
         });
     }
@@ -55,7 +55,7 @@ class ApplicationController extends BaseController {
     public function postCatalogPurge() {
 
         #Helper::tad(Input::all());
-        return View::make(Helper::layout('catalog-purge'));
+        return View::make(Helper::layout(Request::isXmlHttpRequest() ? 'catalog-purge' : 'catalog-list'));
     }
 
 

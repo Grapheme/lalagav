@@ -98,6 +98,26 @@
                         </label>
                     </section>
 
+                    @if (isset($parent_category))
+                        <section>
+                            <label class="label">
+                                Родительская категория
+                            </label>
+                            <label class="select">
+                                {{ Form::select('parent_cat_id', $parent_category) }}
+                            </label>
+                        </section>
+
+                        <section>
+                            <label class="label">
+                                Скопировать набор атрибутов из следующей категории
+                            </label>
+                            <label class="select">
+                                {{ Form::select('attributes_cat_id', $attributes_from_category) }}
+                            </label>
+                        </section>
+                    @endif
+
                     <section>
                         <label class="label">Изображение</label>
                         <label class="input">

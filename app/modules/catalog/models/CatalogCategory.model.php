@@ -174,19 +174,19 @@ class CatalogCategory extends BaseModel {
             }
             $this->relations['attributes_groups'] = $attributes_groups;
             #Helper::tad($this->attributes_groups);
-        }
 
-        ## Extract attributes count
-        $count = 0;
-        if (isset($this->attributes_groups) && is_object($this->attributes_groups) && count($this->attributes_groups)) {
-            foreach ($this->attributes_groups as $group) {
-                #Helper::dd($group->relations['attributes']);
-                if (isset($group->relations['attributes']) && is_object($group->relations['attributes']) && count($group->relations['attributes'])) {
-                    $count += count($group->relations['attributes']);
+            ## Extract attributes count
+            $count = 0;
+            if (isset($this->attributes_groups) && is_object($this->attributes_groups) && count($this->attributes_groups)) {
+                foreach ($this->attributes_groups as $group) {
+                    #Helper::dd($group->relations['attributes']);
+                    if (isset($group->relations['attributes']) && is_object($group->relations['attributes']) && count($group->relations['attributes'])) {
+                        $count += count($group->relations['attributes']);
+                    }
                 }
             }
+            $this->attributes_count = $count;
         }
-        $this->attributes_count = $count;
 
 
 

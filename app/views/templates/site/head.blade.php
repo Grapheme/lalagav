@@ -13,5 +13,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
+@yield('meta_additional')
+
 {{ HTML::stylemod(Config::get('site.theme_path').'/styles/main.css') }}
 {{ HTML::scriptmod(Config::get('site.theme_path').'/scripts/vendor/modernizr.js') }}

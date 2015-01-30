@@ -73,12 +73,11 @@ class AdminCatalogCategoriesController extends BaseController {
 
         Allow::permission($this->module['group'], 'categories_view');
 
-        $elements = new CatalogCategory();
-        $tbl_cat_category = $elements->getTable();
-
         /**
          * Подготавливаем запрос для выборки
          */
+        $elements = new CatalogCategory();
+        $tbl_cat_category = $elements->getTable();
         $elements = $elements
             ->orderBy(DB::raw('-' . $tbl_cat_category . '.lft'), 'DESC') ## 0, 1, 2 ... NULL, NULL
             ->orderBy($tbl_cat_category . '.created_at', 'DESC')
@@ -142,11 +141,50 @@ class AdminCatalogCategoriesController extends BaseController {
 
         Allow::permission($this->module['group'], 'categories_create');
 
+        /**
+         * Новая (пустая) категория
+         */
         $element = new CatalogCategory();
 
+        /**
+         * Существующие категории (для списка родителей)
+         */
+        /**
+         * Подготавливаем запрос для выборки
+         */
+        $elements = new CatalogCategory();
+        $tbl_cat_category = $elements->getTable();
+        $elements = $elements
+            ->orderBy(DB::raw('-' . $tbl_cat_category . '.lft'), 'DESC') ## 0, 1, 2 ... NULL, NULL
+            ->orderBy($tbl_cat_category . '.created_at', 'DESC')
+            ->orderBy($tbl_cat_category . '.id', 'DESC')
+            ->with('meta')
+            #->with('products')
+            #->with('attributes_groups.attributes')
+        ;
+
+        /**
+         * Получаем все категории из БД
+         */
+        $elements = $elements->get();
+        $elements = DicLib::extracts($elements, null, true, true);
+        #Helper::smartQueries(1);
+        #Helper::tad($elements);
+
+        /**
+         * Формируем массив с отступами
+         */
+        $attributes_from_category = NestedSetModel::get_array_for_select($elements);
+        $parent_category = ['[нет]'] + $attributes_from_category;
+        $attributes_from_category = ['[не копировать]'] + $attributes_from_category;
+        #Helper::dd($categories_for_select);
+
+        /**
+         * Локали
+         */
         $locales = Config::get('app.locales');
 
-		return View::make($this->module['tpl'].'edit', compact('element', 'locales'));
+		return View::make($this->module['tpl'].'edit', compact('element', 'locales', 'attributes_from_category', 'parent_category'));
 	}
     
 
@@ -155,12 +193,17 @@ class AdminCatalogCategoriesController extends BaseController {
         Allow::permission($this->module['group'], 'categories_edit');
 
 		$element = CatalogCategory::where('id', $id)
-            ->with('seos', 'metas', 'meta')
+            ->with(['seos', 'metas', 'meta'])
             ->first()
-            ->extract();
+        ;
 
-        if (is_object($element) && is_object($element->meta))
+        if (!is_object($element))
+            App::abort(404);
+
+        if (is_object($element->meta))
             $element->name = $element->meta->name;
+
+        $element->extract();
 
         $locales = Config::get('app.locales');
 
@@ -235,6 +278,18 @@ class AdminCatalogCategoriesController extends BaseController {
          */
         $input['active'] = @$input['active'] ? 1 : NULL;
 
+        /**
+         * Выбрана ли родительская категория
+         */
+        $parent_cat_id = isset($input['parent_cat_id']) ? $input['parent_cat_id'] : false;
+        unset($input['parent_cat_id']);
+
+        /**
+         * Выбрана ли категория для копирования набора атрибутов
+         */
+        $attributes_cat_id = isset($input['attributes_cat_id']) ? $input['attributes_cat_id'] : false;
+        unset($input['attributes_cat_id']);
+
         #Helper::dd($input);
         #Helper::tad($input);
 
@@ -263,15 +318,48 @@ class AdminCatalogCategoriesController extends BaseController {
             } else {
 
                 /**
-                 * Ставим элемент в конец списка
+                 * Если выбрана родительская категория, и она найдена в БД...
                  */
-                $max_rgt = CatalogCategory::max('rgt');
-                $input['lft'] = @(int)$max_rgt+1;
-                $input['rgt'] = @(int)$max_rgt+2;
+                if ($parent_cat_id && NULL !== ($parent_cat = CatalogCategory::find($parent_cat_id))) {
 
-                $element->save();
+                    #Helper::tad($parent_cat);
+
+                    /**
+                     * Поставим новую категорию в конец родительской
+                     */
+                    $input['lft'] = @(int)$parent_cat->rgt;
+                    $input['rgt'] = @(int)$parent_cat->rgt+1;
+                    $element->save();
+
+                    /**
+                     * Увеличим отступ у всех категорий, следующей за родительской
+                     */
+                    #CatalogCategory::where('rgt', '>', $parent_cat->rgt)->get();
+                    if ($parent_cat->rgt) {
+                        DB::update(DB::raw("UPDATE " . $parent_cat->getTable() . " SET lft = lft + 2 WHERE lft > " . $parent_cat->rgt . ""));
+                        DB::update(DB::raw("UPDATE " . $parent_cat->getTable() . " SET rgt = rgt + 2 WHERE rgt > " . $parent_cat->rgt . ""));
+                    }
+
+                    /**
+                     * Увеличим RGT родительской категории на 2
+                     */
+                    $parent_cat->rgt = $parent_cat->rgt+2;
+                    $parent_cat->save();
+
+                } else {
+
+                    /**
+                     * Ставим элемент в конец списка
+                     */
+                    $max_rgt = CatalogCategory::max('rgt');
+                    $input['lft'] = @(int)$max_rgt+1;
+                    $input['rgt'] = @(int)$max_rgt+2;
+                    $element->save();
+                }
+
                 $element->update($input);
                 $category_id = $element->id;
+
                 $redirect = Input::get('redirect');
 
                 /**

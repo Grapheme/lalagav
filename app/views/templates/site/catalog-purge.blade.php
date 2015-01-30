@@ -16,7 +16,7 @@ $per_page = 2;
  */
 $products = (new CatalogProduct)->with('meta', 'values.attribute.group')->with('attributes_groups.attributes')->references('meta');
 
-if (NULL !== ($cat_ids = Input::get('category')) && is_array($cat_ids) && count($cat_ids)) {
+if (NULL !== ($cat_ids = (array)Input::get('category')) && is_array($cat_ids) && count($cat_ids)) {
 
     $products = $products->whereIn('category_id', $cat_ids)->orderBy('meta.name', 'asc');
 
@@ -53,6 +53,9 @@ $products = DicLib::loadImages($products, 'image_id');
         <div class="clrfx"></div>
     </div>
 
+    <?
+    $products->setBaseUrl(URL::route('catalog-purge'));
+    ?>
     {{ $products->links() }}
 
 @endif

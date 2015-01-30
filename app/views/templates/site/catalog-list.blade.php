@@ -42,8 +42,19 @@ if ( 0 ) {
 }
 #die;
 
+$cat_ids = (array)Input::get('category')
 ?>
 @extends(Helper::layout())
+
+
+@section('meta_additional')
+<?
+$params = ['catalog'];
+if (Input::get('page') > 1)
+    $params['page'] = Input::get('page')
+?>
+    <link rel="canonical" href="{{ URL::route('page', $params) }}" />
+@stop
 
 
 @section('style')
@@ -68,7 +79,7 @@ if ( 0 ) {
                     $child_cat = isset($categories[$child['id']]) ? $categories[$child['id']] : false;
                     ?>
                     <label>
-                        <input type="checkbox" value="{{ $child_cat->id }}" name="category[]">
+                        <input type="checkbox" value="{{ $child_cat->id }}" name="category[]" {{ in_array($child['id'], $cat_ids) ? ' checked' : '' }}>
                         <div class="label">{{ $child_cat->name }}</div>
                     </label>
                 @endforeach
