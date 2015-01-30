@@ -275,7 +275,7 @@ class DicVal extends BaseModel {
         return
             $query
                 ->with('meta')
-                ->with('fields', 'textfields')
+                ->with(['fields', 'textfields'])
                 ->with('seo')
             ;
     }
