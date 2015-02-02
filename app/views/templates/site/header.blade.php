@@ -5,9 +5,11 @@
 ?>
 <header>
     <nav>
+        @if (0)
         <ul>
             <li><a href="{{ URL::route('mainpage') }}" class="active"><img src="{{ Config::get('site.theme_path') }}/images/logo_light.svg" class="logo"></a></li>
         </ul>
+        @endif
 
         {{ Menu::placement('main_menu') }}
 

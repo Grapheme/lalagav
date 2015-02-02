@@ -1193,12 +1193,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sleeping-owl/with-join.git",
-                "reference": "2318cb189c66f8e01c442f7d18824f9e0b7a76ff"
+                "reference": "e1e1960d0b41ecde8e76cd201362b49bcd53de9d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sleeping-owl/with-join/zipball/2318cb189c66f8e01c442f7d18824f9e0b7a76ff",
-                "reference": "2318cb189c66f8e01c442f7d18824f9e0b7a76ff",
+                "url": "https://api.github.com/repos/sleeping-owl/with-join/zipball/e1e1960d0b41ecde8e76cd201362b49bcd53de9d",
+                "reference": "e1e1960d0b41ecde8e76cd201362b49bcd53de9d",
                 "shasum": ""
             },
             "require": {
@@ -1232,7 +1232,7 @@
                 "laravel",
                 "with"
             ],
-            "time": "2015-01-23 10:42:17"
+            "time": "2015-01-28 21:39:30"
         },
         {
             "name": "sngrl/string-blade-compiler",
@@ -2261,6 +2261,7 @@
         "sleeping-owl/with-join": 20
     },
     "prefer-stable": false,
+    "prefer-lowest": false,
     "platform": [],
     "platform-dev": []
 }
