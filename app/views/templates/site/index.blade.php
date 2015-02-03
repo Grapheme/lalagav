@@ -19,6 +19,24 @@ $categories = $categories
 ;
 
 /**
+ * Костыльное определение минимальной цены товара в каждой категории
+ */
+$tbl_product = (new CatalogProduct())->getTable();
+$tbl_product_meta = (new CatalogProductMeta())->getTable();
+$alias = $tbl_product_meta . '2';
+$goods = (new CatalogProduct())
+        ->includes('meta')
+        ->orderBy(DB::raw('CAST(meta.price AS UNSIGNED)'), 'DESC')
+        #->groupBy('category_id')
+        ->get()
+;
+#Helper::smartQueries(1);
+$goods = DicLib::extracts($goods, null, 1, 1);
+#Helper::ta($goods);
+$cat_min_prices = Dic::makeLists($goods, null, 'price', 'category_id');
+#Helper::tad($cat_min_prices);
+
+/**
  * Получаем все категории из БД
  */
 $categories = $categories->get();
@@ -72,7 +90,7 @@ if ( 0 ) {
     @foreach($hierarchy as $element)
         <?
         $cat = isset($categories[$element['id']]) ? $categories[$element['id']] : false;
-        $children = $element['children'];
+        $children = isset($element['children']) ? $element['children'] : NULL;
         if (!$cat || !count($children))
             continue;
         ?>
@@ -85,7 +103,9 @@ if ( 0 ) {
                     <div style="background-image:url('{{ is_object($child_cat->image_id) ? $child_cat->image_id->thumb() : '' }}');" class="visual">
                         <div class="text">
                             <p>{{ mb_strtoupper($child_cat->name) }}</p>
-                            {{--<div class="price">600 РУБ. -</div>--}}
+                            @if (isset($cat_min_prices[$child_cat->id]))
+                                <div class="price">от {{ $cat_min_prices[$child_cat->id] }} РУБ. -</div>
+                            @endif
                         </div>
                     </div></a><!--
             @endforeach

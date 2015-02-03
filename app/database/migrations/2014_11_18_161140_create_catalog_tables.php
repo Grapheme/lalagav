@@ -37,6 +37,7 @@ class CreateCatalogTables extends Migration {
                 $table->string('language')->nullable()->index();
                 $table->smallInteger('active')->unsigned()->default(1)->index();
                 $table->string('name')->nullable();
+                $table->string('min_price')->nullable()->unsigned()->index();
 
                 $table->text('settings')->nullable();
                 $table->timestamps();
@@ -59,7 +60,7 @@ class CreateCatalogTables extends Migration {
                 $table->string('slug')->nullable()->unique();
                 $table->integer('category_id')->unsigned()->index();
 
-                $table->string('article')->default('')->unique();
+                $table->string('article')->default('')->index();
                 $table->integer('amount')->unsigned()->index();
 
                 $table->integer('image_id')->unsigned()->default(0);
