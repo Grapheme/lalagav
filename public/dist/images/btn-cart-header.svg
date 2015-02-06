@@ -1,1 +1,14 @@
-<svg width="82" height="65" viewBox="0 0 82 65" xmlns="http://www.w3.org/2000/svg"><title>Path 142</title><desc>Created with Sketch.</desc><path d="M66.504 62.426c-10.444 4.75-49.015 1.97-55.086-1.43C5.348 57.596 0 48.284 0 32.492c0-15.79 3.41-26.616 13.844-30.33 6.348-2.26 36.448-3.03 52.15-.924C76.102 2.594 82 7.948 82 32.492c0 17.808-5.053 25.183-15.496 29.934z" fill="#552E54"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="82px" height="65px" viewBox="0 0 82 65" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.2.2 (9983) - http://www.bohemiancoding.com/sketch -->
+    <title>Path 142</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Home-4" sketch:type="MSArtboardGroup" transform="translate(-1136.000000, -59.000000)" fill="#552E54">
+            <g id="menu" sketch:type="MSLayerGroup" transform="translate(62.000000, 37.000000)">
+                <path d="M1140.50381,84.4256412 C1130.06016,89.1759605 1091.48887,86.3968583 1085.41812,82.9960259 C1079.34737,79.5951935 1074,70.2837864 1074,54.4923856 C1074,38.7009849 1077.41022,27.8755723 1087.84416,24.1612866 C1094.19174,21.9016681 1124.29163,21.1322322 1139.99386,23.2380953 C1150.10244,24.5937799 1156,29.9468227 1156,54.4923856 C1156,72.2997772 1150.94747,79.6753219 1140.50381,84.4256412 Z" id="Path-142" sketch:type="MSShapeGroup"></path>
+            </g>
+        </g>
+    </g>
+</svg>

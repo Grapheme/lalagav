@@ -1,1 +1,20 @@
-<svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><title>Path 138</title><desc>Created with Sketch.</desc><path d="M6.26 16.682c3.176.272 6.662.968 9.347-2.36C18.293 10.99 16.877 3.26 13 2.275 9.125 1.292 4.724-.15 2.88 2.268 1.034 4.686.617 9.25 1.4 11.998c.784 2.75 1.685 4.413 4.86 4.684z" stroke="#F6A623" fill="#F6A623"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.2.2 (9983) - http://www.bohemiancoding.com/sketch -->
+    <title>Path 138</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="каталог" sketch:type="MSArtboardGroup" transform="translate(-246.000000, -195.000000)" stroke="#F6A623" fill="#F6A623">
+            <g id="фильтр-" sketch:type="MSLayerGroup" transform="translate(62.000000, 190.000000)">
+                <g id="Тематика" transform="translate(1.000000, 0.000000)" sketch:type="MSShapeGroup">
+                    <g id="галочка" transform="translate(184.000000, 3.000000)">
+                        <g id="Path-138" transform="translate(0.000000, 3.000000)">
+                            <path d="M5.26035937,0.317608362 C8.43561749,0.046158108 11.9218796,-0.649755008 14.6073397,2.67900488 C17.2927997,6.00776476 15.878419,13.7393153 12.0012944,14.7235984 C8.12416979,15.7078814 3.72308546,17.1512023 1.87880043,14.732426 C0.0345153937,12.3136498 -0.382391867,7.74948462 0.400844294,5.00141259 C1.18408046,2.25334057 2.08510126,0.589058615 5.26035937,0.317608362 Z" transform="translate(8.000000, 8.000000) scale(1, -1) translate(-8.000000, -8.000000) "></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

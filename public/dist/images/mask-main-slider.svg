@@ -1,1 +1,16 @@
-<svg width="1156" height="804" viewBox="0 0 1156 804" xmlns="http://www.w3.org/2000/svg"><title>Mask 2</title><desc>Created with Sketch.</desc><path d="M0 402.406C0 207.32 48.034 73.586 195 27.7 284.408-.215 708.376-9.72 929.548 16.295 1071.93 33.043 1155 99.175 1155 402.405c0 219.99-71.167 311.107-218.27 369.792-147.102 58.684-690.393 24.352-775.902-17.66C75.32 712.52 0 597.49 0 402.406V804h1156V0H0v402.406z" fill="#fff"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="1156px" height="804px" viewBox="0 0 1156 804" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.2.2 (9983) - http://www.bohemiancoding.com/sketch -->
+    <title>Mask 2</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Home-4" sketch:type="MSArtboardGroup" transform="translate(-62.000000, -189.000000)" fill="#FFFFFF">
+            <g id="главная" sketch:type="MSLayerGroup" transform="translate(0.000000, 189.000000)">
+                <g id="фон" sketch:type="MSShapeGroup">
+                    <path d="M62,402.405933 C61.9999997,207.321398 110.034135,73.5859164 257,27.7002021 C346.407981,-0.214776961 770.376015,-9.72026993 991.547729,16.2952383 C1133.93072,33.0431574 1217,99.173825 1217,402.405933 C1217,622.395709 1145.83325,713.512054 998.73053,772.196767 C851.627807,830.881481 308.337082,796.548881 222.828369,754.53552 C137.319656,712.52216 62.0000003,597.490468 62,402.405933 L62,804 L1218,804 L1218,0 L62,0 L62,402.405933 Z" id="Mask-2"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

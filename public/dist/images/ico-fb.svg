@@ -1,1 +1,19 @@
-<svg width="50" height="51" viewBox="0 0 50 51" xmlns="http://www.w3.org/2000/svg"><title>Path 138 + фэйс</title><desc>Created with Sketch.</desc><g fill="none"><path d="M16.44.993c9.92-.85 20.816-3.023 29.208 7.38 8.392 10.4 3.972 34.562-8.144 37.638-12.116 3.077-25.87 7.588-31.633.03C.11 38.48-1.194 24.216 1.254 15.63 3.7 7.04 6.516 1.84 16.44.992z" fill="#2969B0"/><path d="M26.002 32.728v-8.23h2.695l.357-2.835h-3.052l.005-1.42c0-.74.083-1.135 1.343-1.135h1.685v-2.836H26.34c-3.237 0-4.376 1.376-4.376 3.69v1.702h-2.018V24.5h2.018v8.228h4.038z" fill="#fff"/></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="50px" height="51px" viewBox="0 0 50 51" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.2.2 (9983) - http://www.bohemiancoding.com/sketch -->
+    <title>Path 138 + фэйс</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Welcome" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Home-4" sketch:type="MSArtboardGroup" transform="translate(-935.000000, -2531.000000)">
+            <g id="подвал" sketch:type="MSLayerGroup" transform="translate(57.000000, 2504.000000)">
+                <g id="сети" transform="translate(808.000000, 27.000000)" sketch:type="MSShapeGroup">
+                    <g id="Path-138-+-фэйс" transform="translate(70.000000, 0.000000)">
+                        <path d="M16.438623,0.99252613 C26.3613046,0.144244088 37.2558739,-2.0304844 45.6479365,8.37189024 C54.039999,18.7742649 49.6200593,42.9353605 37.5040449,46.0112449 C25.3880306,49.0871294 11.6346421,53.5975071 5.87125134,46.0388314 C0.107860605,38.4801556 -1.19497458,24.2171394 1.25263842,15.6294144 C3.70025142,7.04168927 6.51594142,1.84080817 16.438623,0.99252613 Z" id="Path-138" fill="#2969B0"></path>
+                        <path d="M26.0024223,32.728 L26.0024223,24.4990366 L28.6969208,24.4990366 L29.054,21.6632902 L26.0024223,21.6632902 L26.0070002,20.2439718 C26.0070002,19.5043655 26.0903569,19.1080675 27.3504345,19.1080675 L29.0349253,19.1080675 L29.0349253,16.272 L26.3400453,16.272 C23.1030611,16.272 21.9637265,17.6476421 21.9637265,19.9610395 L21.9637265,21.6636113 L19.946,21.6636113 L19.946,24.4993577 L21.9637265,24.4993577 L21.9637265,32.728 L26.0024223,32.728 L26.0024223,32.728 L26.0024223,32.728 L26.0024223,32.728 Z" id="фэйс" fill="#FFFFFF"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
