@@ -355,6 +355,16 @@ form.filters {
   padding: 0;
   li {
     display: inline-block;
+    text-decoration: inherit;
+    color: inherit;
+    min-width: 36px;
+    min-height: 36px;
+    text-align: center;
+    box-sizing: border-box;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    margin-right: 5px;
   }
   a {
     text-decoration: inherit;
