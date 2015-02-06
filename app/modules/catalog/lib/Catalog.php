@@ -356,6 +356,71 @@ class Catalog extends BaseController {
     }
 
 
+    public static function getCategoryMenuDropdown($categories_array, $filter_default_text = 'Из всех категорий', $filter_name = 'category', $route = 'catalog.products.index') {
+
+        $category_id = Input::get($filter_name);
+        $current_category = NULL;
+        $array = [];
+        $child = [];
+
+        /**
+         * Основной элемент выпадающего меню
+         */
+        if ($category_id && isset($categories_array[$category_id]) && (NULL !== ($current_category = $categories_array[$category_id]))) {
+
+            $current_category = str_replace('&nbsp;', '', $current_category);
+            $current_category = trim($current_category);
+
+            $array[$filter_name] = $category_id;
+            $parent = array(
+                'link' => URL::route($route, $array),
+                'title' => $current_category,
+                'class' => 'btn btn-default',
+            );
+
+            $child[] = array(
+                'link' => URL::route($route, []),
+                'title' => $filter_default_text,
+                'class' => '',
+            );
+
+        } else {
+
+            $parent = array(
+                'link' => URL::route($route, $array),
+                'title' => $filter_default_text,
+                'class' => 'btn btn-default',
+            );
+        }
+
+        /**
+         * Дочерние элементы
+         */
+        foreach ($categories_array as $cat_id => $cat_name) {
+
+            #if ($category_id && $cat_id == $category_id)
+            #    continue;
+
+            $cat_name = trim($cat_name);
+
+            ## Get all current link attributes & modify for next url generation
+            $array = [];
+            $array[$filter_name] = $cat_id;
+
+            $child[] = array(
+                'link' => URL::route($route, $array),
+                'title' => $cat_name,
+                'class' => '',
+            );
+        }
+        ## Assembly
+        $parent['child'] = $child;
+
+        #Helper::tad($parent);
+
+        return $parent;
+    }
+
 
     public static function get_products() {
 

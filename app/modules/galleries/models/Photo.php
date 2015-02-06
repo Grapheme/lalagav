@@ -9,7 +9,11 @@ class Photo extends Eloquent {
 
 	public function thumb() {
 		#return link::to(Config::get('site.galleries_thumb_dir')) . "/" . $this->name;
-		return URL::to(Config::get('site.galleries_thumb_public_dir') . "/" . $this->name);
+		return
+			#file_exists($this->fullpath()) ?
+			URL::to(Config::get('site.galleries_thumb_public_dir') . "/" . $this->name)
+			#: ''
+		;
 	}
 
 	public function full() {

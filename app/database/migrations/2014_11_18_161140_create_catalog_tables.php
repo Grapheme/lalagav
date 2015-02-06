@@ -37,7 +37,7 @@ class CreateCatalogTables extends Migration {
                 $table->string('language')->nullable()->index();
                 $table->smallInteger('active')->unsigned()->default(1)->index();
                 $table->string('name')->nullable();
-                $table->string('min_price')->nullable()->unsigned()->index();
+                $table->string('min_price')->nullable()->index();
 
                 $table->text('settings')->nullable();
                 $table->timestamps();
@@ -48,6 +48,66 @@ class CreateCatalogTables extends Migration {
         } else {
             echo('...' . $this->table . PHP_EOL);
         }
+
+
+        $this->table = $this->prefix . "categories_attributes";
+        if (!Schema::hasTable($this->table)) {
+            Schema::create($this->table, function(Blueprint $table) {
+
+                $table->increments('id');
+                $table->smallInteger('active')->unsigned()->default(1)->index();
+                $table->string('slug')->nullable()->unique();
+                $table->string('type')->nullable();
+
+                $table->text('settings')->nullable();
+                $table->timestamps();
+
+                #$table->unique(array('category_id', 'language'), 'category_language');
+            });
+            echo(' + ' . $this->table . PHP_EOL);
+        } else {
+            echo('...' . $this->table . PHP_EOL);
+        }
+
+        $this->table = $this->prefix . "categories_attributes_meta";
+        if (!Schema::hasTable($this->table)) {
+            Schema::create($this->table, function(Blueprint $table) {
+
+                $table->increments('id');
+                $table->integer('attribute_id')->unsigned()->index();
+                $table->string('language')->nullable()->index();
+                $table->string('name')->nullable();
+
+                $table->text('settings')->nullable();
+                $table->timestamps();
+
+                $table->unique(array('attribute_id', 'language'), 'attribute_language');
+            });
+            echo(' + ' . $this->table . PHP_EOL);
+        } else {
+            echo('...' . $this->table . PHP_EOL);
+        }
+
+        $this->table = $this->prefix . "categories_attributes_values";
+        if (!Schema::hasTable($this->table)) {
+            Schema::create($this->table, function(Blueprint $table) {
+
+                $table->increments('id');
+                $table->integer('category_id')->unsigned()->index();
+                $table->integer('attribute_id')->unsigned()->index();
+                $table->string('language')->nullable()->index();
+                $table->string('value')->nullable();
+
+                $table->text('settings')->nullable();
+                $table->timestamps();
+
+                $table->unique(array('category_id', 'attribute_id', 'language'), 'category_attribute_language');
+            });
+            echo(' + ' . $this->table . PHP_EOL);
+        } else {
+            echo('...' . $this->table . PHP_EOL);
+        }
+
 
 
 
@@ -351,6 +411,17 @@ class CreateCatalogTables extends Migration {
 
         Schema::dropIfExists($this->prefix . "categories_meta");
         echo(' - ' . $this->prefix . "categories_meta" . PHP_EOL);
+
+
+
+        Schema::dropIfExists($this->prefix . "categories_attributes");
+        echo(' - ' . $this->prefix . "categories_attributes" . PHP_EOL);
+
+        Schema::dropIfExists($this->prefix . "categories_attributes_meta");
+        echo(' - ' . $this->prefix . "categories_attributes_meta" . PHP_EOL);
+
+        Schema::dropIfExists($this->prefix . "categories_attributes_values");
+        echo(' - ' . $this->prefix . "categories_attributes_values" . PHP_EOL);
 
 
 

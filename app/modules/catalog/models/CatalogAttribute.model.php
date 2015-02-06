@@ -71,6 +71,8 @@ class CatalogAttribute extends BaseModel {
         ## Extract metas
         if (isset($this->metas)) {
             foreach ($this->metas as $m => $meta) {
+                if (isset($meta->settings) && is_string($meta->settings))
+                    $meta->settings = json_decode($meta->settings, 1);
                 $this->metas[$meta->language] = $meta;
                 if ($m != $meta->language || $m === 0)
                     unset($this->metas[$m]);

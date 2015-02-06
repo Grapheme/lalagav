@@ -127,7 +127,30 @@ class AdminCatalogProductsController extends BaseController {
 
         $sortable = 1;
 
-        return View::make($this->module['tpl'].'index', compact('elements', 'hierarchy', 'sortable', 'root_category'));
+        /**
+         * Получаем все категории
+         */
+        $categories = new CatalogCategory();
+        $tbl_cat_category = $categories->getTable();
+        $categories = $categories
+            ->orderBy(DB::raw('-' . $tbl_cat_category . '.lft'), 'DESC') ## 0, 1, 2 ... NULL, NULL
+            ->orderBy($tbl_cat_category . '.created_at', 'ASC')
+            ->orderBy($tbl_cat_category . '.id', 'DESC')
+            ->with('meta')
+        ;
+        $categories = $categories->get();
+        if (count($categories))
+            $categories = DicVal::extracts($categories, null, true, true);
+        #Helper::tad($categories);
+
+        /**
+         * Формируем массив с отступами
+         */
+        $categories_for_select = NestedSetModel::get_array_for_select($categories);
+        #Helper::dd($categories_for_select);
+
+
+        return View::make($this->module['tpl'].'index', compact('elements', 'hierarchy', 'sortable', 'root_category', 'categories_for_select'));
 	}
 
     /************************************************************************************/

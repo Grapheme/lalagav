@@ -132,7 +132,9 @@ class AdminCatalogCategoriesController extends BaseController {
 
         $sortable = 9;
 
-        return View::make($this->module['tpl'].'index', compact('elements', 'hierarchy', 'sortable', 'root_category'));
+        $show_attributes_button = true;
+
+        return View::make($this->module['tpl'].'index', compact('elements', 'hierarchy', 'sortable', 'root_category', 'show_attributes_button'));
 	}
 
     /************************************************************************************/
@@ -179,12 +181,30 @@ class AdminCatalogCategoriesController extends BaseController {
         $attributes_from_category = ['[не копировать]'] + $attributes_from_category;
         #Helper::dd($categories_for_select);
 
+
+        /**
+         * Загружаем атрибуты категорий
+         */
+        $category_attributes = (new CatalogCategoryAttribute())
+            ->with('metas')
+            ->with('meta')
+            ->references('meta')
+            ->where('meta.language', Config::get('app.locale'))
+            ->orderBy('meta.name')
+            ->get()
+        ;
+        #Helper::tad($category_attributes);
+        $category_attributes = DicLib::extracts($category_attributes, null, true, true);
+        $category_attributes = Dic::modifyKeys($category_attributes, 'slug');
+        #Helper::tad($category_attributes);
+
+
         /**
          * Локали
          */
         $locales = Config::get('app.locales');
 
-		return View::make($this->module['tpl'].'edit', compact('element', 'locales', 'attributes_from_category', 'parent_category'));
+		return View::make($this->module['tpl'].'edit', compact('element', 'locales', 'attributes_from_category', 'parent_category', 'category_attributes'));
 	}
     
 
@@ -193,9 +213,10 @@ class AdminCatalogCategoriesController extends BaseController {
         Allow::permission($this->module['group'], 'categories_edit');
 
 		$element = CatalogCategory::where('id', $id)
-            ->with(['seos', 'metas', 'meta'])
+            ->with(['seos', 'metas.attributes_values', 'meta', 'category_attributes_values'])
             ->first()
         ;
+        #Helper::tad($element);
 
         if (!is_object($element))
             App::abort(404);
@@ -204,12 +225,32 @@ class AdminCatalogCategoriesController extends BaseController {
             $element->name = $element->meta->name;
 
         $element->extract();
+        #Helper::tad($element);
+
+
+        /**
+         * Загружаем атрибуты категорий
+         */
+        $category_attributes = (new CatalogCategoryAttribute())
+            ->where('active', 1)
+            ->with('metas')
+            ->with('meta')
+            ->references('meta')
+            ->where('meta.language', Config::get('app.locale'))
+            ->orderBy('meta.name')
+            ->get()
+        ;
+        #Helper::tad($category_attributes);
+        $category_attributes = DicLib::extracts($category_attributes, null, true, true);
+        $category_attributes = Dic::modifyKeys($category_attributes, 'slug');
+        #Helper::tad($category_attributes);
+
 
         $locales = Config::get('app.locales');
 
         #Helper::tad($element);
 
-        return View::make($this->module['tpl'].'edit', compact('element', 'locales'));
+        return View::make($this->module['tpl'].'edit', compact('element', 'locales', 'category_attributes'));
 	}
 
 
@@ -292,6 +333,21 @@ class AdminCatalogCategoriesController extends BaseController {
 
         #Helper::dd($input);
         #Helper::tad($input);
+
+
+        /**
+         * Загружаем атрибуты категорий
+         */
+        $category_attributes = (new CatalogCategoryAttribute())
+            ->where('active', 1)
+            ->with('metas')
+            ->get()
+        ;
+        $category_attributes = DicLib::extracts($category_attributes, null, true, true);
+        $category_attributes = Dic::modifyKeys($category_attributes, 'slug');
+        #Helper::tad($category_attributes);
+
+
 
         $json_request['responseText'] = "<pre>" . print_r($_POST, 1) . "</pre>";
         #return Response::json($json_request,200);
@@ -404,6 +460,67 @@ class AdminCatalogCategoriesController extends BaseController {
                 }
             }
 
+
+            /**
+             * Сохраняем значения атрибутов категории
+             */
+            if (
+                isset($input['attributes']) && is_array($input['attributes']) && count($input['attributes'])
+            ) {
+
+                #Helper::tad($category_attributes);
+                #Helper::tad($input['attributes']);
+
+                /**
+                 * Перебираем все возможные атрибуты категорий
+                 */
+                foreach ($category_attributes as $cat_attr_slug => $cat_attr) {
+
+                    #Helper::ta($cat_attr_slug);
+
+                    /**
+                     * Перебираем все доступные языки
+                     */
+                    #foreach ($input['attributes'] as $locale_sign => $meta_array) {
+                    foreach (Config::get('app.locales') as $locale_sign => $temp) {
+
+                        #Helper::ta($locale_sign);
+                        #Helper::ta($temp);
+                        #continue;
+
+                        $value = isset($input['attributes'][$locale_sign][$cat_attr_slug]) ? $input['attributes'][$locale_sign][$cat_attr_slug] : NULL;
+
+                        $meta_array = $cat_attr_search_array = array(
+                            'category_id' => $category_id,
+                            'attribute_id' => $cat_attr->id,
+                            'language' => $locale_sign
+                        );
+                        #$meta_array['active'] = @$meta_array['active'] ? 1 : NULL;
+                        $meta_array['value'] = $value ?: NULL;
+                        $category_attr = CatalogCategoryAttributeValue::firstOrNew($cat_attr_search_array);
+                        if (!$category_attr->id)
+                            $category_attr->save();
+                        $category_attr->update($meta_array);
+                        unset($category_attr);
+                    }
+                }
+
+                /*
+                foreach ($input['attributes'] as $locale_sign => $meta_array) {
+                    $meta_search_array = array(
+                        'category_id' => $category_id,
+                        'language' => $locale_sign
+                    );
+                    $meta_array['active'] = @$meta_array['active'] ? 1 : NULL;
+                    $category_meta = CatalogCategoryMeta::firstOrNew($meta_search_array);
+                    if (!$category_meta->id)
+                        $category_meta->save();
+                    $category_meta->update($meta_array);
+                    unset($category_meta);
+                }
+                */
+            }
+
             /**
              * Сохраняем SEO-данные
              */
@@ -462,8 +579,9 @@ class AdminCatalogCategoriesController extends BaseController {
             /**
              * Удаление:
              * !! товаров категории,
-             * - связок с атрибутами/группами,
-             * + SEO-данных,
+             * + связок с атрибутами/группами товаров
+             * + значения атрибутов категорий
+             * + SEO-данных
              * + мета-данных
              * + и самой категории
              */
@@ -504,6 +622,7 @@ class AdminCatalogCategoriesController extends BaseController {
                 }
             }
 
+            CatalogCategoryAttributeValue::where('category_id', $element->id)->delete();
 
             if (Allow::module('seo')) {
                 Seo::where('module', 'CatalogCategory')

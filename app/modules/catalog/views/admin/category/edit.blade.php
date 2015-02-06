@@ -125,13 +125,49 @@
                         </label>
                     </section>
 
-                    @if (0)
-                        <section>
-                            <label class="label">Название</label>
-                            <label class="input">
-                                {{ Form::text('name', null, array('required' => 'required')) }}
-                            </label>
-                        </section>
+                    @if (isset($category_attributes) && is_object($category_attributes) && $category_attributes->count())
+
+                        <h4>Атрибуты группы</h4>
+                        <hr class="margin-top-10 margin-bottom-10"/>
+
+                        @if (count($locales) > 1)
+                            <ul class="nav nav-tabs bordered">
+                                <? $i = 0; ?>
+                                @foreach ($locales as $locale_sign => $locale_name)
+                                    <li class="{{ !$i++ ? 'active' : '' }}">
+                                        <a href="#category_attr_locale_{{ $locale_sign }}" data-toggle="tab">
+                                            {{ $locale_name }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
+
+                        <div class="tab-content @if(count($locales) > 1) padding-10 @endif">
+
+                            <? $i = 0; ?>
+                            @foreach ($locales as $locale_sign => $locale_name)
+                                <div class="tab-pane fade {{ !$i++ ? 'active in' : '' }} clearfix" id="category_attr_locale_{{ $locale_sign }}">
+
+                                    <fieldset class="padding-0 margin-bottom-15 padding-top-20 border-top-0">
+
+                                        {{ Helper::ta_($element) }}
+                                        {{ Helper::ta_($module) }}
+                                        {{ Helper::ta_($locale_sign) }}
+                                        {{ Helper::ta_($category_attributes) }}
+
+                                        <? $type = 'category'; ?>
+                                        @foreach ($category_attributes as $attribute)
+                                            {{ Helper::ta_($attribute) }}
+                                            @include($module['gtpl'] . 'attributes._index_category', compact('module', 'attribute', 'locale_sign', 'type', 'element'))
+                                        @endforeach
+
+                                    </fieldset>
+
+                                </div>
+                            @endforeach
+
+                        </div>
                     @endif
 
                 </fieldset>

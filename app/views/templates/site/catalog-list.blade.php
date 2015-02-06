@@ -16,14 +16,30 @@ $categories = $categories
         ->orderBy($tbl_cat_category . '.created_at', 'DESC')
         ->orderBy($tbl_cat_category . '.id', 'DESC')
         ->with('meta')
+        ->with('category_attributes_value.attribute')
+
+        /*
+        ->inner_join_attr('min_price', function($join, $value){
+            $join->on($value, '>', DB::raw(1000));
+        })
+        */
+        #->having('min_price', '>', 100)
+        #->having('mainpage', '=', 1)
 ;
 
 /**
  * Получаем все категории из БД
  */
 $categories = $categories->get();
-$categories = DicLib::extracts($categories, null, true, true);
+#Helper::smartQueries(1);
 #Helper::tad($categories);
+
+#Helper::tad($categories);
+$categories = DicLib::extracts($categories, null, true, true);
+
+#Helper::smartQueries(1);
+#Helper::ta($categories);
+#Helper::tad($categories[1]->attr_value('min_price'));
 
 /**
  * Строим иерархию
@@ -68,7 +84,7 @@ if (Input::get('page') > 1)
         @foreach($hierarchy as $element)
             <?
             $cat = isset($categories[$element['id']]) ? $categories[$element['id']] : false;
-            $children = $element['children'];
+            $children = isset($element['children']) ? $element['children'] : NULL;
             if (!$cat || !count($children))
                 continue;
             ?>

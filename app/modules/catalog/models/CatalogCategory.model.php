@@ -32,6 +32,163 @@ class CatalogCategory extends BaseModel {
             ;
     }
 
+    public function category_attributes_values() {
+        return $this->hasMany('CatalogCategoryAttributeValue', 'category_id', 'id')
+            ->with('attribute')
+            ;
+    }
+
+    public function category_attributes_value() {
+        return $this->hasMany('CatalogCategoryAttributeValue', 'category_id', 'id')
+            ->where('language', Config::get('app.locale'))
+            ->with('attribute')
+            ;
+    }
+
+
+    /**
+     * Подключаем к выборке значение атрибута.
+     *
+     * ПРИМЕРЫ ВЫЗОВА:
+     *
+     * Выведет только категории, у которых отмечен атрибут mainpage:
+     * ВАЖНО! Having выполняется непосредственно ПЕРЕД выдачей результатов выборки юзеру.
+     * Т.е. на момент срабатывания HAVING все условия для выборки уже учтены,
+     * и никакой оптимизации проводиться не будет - MySQL просто фильтрует результаты!
+     *
+
+        $categories = (new CatalogCategories())
+            ->left_join_attr('mainpage')
+            ->having('mainpage', '=', 1)
+            ->get()
+         ;
+
+     *
+     * Выведет только категории, у которых атрибут min_price больше 1000:
+     * ВАЖНО! Использовать нужно именно inner_join_attr в связке с $join->ON, а не $join->WHERE
+     *
+
+        $categories = (new CatalogCategories())
+            ->inner_join_attr('min_price', function($join, $value){
+                $join->on($value, '>', DB::raw(1000));
+            })
+            ->get()
+         ;
+
+     */
+
+    public function scopeInner_join_attr($query, $attr_name, $additional_rules = null) {
+        return $this->scopeJoin_attr($query, $attr_name, $additional_rules, 'join');
+    }
+
+    public function scopeLeft_join_attr($query, $attr_name, $additional_rules = null) {
+        return $this->scopeJoin_attr($query, $attr_name, $additional_rules, 'leftJoin');
+    }
+
+    public function scopeJoin_attr($query, $attr_name, $additional_rules = null, $method = 'leftJoin') {
+        #dd($attr_name);
+        $tbl_cc = $this->getTable();
+        $tbl_cca = (new CatalogCategoryAttribute())->getTable();
+        $tbl_ccav = (new CatalogCategoryAttributeValue())->getTable();
+        $tbl_ccav_alias = md5(time() . '_' . rand(999999, 9999999));
+
+        $attr = (new CatalogCategoryAttribute())
+            ->where('slug', $attr_name)
+            ->first();
+
+        if (isset($attr) && is_object($attr) && $attr->id) {
+
+            $query->$method(DB::raw('`' . $tbl_ccav . '` AS `' . $tbl_ccav_alias . '`'), function($join) use ($attr, $tbl_cc, $tbl_cca, $tbl_ccav, $tbl_ccav_alias, $additional_rules) {
+                $join->on($tbl_ccav_alias.'.category_id', '=', $tbl_cc.'.id');
+                $join->on($tbl_ccav_alias.'.attribute_id', '=', DB::raw($attr->id));
+                $join->on($tbl_ccav_alias.'.language', '=', DB::raw("'".Config::get('app.locale')."'"));
+                $join->on($tbl_ccav_alias.'.value', DB::raw('IS NOT'), DB::raw('NULL'));
+                #$join->on($tbl_ccav_alias.'.value', '>', DB::raw(100));
+
+                /**
+                 * Не всегда JOIN с доп.условиями приводит к ожидаемому результату...
+                 */
+                if (is_callable($additional_rules)) {
+                    /**
+                     * Правильный способ применения доп. условий через функцию-замыкание
+                     */
+                    call_user_func($additional_rules, $join, DB::raw('`' . $tbl_ccav_alias . '`.`value`'));
+                }
+
+            });
+
+            $query->addSelect(DB::raw('`'.$tbl_ccav_alias.'`.`value` AS "' . $attr_name . '"'));
+        }
+
+        return $query;
+    }
+
+    /**
+     * DON'T USE IT!
+     */
+    /*
+    public function scopeLeft_join_attrs($query, $attrs_name) {
+        #dd($attr_name);
+        $tbl_cc = $this->getTable();
+        $tbl_cca = (new CatalogCategoryAttribute())->getTable();
+        $tbl_ccav = (new CatalogCategoryAttributeValue())->getTable();
+        $tbl_ccav_alias = md5(time() . '_' . rand(999999, 9999999));
+
+        $attrs = (new CatalogCategoryAttribute())
+            ->whereIn('slug', (array)$attrs_name)
+            ->get();
+
+        $attrs = Dic::modifyKeys($attrs, 'slug');
+        #Helper::tad($attrs);
+
+        $attrs_ids = Dic::makeLists($attrs, null, 'id');
+        #Helper::tad($attrs_ids);
+
+        if (isset($attrs) && is_object($attrs) && count($attrs)) {
+
+            $query->leftJoin(DB::raw('`' . $tbl_ccav . '` AS `' . $tbl_ccav_alias . '`'), function($join) use ($attrs, $attrs_ids, $tbl_cc, $tbl_cca, $tbl_ccav, $tbl_ccav_alias) {
+                $join->on($tbl_ccav_alias.'.category_id', '=', $tbl_cc.'.id');
+                $join->on($tbl_ccav_alias.'.language', '=', DB::raw("'".Config::get('app.locale')."'"));
+
+                $i = 0;
+                foreach ($attrs_ids as $attr_id) {
+                    ++$i;
+                    $method = ($i == 1) ? 'where' : 'orWhere';
+                    $join->$method($tbl_ccav_alias.'.attribute_id', '=', $attr_id);
+                }
+
+            });
+            #$query->whereIn($tbl_ccav_alias.'.attribute_id', $attrs_ids);
+
+            #foreach ($attrs as $attr) {
+            #    $query->addSelect(DB::raw($tbl_ccav_alias.'.value AS "' . $attr->slug . '"'));
+            #}
+
+            $query->addSelect(DB::raw($tbl_ccav_alias.'.*'));
+
+        }
+
+        return $query;
+    }
+    */
+
+
+    /**
+     * Возвращает значение атрибута $attr_name, если оно было установлено для категории
+     *
+     * ПРИМЕР:
+     * return $category->attr_value('min_price');
+     *
+     * @param $attr_name
+     * @return null
+     */
+    public function attr_value($attr_name) {
+        $value = NULL;
+        if (isset($this->category_attributes_value) && isset($this->category_attributes_value[$attr_name]))
+            $value = $this->category_attributes_value[$attr_name];
+        return $value;
+    }
+
 
     /**
     * Связь возвращает все META-данные записи (для всех языков)
@@ -91,6 +248,8 @@ class CatalogCategory extends BaseModel {
         ## Extract metas
         if (isset($this->metas)) {
             foreach ($this->metas as $m => $meta) {
+                $meta->extract();
+                #var_dump($meta);
                 $this->metas[$meta->language] = $meta;
                 if ($m != $meta->language || $m === 0)
                     unset($this->metas[$m]);
@@ -210,9 +369,68 @@ class CatalogCategory extends BaseModel {
             #unset($products);
         }
 
+        ## Extract category attributes value
+        if (isset($this->category_attributes_value)) {
+
+            #Helper::ta($this->category_attributes_value);
+
+            $category_attributes_value = new Collection();
+
+            foreach ($this->category_attributes_value as $v => $value) {
+
+                #$value->extract($unset);
+                #$category_attributes_value[$value->id] = $value;
+
+                if (is_object($value) && isset($value->attribute) && is_object($value->attribute) && $value->attribute->slug) {
+                    $category_attributes_value[$value->attribute->slug] = $value->value;
+                }
+
+            }
+
+            #Helper::tad($category_attributes_value);
+
+            $this->relations['category_attributes_value'] = $category_attributes_value;
+            #$this->category_attributes_value = $category_attributes_value;
+        }
+
+
+
+        ## Extract category attributes value
+        if (isset($this->category_attributes_values)) {
+
+            #Helper::ta($this->category_attributes_value);
+
+            $category_attributes_values = new Collection();
+            $category_attributes_values_arr = [];
+
+            foreach ($this->category_attributes_values as $v => $value) {
+
+                #$value->extract($unset);
+                #$category_attributes_value[$value->id] = $value;
+
+                if (is_object($value) && isset($value->attribute) && is_object($value->attribute) && $value->attribute->slug) {
+                    $category_attributes_values_arr[$value->language][$value->attribute->slug] = $value->value;
+                }
+
+            }
+
+            #Helper::tad($category_attributes_values_arr);
+            #Helper::tad($category_attributes_value);
+
+            if (count($category_attributes_values_arr)) {
+                foreach ($category_attributes_values_arr as $locale_sign => $temp) {
+                    $category_attributes_values[$locale_sign] = $temp;
+                }
+            }
+
+            $this->relations['category_attributes_values'] = $category_attributes_values;
+            #$this->category_attributes_value = $category_attributes_value;
+        }
+
 
 
 
         return $this;
     }
+
 }
