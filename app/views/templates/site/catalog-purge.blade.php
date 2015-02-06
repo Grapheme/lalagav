@@ -56,7 +56,9 @@ $products = DicLib::loadImages($products, 'image_id');
     <?
     $products->setBaseUrl(URL::route('catalog-purge'));
     ?>
-    {{ $products->links() }}
+    <center>
+        {{ $products->links() }}
+    </center>
 
 @endif
 
