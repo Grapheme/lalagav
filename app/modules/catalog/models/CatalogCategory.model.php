@@ -19,18 +19,26 @@ class CatalogCategory extends BaseModel {
         #'slug' => 'required',
 	);
 
-
     public function products() {
         return $this->hasMany('CatalogProduct', 'category_id', 'id')
             ->orderBy('lft', 'ASC')
             ;
     }
 
+    /**
+     * Группы атрибутов для товаров внутри категории
+     */
+
     public function attributes_groups() {
         return $this->hasMany('CatalogAttributeGroup', 'category_id', 'id')
             ->orderBy('lft', 'ASC')
             ;
     }
+
+
+    /**
+     * Атрибуты категории
+     */
 
     public function category_attributes_values() {
         return $this->hasMany('CatalogCategoryAttributeValue', 'category_id', 'id')

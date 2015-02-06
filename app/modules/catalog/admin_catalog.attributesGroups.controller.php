@@ -77,7 +77,7 @@ class AdminCatalogAttributesGroupsController extends BaseController {
         if (NULL !== ($cat_id = Input::get('category'))) {
 
             $root_category = CatalogCategory::where('id', $cat_id)
-                ->with('meta', 'attributes_groups.meta', 'attributes_groups.attributes.meta')
+                ->with(['meta', 'attributes_groups.meta', 'attributes_groups.attributes.meta'])
                 ->first()
             ;
 
@@ -132,7 +132,7 @@ class AdminCatalogAttributesGroupsController extends BaseController {
         Allow::permission($this->module['group'], 'attributes_edit');
 
 		$element = CatalogAttributeGroup::where('id', $id)
-            ->with('metas', 'meta', 'category.meta')
+            ->with(['metas', 'meta', 'category.meta'])
             ->first()
             ->extract(1);
 

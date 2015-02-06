@@ -285,6 +285,7 @@ class AdminCatalogCategoriesController extends BaseController {
             $element = new CatalogCategory();
 
         $input = Input::all();
+        #Helper::tad($input);
 
         /**
          * Проверяем системное имя
@@ -373,6 +374,8 @@ class AdminCatalogCategoriesController extends BaseController {
 
             } else {
 
+                #Helper::tad($input);
+
                 /**
                  * Если выбрана родительская категория, и она найдена в БД...
                  */
@@ -418,25 +421,158 @@ class AdminCatalogCategoriesController extends BaseController {
 
                 $redirect = Input::get('redirect');
 
+
                 /**
-                 * Создаем группу атрибутов по умолчанию
+                 * Функционал копирования из существующей категории в новую набора групп атрибутов и атрибутов для товаров внутри категории
                  */
-                $max_rgt = CatalogAttributeGroup::where('category_id', $category_id)->max('rgt');
-                $group = CatalogAttributeGroup::create(array(
-                    'id' => null,
-                    'category_id' => $category_id,
-                    'active' => 1,
-                    'slug' => 'default',
-                    'lft' => @(int)$max_rgt+1,
-                    'rgt' => @(int)$max_rgt+2,
-                ));
-                CatalogAttributeGroupMeta::create(array(
-                    'id' => null,
-                    'attributes_group_id' => $group->id,
-                    'language' => 'ru',
-                    'active' => 1,
-                    'name' => 'По умолчанию',
-                ));
+                if ($attributes_cat_id) {
+
+                    /**
+                     * Получаем категорию-донора, вместе со всеми нужными данными
+                     */
+                    $donor_cat = CatalogCategory::where('id', $attributes_cat_id)
+                        ->with(['attributes_groups.metas', 'attributes_groups.attributes.metas'])
+                        ->first();
+                    #Helper::tad($donor_cat);
+
+                    if (is_object($donor_cat)) {
+
+                        /**
+                         * Если у донора есть группы атрибутов
+                         */
+                        if (isset($donor_cat->attributes_groups) && is_object($donor_cat->attributes_groups) && $donor_cat->attributes_groups->count()) {
+
+                            foreach ($donor_cat->attributes_groups as $attributes_group) {
+
+                                $temp_array = $attributes_group->toArray();
+
+                                /**
+                                 * Создаем массивы для создания новых записей в БД
+                                 */
+                                $temp_array_metas = $temp_array['metas'];
+                                unset($temp_array['metas']);
+
+                                $temp_array_attributes = $temp_array['attributes'];
+                                unset($temp_array['attributes']);
+
+                                $temp_array['category_id'] = $category_id;
+                                unset($temp_array['id'], $temp_array['created_at'], $temp_array['updated_at']);
+
+                                #Helper::ta($temp_array);
+
+                                /**
+                                 * На всякий случай здесь и далее будем удалять все,
+                                 * что связано с ID только что созданной категории,
+                                 * или новых вложенных элементов для нее.
+                                 */
+                                #CatalogAttributeGroup::where('category_id', $category_id)->delete();
+
+                                /**
+                                 * Создадим новую группу атрибутов, для новой категории
+                                 */
+                                $new_attr_group = CatalogAttributeGroup::create($temp_array);
+
+                                #Helper::ta($new_attr_group);
+
+                                /**
+                                 * Создадим meta-записи текущей группы атрибутов
+                                 */
+                                if (isset($temp_array_metas) && is_array($temp_array_metas) && count($temp_array_metas)) {
+
+                                    #CatalogAttributeGroupMeta::where('attributes_group_id', $new_attr_group->id)->delete();
+
+                                    foreach ($temp_array_metas as $temp_array_meta) {
+
+                                        $temp_array_meta['attributes_group_id'] = $new_attr_group->id;
+                                        unset($temp_array_meta['id'], $temp_array_meta['created_at'], $temp_array_meta['updated_at']);
+
+                                        #Helper::ta($temp_array_meta);
+                                        $new_attr_group_meta = CatalogAttributeGroupMeta::create($temp_array_meta);
+                                        #Helper::ta($new_attr_group_meta);
+
+                                        unset($temp_array_meta);
+                                    }
+                                }
+
+                                /**
+                                 * Создадим атрибуты группы
+                                 */
+                                if (isset($temp_array_attributes) && is_array($temp_array_attributes) && count($temp_array_attributes)) {
+
+                                    #CatalogAttribute::where('attributes_group_id', $new_attr_group->id)->delete();
+
+                                    foreach ($temp_array_attributes as $temp_array_attribute) {
+
+                                        $temp_array_attribute_metas = $temp_array_attribute['metas'];
+                                        unset($temp_array_attribute['metas']);
+
+                                        $temp_array_attribute['attributes_group_id'] = $new_attr_group->id;
+                                        unset($temp_array_attribute['id'], $temp_array_attribute['created_at'], $temp_array_attribute['updated_at']);
+
+                                        #Helper::ta($temp_array_attribute);
+                                        $new_attr = CatalogAttribute::create($temp_array_attribute);
+                                        #Helper::ta($new_attr);
+
+                                        /**
+                                         * Создадим meta-записи текущего атрибута группы
+                                         */
+                                        if (isset($temp_array_attribute_metas) && is_array($temp_array_attribute_metas) && count($temp_array_attribute_metas)) {
+
+                                            CatalogAttributeMeta::where('attribute_id', $new_attr->id)->delete();
+
+                                            foreach ($temp_array_attribute_metas as $temp_array_attribute_meta) {
+
+                                                $temp_array_attribute_meta['attribute_id'] = $new_attr->id;
+                                                unset($temp_array_attribute_meta['id'], $temp_array_attribute_meta['created_at'], $temp_array_attribute_meta['updated_at']);
+
+                                                #Helper::ta($temp_array_attribute_meta);
+                                                $new_attr_meta = CatalogAttributeMeta::create($temp_array_attribute_meta);
+                                                #Helper::ta($new_attr_meta);
+
+                                                unset($temp_array_attribute_meta);
+                                            }
+                                        }
+
+                                        unset($new_attr);
+                                        unset($temp_array_attribute);
+
+                                    }
+                                }
+
+                                unset($temp_array);
+                                unset($new_attr_group);
+
+                            }
+                        }
+
+                    }
+
+                    #die;
+
+                } else {
+
+                    /**
+                     * Создаем группу атрибутов по умолчанию
+                     */
+                    $max_rgt = CatalogAttributeGroup::where('category_id', $category_id)->max('rgt');
+                    $group = CatalogAttributeGroup::create(array(
+                        'id' => null,
+                        'category_id' => $category_id,
+                        'active' => 1,
+                        'slug' => 'default',
+                        'lft' => @(int)$max_rgt+1,
+                        'rgt' => @(int)$max_rgt+2,
+                    ));
+                    CatalogAttributeGroupMeta::create(array(
+                        'id' => null,
+                        'attributes_group_id' => $group->id,
+                        'language' => 'ru',
+                        'active' => 1,
+                        'name' => 'По умолчанию',
+                    ));
+
+                }
+
             }
 
 
@@ -645,6 +781,11 @@ class AdminCatalogCategoriesController extends BaseController {
             }
 
             $json_request['responseText'] = 'Удалено';
+            $json_request['status'] = TRUE;
+
+        } else {
+
+            $json_request['responseText'] = 'Запись не найдена';
             $json_request['status'] = TRUE;
         }
 
