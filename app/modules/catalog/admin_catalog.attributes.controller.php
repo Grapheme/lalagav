@@ -246,6 +246,7 @@ class AdminCatalogAttributesController extends BaseController {
         }
         $input['slug'] = Helper::translit($input['slug']);
 
+        /*
         $slug = $input['slug'];
         $exit = false;
         $i = 1;
@@ -265,6 +266,7 @@ class AdminCatalogAttributesController extends BaseController {
             }
 
         } while (!$exit);
+        */
 
         /**
          * Проверяем флаг активности

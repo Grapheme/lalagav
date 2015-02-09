@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * BaseModel
+ *
+ */
 class BaseModel extends Eloquent {
 
     use \SleepingOwl\WithJoin\WithJoinTrait;
