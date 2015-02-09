@@ -438,7 +438,12 @@ class AdminCatalogProductsController extends BaseController {
                 $element->save();
                 $element->update($input);
                 $product_id = $element->id;
-                $redirect = Input::get('redirect');
+
+                #$redirect = Input::get('redirect');
+                $temp = [];
+                if (Input::get('category_id'))
+                    $temp['category'] = Input::get('category_id');
+                $redirect = URL::route('catalog.products.index', $temp);
             }
 
             /**
