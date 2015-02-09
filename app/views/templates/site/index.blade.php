@@ -86,33 +86,35 @@ if ( 0 ) {
     @endif
 
 
-    <div class="goods-list"><!--
-    @foreach($hierarchy as $element)
-        <?
-        $cat = isset($categories[$element['id']]) ? $categories[$element['id']] : false;
-        $children = isset($element['children']) ? $element['children'] : NULL;
-        if (!$cat || !count($children))
-            continue;
-        ?>
-            @foreach($children as $child)
-                <?
-                $child_cat = isset($categories[$child['id']]) ? $categories[$child['id']] : false;
-                ?>
-                --><a href="{{ URL::route('page', ['catalog', 'category' => $child_cat->id]) }}" class="unit">
-                    <div class="mask"><img src="{{ Config::get('site.theme_path') }}/images/mask-main-slider.svg"></div>
-                    <div style="background-image:url('{{ is_object($child_cat->image_id) ? $child_cat->image_id->thumb() : '' }}');" class="visual">
-                        <div class="text">
-                            <p>{{ mb_strtoupper($child_cat->name) }}</p>
-                            @if (isset($cat_min_prices[$child_cat->id]))
-                                <div class="price">от {{ $cat_min_prices[$child_cat->id] }} РУБ. -</div>
-                            @endif
-                        </div>
-                    </div></a><!--
-            @endforeach
-    @endforeach
-    -->
-        <div class="clrfx"></div>
-    </div>
+    @if (isset($hierarchy) && is_array($hierarchy) && count($hierarchy))
+        <div class="goods-list"><!--
+        @foreach($hierarchy as $element)
+            <?
+            $cat = isset($categories[$element['id']]) ? $categories[$element['id']] : false;
+            $children = isset($element['children']) ? $element['children'] : NULL;
+            if (!$cat || !count($children))
+                continue;
+            ?>
+                @foreach($children as $child)
+                    <?
+                    $child_cat = isset($categories[$child['id']]) ? $categories[$child['id']] : false;
+                    ?>
+                    --><a href="{{ URL::route('page', ['catalog', 'category' => $child_cat->id]) }}" class="unit">
+                        <div class="mask"><img src="{{ Config::get('site.theme_path') }}/images/mask-main-slider.svg"></div>
+                        <div style="background-image:url('{{ is_object($child_cat->image_id) ? $child_cat->image_id->thumb() : '' }}');" class="visual">
+                            <div class="text">
+                                <p>{{ mb_strtoupper($child_cat->name) }}</p>
+                                @if (isset($cat_min_prices[$child_cat->id]))
+                                    <div class="price">от {{ $cat_min_prices[$child_cat->id] }} РУБ. -</div>
+                                @endif
+                            </div>
+                        </div></a><!--
+                @endforeach
+        @endforeach
+        -->
+            <div class="clrfx"></div>
+        </div>
+    @endif
 
 
     @if (0)
