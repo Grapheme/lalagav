@@ -2,10 +2,12 @@
 #Helper:dd($dic_id);
 $menus = array();
 
+/*
 $array = array();
 if (isset($root_category) && is_object($root_category) && $root_category->id)
     $array['category'] = $root_category->id;
-
+*/
+$array = [];
 
 $menus[] = array(
     'link' => URL::route('catalog.products.index', $array),

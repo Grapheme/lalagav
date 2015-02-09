@@ -1,3 +1,4 @@
+
     {{ Helper::ta_($attribute) }}
 
     <?
@@ -9,7 +10,8 @@
     } else {
 
         #$settings = $attribute->settings;
-        $settings = isset($attribute->settings) ? $attribute->settings : NULL;
+        #$settings = isset($attribute->settings) ? $attribute->settings : NULL;
+        $settings = isset($attribute->metas) && isset($attribute->metas[$locale_sign]) && isset($attribute->metas[$locale_sign]->settings) ? $attribute->metas[$locale_sign]->settings : NULL;
     }
 
     if (isset($settings) && $settings && isset($settings['values']) && is_string($settings['values'])) {

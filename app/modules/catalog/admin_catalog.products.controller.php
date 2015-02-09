@@ -163,14 +163,23 @@ class AdminCatalogProductsController extends BaseController {
 
         #Helper::d($element);
 
+        /*
         $element->load(
             'category', 'seos',
             'metas', 'meta',
             'attributes_groups.meta', 'attributes_groups.attributes.meta'
         );
+        */
 
+        $element->load(
+            [
+                'category', 'seos',
+                'metas', 'meta',
+                'attributes_groups.meta', 'attributes_groups.attributes.metas'
+            ]
+        );
 
-        $element->extract(1);
+        $element->extract(0);
 
         if (is_object($element) && is_object($element->meta))
             $element->name = $element->meta->name;
@@ -249,7 +258,7 @@ class AdminCatalogProductsController extends BaseController {
             )
             #*/
             ->with(
-                array(
+                [
                     #/*
                     'category', 'seos',
                     'metas', 'meta',
@@ -258,14 +267,14 @@ class AdminCatalogProductsController extends BaseController {
                     'attributes_groups.attributes.values' => function($query) use ($id) {
                         $query->where('product_id', $id);
                     }
-                )
+                ]
             )
             ->first();
 
         if (!is_object($element))
             App::abort(404);
 
-        $element->extract(1);
+        $element->extract(0);
 
         if (is_object($element) && isset($element->meta) && is_object($element->meta))
             $element->name = $element->meta->name;
