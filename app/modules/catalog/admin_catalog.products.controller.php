@@ -262,7 +262,7 @@ class AdminCatalogProductsController extends BaseController {
                     #/*
                     'category', 'seos',
                     'metas', 'meta',
-                    'attributes_groups.meta', 'attributes_groups.attributes.meta',
+                    'attributes_groups.meta', 'attributes_groups.attributes.metas',
                     #*/
                     'attributes_groups.attributes.values' => function($query) use ($id) {
                         $query->where('product_id', $id);
@@ -349,8 +349,16 @@ class AdminCatalogProductsController extends BaseController {
 		if(!Request::ajax())
             App::abort(404);
 
-        if (!$id || NULL === ($element = CatalogProduct::find($id)))
+        if (!$id || NULL === ($element = CatalogProduct::find($id))) {
+
             $element = new CatalogProduct();
+            #if (!Input::get('amount'))
+            #    $element->amount = NULL;
+            if (NULL !== ($cat_id = Input::get('category_id')))
+                $element->category_id = $cat_id;
+        }
+
+
 
         /**
          * Подгружаем все возможные атрибуты (через группы атрибутов)
@@ -409,8 +417,6 @@ class AdminCatalogProductsController extends BaseController {
         if (!@$input['gallery_id']['gallery_id'])
             $form_values['#gallery_id_gallery_id'] = $tmp;
         $input['gallery_id'] = $tmp;
-
-        #Helper::dd($input);
 
         $json_request['responseText'] = "<pre>" . print_r($_POST, 1) . "</pre>";
         #return Response::json($json_request,200);

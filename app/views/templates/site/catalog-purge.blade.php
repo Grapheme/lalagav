@@ -8,7 +8,7 @@
 /**
  * Settings
  */
-$per_page = 2;
+$per_page = 6;
 #$page = (int)Input::get('page') ?: 1;
 
 /**

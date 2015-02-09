@@ -121,7 +121,7 @@ class CreateCatalogTables extends Migration {
                 $table->integer('category_id')->unsigned()->index();
 
                 $table->string('article')->default('')->index();
-                $table->integer('amount')->unsigned()->index();
+                $table->integer('amount')->unsigned()->nullable()->index();
 
                 $table->integer('image_id')->unsigned()->default(0);
                 $table->integer('gallery_id')->unsigned()->default(0);
