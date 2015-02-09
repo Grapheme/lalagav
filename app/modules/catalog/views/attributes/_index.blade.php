@@ -25,7 +25,7 @@ if (
 */
 ?>
 
-{{ Helper::ta($attribute) }}
+{{ Helper::ta_($attribute) }}
 {{ Helper::ta_($value) }}
 
 @include($module['gtpl'] . 'attributes.' . $attribute->type)

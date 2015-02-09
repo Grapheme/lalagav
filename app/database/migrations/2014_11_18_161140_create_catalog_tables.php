@@ -178,6 +178,7 @@ class CreateCatalogTables extends Migration {
                 $table->integer('lft')->unsigned()->nullable()->index();
                 $table->integer('rgt')->unsigned()->nullable()->index();
 
+                $table->softDeletes(); ## нет поддержки в коде магазина
                 $table->timestamps();
 
                 $table->unique(array('category_id', 'slug'), 'attributes_groups_category_id_slug_language');
@@ -198,6 +199,8 @@ class CreateCatalogTables extends Migration {
                 $table->string('name')->nullable()->index();
 
                 $table->text('settings')->nullable();
+
+                $table->softDeletes(); ## нет поддержки в коде магазина
                 $table->timestamps();
 
                 $table->unique(array('attributes_group_id', 'language'), 'attributes_group_id_language');
@@ -220,6 +223,8 @@ class CreateCatalogTables extends Migration {
                 $table->text('settings')->nullable();
                 $table->integer('lft')->unsigned()->nullable()->index();
                 $table->integer('rgt')->unsigned()->nullable()->index();
+
+                $table->softDeletes(); ## нет поддержки в коде магазина
                 $table->timestamps();
             });
             echo(' + ' . $this->table . PHP_EOL);
@@ -238,6 +243,8 @@ class CreateCatalogTables extends Migration {
                 $table->string('name')->nullable()->index();
 
                 $table->text('settings')->nullable();
+
+                $table->softDeletes(); ## нет поддержки в коде магазина
                 $table->timestamps();
 
                 $table->unique(array('attribute_id', 'language'), 'attribute_id_language');
