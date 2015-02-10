@@ -15,31 +15,15 @@ $categories = $categories
         ->orderBy(DB::raw('-' . $tbl_cat_category . '.lft'), 'DESC') ## 0, 1, 2 ... NULL, NULL
         ->orderBy($tbl_cat_category . '.created_at', 'DESC')
         ->orderBy($tbl_cat_category . '.id', 'DESC')
-        ->with('meta')
+        #->with('meta')
+        ->with(['meta', 'category_attributes_value'])
 ;
-
-/**
- * Костыльное определение минимальной цены товара в каждой категории
- */
-$tbl_product = (new CatalogProduct())->getTable();
-$tbl_product_meta = (new CatalogProductMeta())->getTable();
-$alias = $tbl_product_meta . '2';
-$goods = (new CatalogProduct())
-        ->includes('meta')
-        ->orderBy(DB::raw('CAST(meta.price AS UNSIGNED)'), 'DESC')
-        #->groupBy('category_id')
-        ->get()
-;
-#Helper::smartQueries(1);
-$goods = DicLib::extracts($goods, null, 1, 1);
-#Helper::ta($goods);
-$cat_min_prices = Dic::makeLists($goods, null, 'price', 'category_id');
-#Helper::tad($cat_min_prices);
 
 /**
  * Получаем все категории из БД
  */
 $categories = $categories->get();
+#Helper::tad($categories);
 $categories = DicLib::extracts($categories, null, true, true);
 $categories = DicLib::loadImages($categories, 'image_id');
 #Helper::tad($categories);
@@ -60,6 +44,26 @@ if ( 0 ) {
     Helper::tad($hierarchy);
 }
 #die;
+
+
+/**
+ * Костыльное определение минимальной цены товара в каждой категории
+ */
+$tbl_product = (new CatalogProduct())->getTable();
+$tbl_product_meta = (new CatalogProductMeta())->getTable();
+$alias = $tbl_product_meta . '2';
+$goods = (new CatalogProduct())
+        ->includes('meta')
+        ->orderBy(DB::raw('CAST(meta.price AS UNSIGNED)'), 'DESC')
+        #->groupBy('category_id')
+        ->get()
+;
+#Helper::smartQueries(1);
+$goods = DicLib::extracts($goods, null, 1, 1);
+#Helper::ta($goods);
+$cat_min_prices = Dic::makeLists($goods, null, 'price', 'category_id');
+#Helper::tad($cat_min_prices);
+
 ?>
 @extends(Helper::layout())
 
@@ -98,6 +102,9 @@ if ( 0 ) {
                 @foreach($children as $child)
                     <?
                     $child_cat = isset($categories[$child['id']]) ? $categories[$child['id']] : false;
+                    #Helper::ta($child_cat);
+                    if (!$child_cat->attr_value('mainpage'))
+                        continue;
                     ?>
                     --><a href="{{ URL::route('page', ['catalog', 'category' => $child_cat->id]) }}" class="unit">
                         <div class="mask"><img src="{{ Config::get('site.theme_path') }}/images/mask-main-slider.svg"></div>
