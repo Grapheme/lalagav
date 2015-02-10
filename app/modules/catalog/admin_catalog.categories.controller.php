@@ -707,78 +707,13 @@ class AdminCatalogCategoriesController extends BaseController {
 
 		$json_request = array('status' => FALSE, 'responseText' => '');
 
-        $element = CatalogCategory::where('id', $id)->with('attributes_groups.attributes')->first();
-
+        #$element = CatalogCategory::where('id', $id)->with('attributes_groups.attributes')->first();
+        $element = CatalogCategory::find($id);
         #Helper::tad($element);
 
         if (is_object($element)) {
-            /**
-             * Удаление:
-             * !! товаров категории,
-             * + связок с атрибутами/группами товаров
-             * + значения атрибутов категорий
-             * + SEO-данных
-             * + мета-данных
-             * + и самой категории
-             */
 
-
-            /*
-            $groups = $element->attributes_groups;
-            $attributes = $groups->attributes();
-            $groups->delete();
-            $attributes->delete();
-            */
-
-            if (isset($element->attributes_groups) && is_object($element->attributes_groups) && count($element->attributes_groups)) {
-
-                $groups_ids = array();
-                $attributes_ids = array();
-                foreach ($element->attributes_groups as $group) {
-
-                    $groups_ids[] = $group->id;
-
-                    if (isset($group->attributes) && is_object($group->attributes) && count($group->attributes)) {
-                        foreach ($group->attributes as $attribute) {
-                            $attributes_ids[] = $attribute->id;
-                        }
-                    }
-                }
-
-                #Helper::d($groups_ids);
-                #Helper::dd($attributes_ids);
-
-                if (count($attributes_ids)) {
-                    CatalogAttributeMeta::whereIn('attribute_id', $attributes_ids)->delete();
-                    CatalogAttribute::whereIn('id', $attributes_ids)->delete();
-                }
-                if (count($groups_ids)) {
-                    CatalogAttributeGroupMeta::whereIn('attributes_group_id', $groups_ids)->delete();
-                    CatalogAttributeGroup::whereIn('id', $groups_ids)->delete();
-                }
-            }
-
-            CatalogCategoryAttributeValue::where('category_id', $element->id)->delete();
-
-            if (Allow::module('seo')) {
-                Seo::where('module', 'CatalogCategory')
-                    ->where('unit_id', $element->id)
-                    ->delete()
-                ;
-            }
-
-            $element->metas()->delete();
-
-            $element->delete();
-
-            /**
-             * Сдвигаем категории в общем дереве
-             */
-            if ($element->rgt) {
-
-                DB::update(DB::raw("UPDATE " . $element->getTable() . " SET lft = lft - 2 WHERE lft > " . $element->lft . ""));
-                DB::update(DB::raw("UPDATE " . $element->getTable() . " SET rgt = rgt - 2 WHERE rgt > " . $element->rgt . ""));
-            }
+            $element->full_delete();
 
             $json_request['responseText'] = 'Удалено';
             $json_request['status'] = TRUE;

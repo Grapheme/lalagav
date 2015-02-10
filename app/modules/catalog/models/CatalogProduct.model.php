@@ -439,4 +439,65 @@ class CatalogProduct extends BaseModel {
 
         return $this;
     }
+
+
+    ####################################################################################################################
+
+
+    public function full_delete() {
+
+        #Helper::tad($this);
+
+        /**
+         * Если категории не существует - ничего не будем делать
+         */
+        if (!$this->id)
+            return false;
+
+        /**
+         * Alias
+         */
+        $element = $this;
+
+        /**
+         * Удаление:
+         * + SEO-данных,
+         * + мета-данных
+         * + значений атрибутов товара
+         * + фото, галерея с фотографиями
+         * + самого товара
+         */
+
+        /**
+         * SEO
+         */
+        if (Allow::module('seo')) {
+            Seo::where('module', 'CatalogProduct')
+                ->where('unit_id', $element->id)
+                ->delete()
+            ;
+        }
+
+        $element->metas()->delete();
+
+        $element->values()->delete();
+
+        if ($element->image_id) {
+            Photo::where('id', $element->image_id)->delete();
+        }
+        if ($element->gallery_id) {
+            Photo::where('gallery_id', $element->gallery_id)->delete();
+            Gallery::where('id', $element->gallery_id)->delete();
+        }
+
+        $element->delete();
+
+        /**
+         * Делаем сдвиг в общем дереве товаров
+         */
+        if ($element->rgt)
+            DB::update(DB::raw("UPDATE " . $element->getTable() . " SET lft = lft - 2, rgt = rgt - 2 WHERE lft > " . $element->rgt . ""));
+
+        return true;
+    }
 }

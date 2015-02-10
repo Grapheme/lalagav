@@ -441,4 +441,129 @@ class CatalogCategory extends BaseModel {
         return $this;
     }
 
+
+    ####################################################################################################################
+
+
+    public function full_delete() {
+
+        #Helper::tad($this);
+
+        /**
+         * Если категории не существует - ничего не будем делать
+         */
+        if (!$this->id)
+            return false;
+
+        /**
+         * Alias
+         */
+        $element = $this;
+
+        /**
+         * Удаление:
+         * !!! товаров категории - ЗАПРЕТ!
+         * + атрибуты/группы атрибутов товаров
+         * + значения атрибутов категорий
+         * + SEO-данных категории
+         * + мета-данных
+         * + фото
+         * + и самой категории
+         */
+
+        /**
+         * Загрузим нужные связи
+         */
+        $element->load('attributes_groups.attributes');
+
+        #Helper::ta($element);
+
+        if (
+            isset($element->relations['attributes_groups'])
+            && is_object($element->relations['attributes_groups'])
+            && $element->relations['attributes_groups']->count()
+        ) {
+
+            /**
+             * Получим IDs атрибутов/групп атрибутов товаров в категории
+             */
+            $groups_ids = array();
+            $attributes_ids = array();
+            foreach ($element->attributes_groups as $group) {
+
+                $groups_ids[] = $group->id;
+
+                if (
+                    isset($group->relations['attributes'])
+                    && is_object($group->relations['attributes'])
+                    && $group->relations['attributes']->count()
+                ) {
+                    foreach ($group->relations['attributes'] as $attribute) {
+                        $attributes_ids[] = $attribute->id;
+                    }
+                }
+            }
+            #Helper::d($attributes_ids);
+            #Helper::dd($groups_ids);
+
+            if (count($attributes_ids)) {
+                /**
+                 * Атрибуты товаров в категории
+                 */
+                CatalogAttributeMeta::whereIn('attribute_id', $attributes_ids)->delete();
+                CatalogAttribute::whereIn('id', $attributes_ids)->delete();
+            }
+            if (count($groups_ids)) {
+                /**
+                 * Группы атрибутов товаров в категории
+                 */
+                CatalogAttributeGroupMeta::whereIn('attributes_group_id', $groups_ids)->delete();
+                CatalogAttributeGroup::whereIn('id', $groups_ids)->delete();
+            }
+        }
+
+        /**
+         * Значения атрибутов категории
+         */
+        CatalogCategoryAttributeValue::where('category_id', $element->id)->delete();
+
+        /**
+         * SEO
+         */
+        if (Allow::module('seo')) {
+            Seo::where('module', 'CatalogCategory')
+                ->where('unit_id', $element->id)
+                ->delete()
+            ;
+        }
+
+        /**
+         * META-данные категории
+         */
+        $element->metas()->delete();
+
+        /**
+         * Фото
+         */
+        if ($element->image_id) {
+            Photo::where('id', $element->image_id)->delete();
+        }
+
+        /**
+         * Удаление самой категории
+         */
+        $element->delete();
+
+        /**
+         * Сдвигаем остальные категории в общем дереве
+         */
+        if ($element->rgt) {
+
+            DB::update(DB::raw("UPDATE " . $element->getTable() . " SET lft = lft - 2 WHERE lft > " . $element->lft . ""));
+            DB::update(DB::raw("UPDATE " . $element->getTable() . " SET rgt = rgt - 2 WHERE rgt > " . $element->rgt . ""));
+        }
+
+        return true;
+    }
+
 }

@@ -607,39 +607,11 @@ class AdminCatalogProductsController extends BaseController {
 
         $json_request = array('status' => FALSE, 'responseText' => '');
 
-        $element = CatalogProduct::where('id', $id)
-            #->with('metas')
-            ->first()
-        ;
+        $element = CatalogProduct::find($id);
 
         if (is_object($element)) {
 
-            /**
-             * Удаление:
-             * + SEO-данных,
-             * + мета-данных
-             * + значений атрибутов
-             * + самого товара
-             */
-
-            if (Allow::module('seo')) {
-                Seo::where('module', 'CatalogProduct')
-                    ->where('unit_id', $element->id)
-                    ->delete()
-                ;
-            }
-
-            $element->metas()->delete();
-
-            $element->values()->delete();
-
-            $element->delete();
-
-            /**
-             * Делаем сдвиг в общем дереве
-             */
-            if ($element->rgt)
-                DB::update(DB::raw("UPDATE " . $element->getTable() . " SET lft = lft - 2, rgt = rgt - 2 WHERE lft > " . $element->rgt . ""));
+            $element->full_delete();
 
             $json_request['responseText'] = 'Удалено';
             $json_request['status'] = TRUE;
