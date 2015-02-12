@@ -40,7 +40,7 @@ $(function() {
     var $clone = $visual.clone();
     var pos = $visual.position();
     var cartPos = $cart.position();
-    var href = $(this).attr('href');
+    var href = $(this).attr('data-href');
     var id = $(this).attr('data-id');
     var counter;
 
@@ -64,7 +64,7 @@ $(function() {
     }, 1)
     $.ajax({
       type: "POST",
-      url: url,
+      url: href,
       data: id,
       success: function(data){
         counter = data
