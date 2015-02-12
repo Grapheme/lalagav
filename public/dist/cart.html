@@ -21,7 +21,7 @@
         </ul>
       </nav>
       <div class="right">
-        <div class="phone"><a href="tel:+7 (863) 263-81-59">+7 (863) 263-81-59</a></div><a href="cart-goods.html" class="cart">
+        <div class="phone"><a href="tel:+7 (863) 263-81-59">+7 (863) 263-81-59</a></div><a href="cart.html" class="cart">
           <div class="count">1</div>
           <div class="ico"><img src="images/cart-ico.svg"></div></a>
       </div>
@@ -29,10 +29,10 @@
     </header>
     <form action="cart-final.html" class="cart-detail">
       <h1>Оформление заказа</h1>
-      <div class="bar top"><a class="active">Товары в корзине</a><img src="images/ico-paginator-right.svg"><a>Данные питомца</a><img src="images/ico-paginator-right.svg"><a>Контактные данные</a><img src="images/ico-paginator-right.svg"><a>Способ оплаты</a><img src="images/ico-paginator-right.svg"><a>Подтверждение</a></div>
+      <div class="bar top"><a href="#n-1">Товары в корзине</a><img src="images/ico-paginator-right.svg"><a href="#n-2">Данные питомца</a><img src="images/ico-paginator-right.svg"><a href="#n-3">Контактные данные</a><img src="images/ico-paginator-right.svg"><a href="#n-4">Способ оплаты</a><img src="images/ico-paginator-right.svg"><a href="#n-5">Подтверждение</a></div>
       <section class="n-1">
-        <table class="cart-goods-list">
-          <tr>
+        <table data-action="cart-update.json" data-method="GET" class="cart-goods-list">
+          <tr class="id-8">
             <td class="margin"></td>
             <td class="visual-wrapper"><a href="catalog-detail.html" class="unit">
                 <div class="mask"><img src="images/mask-main-slider.svg"></div></a>
@@ -40,13 +40,13 @@
             </td>
             <td class="title"><a href="catalog-detail.html">Платье тайландское</a></td>
             <td class="count">
-              <input value="1" name="id-8">
+              <input value="1" name="id-8" autocomplete="off">
             </td>
             <td class="current-total"><span class="number">1 600</span>&nbsp;руб.-</td>
             <td class="del"><a href=""><img src="/images/ico-cross-red.svg"></a></td>
             <td class="margin"></td>
           </tr>
-          <tr>
+          <tr class="id-6">
             <td class="margin"></td>
             <td class="visual-wrapper"><a href="catalog-detail.html" class="unit">
                 <div class="mask"><img src="images/mask-main-slider.svg"></div></a>
@@ -54,9 +54,9 @@
             </td>
             <td class="title"><a href="catalog-detail.html">Платье тайландское</a></td>
             <td class="count">
-              <input value="2" name="id-6">
+              <input value="2" name="id-6" autocomplete="off">
             </td>
-            <td class="current-total"><span class="number">1 600</span>&nbsp;руб.-</td>
+            <td class="current-total"><span class="number">3 200</span>&nbsp;руб.-</td>
             <td class="del"><a href=""><img src="images/ico-cross-red.svg"></a></td>
             <td class="margin"></td>
           </tr>
@@ -90,19 +90,19 @@
           <div class="common-form">
             <label>
               <div class="label">Имя, Фамилия</div>
-              <input>
+              <input name="name">
             </label>
             <label>
               <div class="label">E-mail</div>
-              <input>
+              <input name="email">
             </label>
             <label>
               <div class="label">Адрес доставки</div>
-              <textarea></textarea>
+              <textarea name="address"></textarea>
             </label>
             <label>
               <div class="label">Телефон</div>
-              <input>
+              <input name="tel">
             </label>
           </div>
         </div>
@@ -179,24 +179,24 @@
             <h3>Контактные данные</h3>
             <div class="row">
               <div class="key">ФИО:</div>
-              <div class="val">Жужам Махмудахмадинеджад Махмудахмадинеджадович</div>
+              <div class="val name">Жужам Махмудахмадинеджад Махмудахмадинеджадович</div>
             </div>
             <div class="row">
               <div class="key">E-mail:</div>
-              <div class="val">Махмудахмад@Yandex.ru</div>
+              <div class="val email">Махмудахмад@Yandex.ru</div>
             </div>
             <div class="row">
               <div class="key">Адрес:</div>
-              <div class="val">Россия, г. Ростов-на-Дону, ул. Каспийская д.35 кв. 9</div>
+              <div class="val address">Россия, г. Ростов-на-Дону, ул. Каспийская д.35 кв. 9</div>
             </div>
             <div class="row">
               <div class="key">Телефон:</div>
-              <div class="val">+7(928)172-39-29</div>
+              <div class="val tel">+7(928)172-39-29</div>
             </div>
           </section>
           <section class="pet-data">
             <h3>Данные питомца</h3>
-            <div class="row">
+            <div class="row metrics">
               Порода: Красный гигант<br>
               Пол: Кобель<br>
               Обхват шеи: 900<br>
@@ -219,11 +219,12 @@
               <div class="val">123 руб.-</div>
             </div>
           </section>
-          <center><a href="final.html" class="btn final">Отправить заказ</a></center>
+          <center>
+            <button href="final.html" type="submit" class="btn final">Отправить заказ</button>
+          </center>
         </div>
       </section>
-      <div class="bar bottom"><a href="catalog.html" class="back">Вернуться в каталог</a>
-        <button type="submit" class="btn">Далее</button>
+      <div class="bar bottom"><a href="catalog.html" class="back">Вернуться в каталог</a><a href="#next" class="btn next">Далее</a>
         <div class="clrfx"></div>
       </div>
     </form>

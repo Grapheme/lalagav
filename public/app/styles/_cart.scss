@@ -1,4 +1,36 @@
 .cart-detail {
+  .error {
+    border-color: red !important;
+    background-color: rgba(255, 0, 0, 0.04);
+  }
+  
+  label.error {
+    color: red;
+    font-size: 60%;
+    text-align: center;
+    margin-bottom: 16px !important;
+    background: none;
+  }
+  
+  #pay_type-error {
+    position: absolute;
+    color: red;
+    font-size: 80%;
+    position: absolute;
+    color: red;
+    font-size: 80%;
+    left: 50%;
+    margin-left: -190px;
+    margin-top: 170px;
+  }
+  
+  &>section {
+    display: none;
+    &.visible {
+      display: block;
+    }
+  }
+  
   h1 {
     font-family: Novito;
     font-size: 45px;
@@ -35,6 +67,7 @@
     }
     &.top {
       a {
+        cursor: default;
         opacity: 0.6;
         font-family: Ubuntu-Light;
         font-size: 18px;
@@ -59,16 +92,22 @@
         @include max-screen(1000px) {
           font-size: 12px;
         }
+        //&[href], &.enabled{
+        &.enabled{
+          opacity: 1;
+          cursor: pointer;
+          &:hover {
+            background-image: url('../images/btn-cart-hover.svg');
+            color: white;
+          }
+        }
         &.active {
           background-image: url('../images/btn-cart.svg');
           color: white;
           opacity: 1;
-        }
-        &[href]{
-          opacity: 1;
+          cursor: default;
           &:hover {
-            background-image: url('../images/btn-cart-hover.svg');
-            color: white;
+            background-image: url('../images/btn-cart.svg');
           }
         }
       }
@@ -342,7 +381,7 @@
             width: 250px;
           }
           .val {
-            width: 125px;
+            width: 124px;
           }
         }
       }

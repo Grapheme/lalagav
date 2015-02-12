@@ -1,0 +1,18 @@
+{
+  "status": true,
+  "items": [
+    {
+      "id": "id-8",
+      "amount": 5,
+      "price": "1 600",
+      "summ": "8 000"
+    },
+    {
+      "id": "id-8",
+      "amount": 2,
+      "price": "1 600",
+      "summ": "3 200"
+    }
+  ],
+  "fullsumm": "11 200"
+}

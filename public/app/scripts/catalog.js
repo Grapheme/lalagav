@@ -40,6 +40,10 @@ $(function() {
     var $clone = $visual.clone();
     var pos = $visual.position();
     var cartPos = $cart.position();
+    var href = $(this).attr('href');
+    var id = $(this).attr('data-id');
+    var counter;
+
     $clone.width($visual.width());
     //$clone.height($visual.height());
     $clone.addClass('fly').insertBefore($visual);
@@ -58,6 +62,15 @@ $(function() {
         $clone.remove();
       }, 500);
     }, 1)
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: id,
+      success: function(data){
+        counter = data
+        $cart.find('.count').text(counter);
+      }
+    });
     
   });
   

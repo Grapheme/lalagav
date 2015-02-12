@@ -5,7 +5,8 @@
     "jquery": "#^1",
     "modernizr": "~2.8.1",
     "normalize-scss": "~3.0.2",
-    "bower-bourbon": "~3.1.8"
+    "bower-bourbon": "~3.1.8",
+    "jquery-validation": "~1.13.1"
   },
   "devDependencies": {
     "sass-mediaqueries": "~1.4.0"
