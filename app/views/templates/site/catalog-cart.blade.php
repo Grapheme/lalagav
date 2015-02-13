@@ -20,7 +20,7 @@
             <table data-action="{{ URL::route('catalog.cart.update') }}" data-method="POST" class="cart-goods-list">
                 @if (count($goods))
                     @foreach ($goods as $good)
-                        <tr>
+                        <tr class="hash-{{ $good->_hash }}">
                             <td class="margin"></td>
                             <td class="visual-wrapper"><a href="catalog-detail.html" class="unit">
                                     <div class="mask"><img src="{{ Config::get('site.theme_path') }}/images/mask-main-slider.svg"></div></a>

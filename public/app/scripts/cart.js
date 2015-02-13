@@ -1,10 +1,11 @@
 var validator;
 $(function() {
   function prepareJson() {
-    items = [];
+    items = {'goods':[]};
     $countInputs.each(function(){
-      items.push({
-        id: $(this).attr('name'),
+      items.goods.push({
+        id: $(this).attr('data-id'),
+        hash: $(this).attr('hash'),
         amount: $(this).val()
       });
     });
@@ -17,15 +18,16 @@ $(function() {
     $.ajax({
       type: $cartGoodsList.attr('data-method'),
       url: url,
-      data: JSON.stringify(items),
+      data: items,
       dataType: 'json',
       success: function(data){
         if (data.status == true) {
           $('.total .number').text(data.fullsumm);
         }
         data.items.forEach(function(item){
-          var $tr = $cartGoodsList.find('tr.'+item.id);
+          var $tr = $cartGoodsList.find('tr.hash-'+item.hash);
           $tr.find('.current-total .number').text(item.summ);
+          $tr.find('.count input').attr('data-price').text(item.price);
         });
       }
     });
