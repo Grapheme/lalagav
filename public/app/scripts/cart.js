@@ -5,9 +5,11 @@ $(function() {
     var $input = $item.find('.count input');
     //$countInputs.each(function(){
     items = {
-      id: $input.attr('data-id'),
-      hash: $input.attr('hash'),
-      amount: $input.val()
+      good: {
+        id: $input.attr('data-id'),
+        hash: $input.attr('name'),
+        amount: $input.val() 
+      }
     };
       /*items.good.push({
         id: $input.attr('data-id'),
