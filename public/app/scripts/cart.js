@@ -17,7 +17,7 @@ $(function() {
     $.ajax({
       type: $cartGoodsList.attr('data-method'),
       url: url,
-      data: items,
+      data: JSON.stringify(items),
       dataType: 'json',
       success: function(data){
         if (data.status == true) {
