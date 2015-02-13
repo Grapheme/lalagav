@@ -1,14 +1,15 @@
 var validator;
 $(function() {
-  function prepareJson() {
-    items = {'goods':[]};
-    $countInputs.each(function(){
-      items.goods.push({
-        id: $(this).attr('data-id'),
-        hash: $(this).attr('hash'),
-        amount: $(this).val()
+  function prepareJson($item) {
+    items = {'good':[]};
+    var $input = $item.find('.count input');
+    //$countInputs.each(function(){
+      items.good.push({
+        id: $input.attr('data-id'),
+        hash: $input.attr('hash'),
+        amount: $input.val()
       });
-    });
+    //});
     console.log(items);
     sendJson();
   };
@@ -43,7 +44,8 @@ $(function() {
         items = [];
 
     $countInputs.change(function(){
-      prepareJson();
+      var $item = $(this).closest('tr');
+      prepareJson($item);
     });
     
     $dels.click(function(e){
@@ -56,7 +58,7 @@ $(function() {
         opacity: 0,
       }, 300, function(){
         $input.val(-1);
-        prepareJson();
+        prepareJson($item);
         $item.remove();
       });
     });
