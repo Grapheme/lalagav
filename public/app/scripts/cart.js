@@ -1,16 +1,20 @@
 var validator;
 $(function() {
   function prepareJson($item) {
-    items = {'good':[]};
+    
     var $input = $item.find('.count input');
     //$countInputs.each(function(){
-      items.good.push({
+    items = {
+      id: $input.attr('data-id'),
+      hash: $input.attr('hash'),
+      amount: $input.val()
+    };
+      /*items.good.push({
         id: $input.attr('data-id'),
         hash: $input.attr('hash'),
         amount: $input.val()
-      });
+      });*/
     //});
-    console.log(items);
     sendJson();
   };
   
