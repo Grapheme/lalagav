@@ -42,6 +42,14 @@ $(function() {
     var cartPos = $cart.position();
     var href = $(this).attr('data-href');
     var id = $(this).attr('data-id');
+    var sendData = {
+      goods: [
+        {
+          'id': id,
+          'amount': 1
+        }
+      ]
+    }
     var counter;
 
     $clone.width($visual.width());
@@ -58,17 +66,20 @@ $(function() {
       }).addClass('end');
       setTimeout(function(){
         var number = parseInt($cart.find('.count').text());
-        $cart.find('.count').text(number+=1);
+        //$cart.find('.count').text(number+=1);
         $clone.remove();
       }, 500);
     }, 1)
     $.ajax({
       type: "POST",
       url: href,
-      data: id,
+      data: JSON.stringify(sendData),
+      dataType: 'json',
       success: function(data){
-        counter = data
-        $cart.find('.count').text(counter);
+        if (data.status == true) {
+          counter = data.goodsCount
+          $cart.find('.count').text(counter);
+        };
       }
     });
     
