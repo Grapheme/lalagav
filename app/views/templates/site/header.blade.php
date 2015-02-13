@@ -3,6 +3,9 @@
  * TEMPLATE_IS_NOT_SETTABLE
  */
 ?>
+<?
+CatalogCart::getInstance();
+?>
 <header>
     <nav>
         @if (0)
@@ -23,10 +26,10 @@
     </nav>
     <div class="right">
         <div class="phone"><a href="tel:+7 (863) 263-81-59">+7 (863) 263-81-59</a></div>
-        <div class="cart">
-            <div class="count">1</div>
+        <a href="{{ URL::route('catalog.cart.show') }}" class="cart">
+            <div class="count">{{ CatalogCart::count() }}</div>
             <div class="ico"><img src="{{ Config::get('site.theme_path') }}/images/cart-ico.svg"></div>
-        </div>
+        </a>
     </div>
     <div class="clrfx"></div>
 </header>

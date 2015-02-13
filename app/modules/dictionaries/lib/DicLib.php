@@ -242,8 +242,8 @@ class DicLib extends BaseController {
 
                 if ($field) {
                     $obj->$field = $work_obj;
-                #} else {
-                #    $obj = $work_obj;
+                    #} else {
+                    #    $obj = $work_obj;
                 }
 
                 if (is_object($collection))

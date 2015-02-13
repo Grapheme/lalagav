@@ -60,7 +60,7 @@
             <div class="price">{{ $product->price }} Руб.-</div>
             <div class="text">
                 <p>{{ $product->description }}</p>
-            </div><a href="" class="btn buy">КУПИТЬ</a>
+            </div><a href="#" data-href="{{ URL::route('catalog.cart.add') }}" data-id="{{ $product->id }}" class="btn buy">КУПИТЬ</a>
         </div>
         <div class="clrfx"></div>
 

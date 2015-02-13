@@ -83,7 +83,12 @@ class ApplicationController extends BaseController {
             $query->with('meta');
         }]);
 
+        #Helper::ta($product);
+
         $product->extract(1);
+
+        #Helper::tad($product);
+
         $product = DicLib::loadImages($product, 'image_id');
         $product = DicLib::loadGallery($product, 'gallery_id');
         #$product->extract(1);

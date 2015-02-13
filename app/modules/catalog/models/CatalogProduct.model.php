@@ -157,7 +157,7 @@ class CatalogProduct extends BaseModel {
      */
     public function extract($unset = false) {
 
-        #Helper::ta($this);
+        #Helper::tad($this);
 
         ## Extract category
         if (isset($this->relations['category']) && is_object($this->relations['category'])) {
