@@ -18,34 +18,24 @@
         <div class="bar top"><a href="#n-1">Товары в корзине</a><img src="{{ Config::get('site.theme_path') }}/images/ico-paginator-right.svg"><a href="#n-2">Данные питомца</a><img src="{{ Config::get('site.theme_path') }}/images/ico-paginator-right.svg"><a href="#n-3">Контактные данные</a><img src="{{ Config::get('site.theme_path') }}/images/ico-paginator-right.svg"><a href="#n-4">Способ оплаты</a><img src="{{ Config::get('site.theme_path') }}/images/ico-paginator-right.svg"><a href="#n-5">Подтверждение</a></div>
         <section class="n-1">
             <table data-action="{{ URL::route('catalog.cart.update') }}" data-method="POST" class="cart-goods-list">
-                <tr class="id-8">
-                    <td class="margin"></td>
-                    <td class="visual-wrapper"><a href="catalog-detail.html" class="unit">
-                            <div class="mask"><img src="{{ Config::get('site.theme_path') }}/images/mask-main-slider.svg"></div></a>
-                        <div style="background-image:url('http://dummyimage.com/752x456');" class="visual"></div>
-                    </td>
-                    <td class="title"><a href="catalog-detail.html">Платье тайландское</a></td>
-                    <td class="count">
-                        <input value="1" name="id-8" autocomplete="off">
-                    </td>
-                    <td class="current-total"><span class="number">1 600</span>&nbsp;руб.-</td>
-                    <td class="del"><a href=""><img src="{{ Config::get('site.theme_path') }}/images/ico-cross-red.svg"></a></td>
-                    <td class="margin"></td>
-                </tr>
-                <tr class="id-6">
-                    <td class="margin"></td>
-                    <td class="visual-wrapper"><a href="catalog-detail.html" class="unit">
-                            <div class="mask"><img src="{{ Config::get('site.theme_path') }}/images/mask-main-slider.svg"></div></a>
-                        <div style="background-image:url('http://dummyimage.com/752x456');" class="visual"></div>
-                    </td>
-                    <td class="title"><a href="catalog-detail.html">Платье тайландское</a></td>
-                    <td class="count">
-                        <input value="2" name="id-6" autocomplete="off">
-                    </td>
-                    <td class="current-total"><span class="number">3 200</span>&nbsp;руб.-</td>
-                    <td class="del"><a href=""><img src="{{ Config::get('site.theme_path') }}/images/ico-cross-red.svg"></a></td>
-                    <td class="margin"></td>
-                </tr>
+                @if (count($goods))
+                    @foreach ($goods as $good)
+                        <tr>
+                            <td class="margin"></td>
+                            <td class="visual-wrapper"><a href="catalog-detail.html" class="unit">
+                                    <div class="mask"><img src="{{ Config::get('site.theme_path') }}/images/mask-main-slider.svg"></div></a>
+                                <div style="background-image:url('http://dummyimage.com/752x456');" class="visual"></div>
+                            </td>
+                            <td class="title"><a href="{{ URL::route('catalog-detail', [$good->id]) }}">{{ $good->name }}</a></td>
+                            <td class="count">
+                                <input value="{{ $good->_amount }}" name="{{ $good->_hash }}" data-id="{{ $good->id }}" data-price="{{ $good->price }}" autocomplete="off">
+                            </td>
+                            <td class="current-total"><span class="number">{{ number_format($good->price * $good->_amount, 0, '.', ' ') }}</span>&nbsp;руб.-</td>
+                            <td class="del"><a href=""><img src="{{ Config::get('site.theme_path') }}/images/ico-cross-red.svg"></a></td>
+                            <td class="margin"></td>
+                        </tr>
+                    @endforeach
+                @endif
             </table>
             <div class="total"><span class="number">4 600</span>&nbsp;руб.-</div>
         </section>

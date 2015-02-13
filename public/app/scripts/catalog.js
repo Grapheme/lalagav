@@ -73,7 +73,7 @@ $(function() {
     $.ajax({
       type: "POST",
       url: href,
-      data: JSON.stringify(sendData),
+      data: sendData,
       dataType: 'json',
       success: function(data){
         if (data.status == true) {

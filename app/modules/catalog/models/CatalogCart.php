@@ -40,8 +40,15 @@ class CatalogCart {
         return self::$goods;
     }
 
-    public static function get_full($load = false)
-    {
+    public static function update($hash, $fields) {
+
+        $good_data = isset(self::goods[$hash]) ? self::goods[$hash] : null;
+        #if () {
+
+        #}
+    }
+
+    public static function get_full($load = false) {
 
         if ($load)
             self::load();
@@ -49,8 +56,13 @@ class CatalogCart {
         #Helper::tad(self::$goods);
 
         $ids = [];
-        if (count(self::$goods))
-            $ids = array_keys(self::$goods);
+        if (count(self::$goods)) {
+            #$ids = array_keys(self::$goods);
+            foreach (self::$goods as $good_variant) {
+                $ids[] = $good_variant['id'];
+            }
+        }
+        $ids = array_unique($ids);
 
         if (!count($ids))
             return null;
@@ -60,14 +72,34 @@ class CatalogCart {
         $goods = (new CatalogProduct())
             ->whereIn('id', $ids)
             ->with(['meta'])
-            ->get();
+            ->get()
+        ;
         if (is_object($goods) && $goods->count()) {
             $goods = DicVal::extracts($goods, null, true, true);
+            #Helper::ta($goods);
             $goods = DicLib::loadImages($goods, ['image_id']);
         }
         #Helper::tad($goods);
 
-        return $goods;
+        $return = new Collection();
+
+        foreach (self::$goods as $good_variant_hash => $good_variant) {
+            #foreach ($good_variants as $good_variant) {
+                #Helper::tad($good_variant);
+                $good_id = @$good_variant['id'];
+                if (!isset($goods[$good_id]) || !@$good_variant['amount'])
+                    continue;
+                $good = $goods[$good_id];
+                $good->_hash = $good_variant_hash;
+                $good->_amount = $good_variant['amount'];
+                if (isset($good_variant['options']) && is_array($good_variant['options']) && count($good_variant['options']))
+                    $good->_options = $good_variant['options'];
+                $return[] = $good;
+            #}
+        }
+        #Helper::tad($return);
+
+        return $return;
     }
 
     public static function count($load = false) {
@@ -75,18 +107,21 @@ class CatalogCart {
         if ($load)
             self::load();
 
-        $count = 0;
-
+        /*
+        $amount = 0;
         foreach (self::$goods as $good_variants) {
             foreach ($good_variants as $good_variant) {
-                $count += $good_variant['count'];
+                $amount += $good_variant['amount'];
             }
         }
+        */
 
-        return $count;
+        $amount = count(self::$goods);
+
+        return $amount;
     }
 
-    public static function add($good_id, $count = 1, $options = [], $save = false) {
+    public static function add($good_id, $amount = 1, $options = [], $save = false) {
 
         /**
          * Такая штука: нам нужно хранить свойства покупаемого товара, если они могут различаться.
@@ -95,39 +130,63 @@ class CatalogCart {
          */
 
         /*
-         * Если товар с данным id еще не существует в корзине - создадим под него массив
+         * Сортируем опции по ключам - обязательно для точного вычисления хэша
          */
-        if (!isset(self::$goods[$good_id]))
-            self::$goods[$good_id] = [];
+        ksort($options);
+
+        /*
+         * Вычисляем хэш позиции - ID и хэш от Options JSON
+         */
+        $good_variant_hash = $good_id . '_' . sha1(json_encode($options));
+
+        /*
+         * Ищем позицию в списке (или создаем новую) и заполняем нужными данными
+         */
+        if (isset(self::$goods[$good_variant_hash])) {
+
+            ## Если текущая позиция уже есть в корзине - добавляем нужное количество
+            self::$goods[$good_variant_hash]['amount'] += $amount;
+
+        } else {
+
+            ## Если позиция еще не в корзине - добавляем ее
+            self::$goods[$good_variant_hash] = [
+                'id' => $good_id,
+                'amount' => $amount,
+                'options' => $options,
+            ];
+        }
 
         /*
          * Если в корзине уже есть массив с данными о товаре с таким id -
          * пройдемся по всем элементам массива (группы одного и того же товара, но с разными свойствами),
          * и если найдем совпадение в свойствах с текущим набором - добавим туда текущее кол-во.
          */
+        /*
         $found = false;
         if (count(self::$goods[$good_id])) {
-            /*
-             * Ищем группу товаров с подходящими свойствами
-             */
-            foreach (self::$goods[$good_id] as $g => $good_variant) {
+            ## Ищем группу товаров с подходящими свойствами
+            foreach (self::$goods[$good_id] as $good_variant_hash => $good_variant) {
                 if ($good_variant['options'] == $options) {
-                    $good_variant['count'] += $count;
-                    self::$goods[$good_id][$g] = $good_variant;
+                    $good_variant['amount'] += $amount;
+                    self::$goods[$good_id][$good_variant_hash] = $good_variant;
                     $found = true;
                     break;
                 }
             }
         }
+        */
         /*
          * Если группа товаров с подходящими свойствами не найдена - добавляем ее
          */
+        /*
         if (!$found) {
-            self::$goods[$good_id][] = [
+            self::$goods[$good_id][$good_variant_hash] = [
                 'options' => $options,
-                'count' => $count,
+                'amount' => $amount,
             ];
         }
+        */
 
         /*
          * Если передана команда о сохранении - сохраняем корзину

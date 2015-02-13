@@ -132,6 +132,8 @@ class DicLib extends BaseController {
      */
     public static function loadImages($collection, $key = 'image_id', $field = null){
 
+        #Helper::ta($collection);
+
         if (!is_array($key))
             $key = (array)$key;
 
@@ -145,7 +147,9 @@ class DicLib extends BaseController {
         $single_mode = false;
         $paginator_mode = false;
 
-        if ($collection instanceof Collection) {
+        #die($collection instanceof Collection);
+
+        if ($collection instanceof Collection || $collection instanceof Illuminate\Database\Eloquent\Collection) {
 
             ## all ok
 
@@ -162,6 +166,8 @@ class DicLib extends BaseController {
             $collection = new Collection();
             $collection->put(0, $temp);
         }
+
+        #Helper::tad('single: ' . $single_mode . ', paginator: ' . $paginator_mode . '');
 
         #Helper::tad($collection);
         #dd($collection);
@@ -187,6 +193,11 @@ class DicLib extends BaseController {
              * Перебираем все переданные ключи с ID изображений
              */
             foreach ($key as $attr)
+
+                if (!is_object($work_obj)) {
+                    dd($work_obj);
+                }
+
                 if (is_numeric($work_obj->$attr)) {
 
                     /**

@@ -87,19 +87,21 @@ class PublicCatalogController extends BaseController {
         ## Singleton
         CatalogCart::getInstance();
 
-        #/*
         $goods = Input::get('goods');
+        #Helper::tad($goods);
         if (count($goods)) {
-            foreach ($goods as $good_id => $good_array) {
-                $count = isset($good_array['count']) && (int)$good_array['count'] > 0 ? (int)$good_array['count'] : 1;
+            foreach ($goods as $good_array) {
+                $good_id = isset($good_array['id']) && (int)$good_array['id'] > 0 ? (int)$good_array['id'] : NULL;
+                if (!$good_id)
+                    continue;
+                $amount = isset($good_array['amount']) && (int)$good_array['amount'] > 0 ? (int)$good_array['amount'] : 1;
                 $options = isset($good_array['options']) && is_array($good_array['count']) ? $good_array['options'] : [];
-                CatalogCart::add($good_id, $count, $options, false);
+                CatalogCart::add($good_id, $amount, $options, false);
             }
         }
-        #*/
 
         ## Debug
-        CatalogCart::add(1, 1, [], false);
+        #CatalogCart::add(1, 1, [], false);
 
         CatalogCart::save();
         $goods_count = CatalogCart::count();
@@ -134,18 +136,28 @@ class PublicCatalogController extends BaseController {
 
     public function postChangeQuantity() {
 
+        /**
+         * - Ищем товар в БД
+         * - Если найден - обновляем кол-во в корзине в соответствии с переданным значением
+         * - Если не найден - удаляем позицию из корзины
+         * - Получаем текущее состояние корзины
+         * - Считаем полную сумму заказа
+         * - Возвращаем JSON-объект
+         */
         /*
 {
   "status": true,
   "items": [
     {
       "id": "id-8",
+      "hash": 777
       "amount": 5,
       "price": "1 600",
       "summ": "8 000"
     },
     {
       "id": "id-8",
+      "hash": 777888
       "amount": 2,
       "price": "1 600",
       "summ": "3 200"
@@ -155,8 +167,40 @@ class PublicCatalogController extends BaseController {
 }
          */
 
-        $good = Input::get('good');
+        CatalogCart::getInstance();
+        $goods = CatalogCart::get();
+        Helper::tad($goods);
 
+        $good = Input::get('good');
+        if (isset($good['hash']) && isset($goods[$good['hash']])) {
+
+
+
+        }
+
+
+        $price = null;
+        $product = null;
+        if (isset($good['id']))
+             $product = (new CatalogProduct())->find($good['id']);
+
+        if (is_object($product)) {
+
+            $product->load(['meta']);
+            $product->extract(true);
+            $price = $product->price ?: null;
+
+        } else {
+
+        }
+
+
+
+        $json_request = [];
+        $json_request['responseText'] = '';
+        $json_request['status'] = TRUE;
+
+        return Response::json($json_request, 200);
     }
 
     /**
