@@ -306,6 +306,7 @@ class CreateCatalogTables extends Migration {
                 $table->increments('id');
                 $table->integer('order_id')->unsigned()->index();
                 $table->integer('product_id')->unsigned()->index();
+                $table->string('product_hash')->nullable()->index();
                 $table->integer('count')->unsigned()->default(1);
                 $table->float('price')->unsigned()->index();
 
@@ -313,7 +314,7 @@ class CreateCatalogTables extends Migration {
 
                 $table->timestamps();
 
-                $table->unique(array('order_id', 'product_id'), 'order_product');
+                $table->unique(array('order_id', 'product_hash'), 'order_product_hash');
             });
             echo(' + ' . $this->table . PHP_EOL);
         } else {

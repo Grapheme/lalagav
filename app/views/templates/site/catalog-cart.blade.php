@@ -13,16 +13,22 @@
 
 @section('content')
 
-    <form action="cart-final.html" class="cart-detail">
+    <form action="{{ URL::route('catalog.cart.make-order') }}" method="POST" class="cart-detail">
         <h1>Оформление заказа</h1>
         <div class="bar top"><a href="#n-1">Товары в корзине</a><img src="{{ Config::get('site.theme_path') }}/images/ico-paginator-right.svg"><a href="#n-2">Данные питомца</a><img src="{{ Config::get('site.theme_path') }}/images/ico-paginator-right.svg"><a href="#n-3">Контактные данные</a><img src="{{ Config::get('site.theme_path') }}/images/ico-paginator-right.svg"><a href="#n-4">Способ оплаты</a><img src="{{ Config::get('site.theme_path') }}/images/ico-paginator-right.svg"><a href="#n-5">Подтверждение</a></div>
         <section class="n-1">
-            <table data-action="{{ URL::route('catalog.cart.update') }}" data-method="POST" class="cart-goods-list">
-                @if (count($goods))
+            <?
+            $fullsumm = 0;
+            ?>
+            @if (count($goods))
+                <table data-action="{{ URL::route('catalog.cart.update') }}" data-method="POST" class="cart-goods-list">
                     @foreach ($goods as $good)
+                        <?
+                        $fullsumm = $good->price * $good->_amount;
+                        ?>
                         <tr class="hash-{{ $good->_hash }}">
                             <td class="margin"></td>
-                            <td class="visual-wrapper"><a href="catalog-detail.html" class="unit">
+                            <td class="visual-wrapper"><a href="{{ URL::route('catalog-detail', [$good->id]) }}" class="unit">
                                     <div class="mask"><img src="{{ Config::get('site.theme_path') }}/images/mask-main-slider.svg"></div></a>
                                 <div style="background-image:url('http://dummyimage.com/752x456');" class="visual"></div>
                             </td>
@@ -30,14 +36,16 @@
                             <td class="count">
                                 <input value="{{ $good->_amount }}" name="{{ $good->_hash }}" data-id="{{ $good->id }}" data-price="{{ $good->price }}" autocomplete="off">
                             </td>
-                            <td class="current-total"><span class="number">{{ number_format($good->price * $good->_amount, 0, '.', ' ') }}</span>&nbsp;руб.-</td>
+                            <td class="current-total"><span class="number">{{ number_format($fullsumm, 0, '.', ' ') }}</span>&nbsp;руб.-</td>
                             <td class="del"><a href=""><img src="{{ Config::get('site.theme_path') }}/images/ico-cross-red.svg"></a></td>
                             <td class="margin"></td>
                         </tr>
                     @endforeach
-                @endif
-            </table>
-            <div class="total"><span class="number">4 600</span>&nbsp;руб.-</div>
+                </table>
+                <div class="total"><span class="number">{{ number_format($fullsumm, 0, '.', ' ') }}</span>&nbsp;руб.-</div>
+            @else
+                Ваша корзина пуста.
+            @endif
         </section>
         <section class="n-2">
             <div class="common-form-wrapper">
@@ -46,18 +54,18 @@
                         Для того чтобы "костюмчик сидел" мы рекомендуем снять мерки с вашего питомца.<br>
                         Да, это займет немного времени, но позволит нам выполнить заказ идеально!
                     </p>
-                    <p><a href="images/how-to.jpg" class="new-window">Как правильно снять мерки с питомца</a></p>
+                    <p><a href="{{ Config::get('site.theme_path') }}/images/how-to.jpg" class="new-window">Как правильно снять мерки с питомца</a></p>
                     <p>Пожалуйста укажите размеры питомцев в свободной форме или используйте представлнеую заготовку:</p>
-            <textarea name="metrics">
-              Порода:
-              Пол:
-              Обхват шеи:
-              Обхват груди:
-              Длина спины:
-              Обхват передней лапы:
-              От шеи до передней лапы:
-              Между передними лапами:
-            </textarea>
+<textarea name="metrics">
+Порода:
+Пол:
+Обхват шеи:
+Обхват груди:
+Длина спины:
+Обхват передней лапы:
+От шеи до передней лапы:
+Между передними лапами:
+</textarea>
                 </div>
             </div>
         </section>
@@ -96,7 +104,7 @@
                         <label>
                             <input type="radio" name="pay_type" value="1">
                             <div class="label-wrapper">
-                                <div class="ico"> <img src="images/ico-visa.svg"></div>
+                                <div class="ico"> <img src="{{ Config::get('site.theme_path') }}/images/ico-visa.svg"></div>
                                 <div class="label">
                                     <div class="title">Электронный платеж</div>
                                     <div class="desc">
@@ -110,7 +118,7 @@
                         <label>
                             <input type="radio" name="pay_type" value="2">
                             <div class="label-wrapper">
-                                <div class="ico"><img src="images/ico-russiapost.svg"></div>
+                                <div class="ico"><img src="{{ Config::get('site.theme_path') }}/images/ico-russiapost.svg"></div>
                                 <div class="label">
                                     <div class="title">Наложенный платеж</div>
                                     <div class="desc">
@@ -123,7 +131,7 @@
                         <label>
                             <input type="radio" name="pay_type" value="3">
                             <div class="label-wrapper">
-                                <div class="ico"><img src="images/ico-curier.svg"></div>
+                                <div class="ico"><img src="{{ Config::get('site.theme_path') }}/images/ico-curier.svg"></div>
                                 <div class="label">
                                     <div class="title">Курьер (наличный платеж)</div>
                                     <div class="desc">
@@ -200,7 +208,7 @@
                 </center>
             </div>
         </section>
-        <div class="bar bottom"><a href="catalog.html" class="back">Вернуться в каталог</a><a href="#next" class="btn next">Далее</a>
+        <div class="bar bottom"><a href="{{ URL::route('page', 'catalog') }}" class="back">Вернуться в каталог</a><a href="#next" class="btn next">Далее</a>
             <div class="clrfx"></div>
         </div>
     </form>

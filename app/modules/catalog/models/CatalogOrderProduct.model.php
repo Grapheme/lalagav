@@ -9,7 +9,9 @@ class CatalogOrderProduct extends BaseModel {
     protected $fillable = array(
         'order_id',
         'product_id',
+        'product_hash',
         'count',
+        'price',
         'product_cache',
     );
 

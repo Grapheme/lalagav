@@ -137,12 +137,14 @@ class PublicCatalogController extends BaseController {
     public function postChangeQuantity() {
 
         /**
-         * - Ищем товар в БД
-         * - Если найден - обновляем кол-во в корзине в соответствии с переданным значением
-         * - Если не найден - удаляем позицию из корзины
-         * - Получаем текущее состояние корзины
-         * - Считаем полную сумму заказа
-         * - Возвращаем JSON-объект
+         * + Ищем товар в корзине
+         * + Если найден - ищем в БД
+         * +++ Если не найден в корзине - не будем искать в БД
+         * +++ Если найден в БД - обновляем кол-во в корзине в соответствии с переданным значением
+         * +++ Если не найден в БД - удаляем позицию из корзины
+         * + Получаем текущее состояние корзины
+         * + Считаем полную сумму заказа
+         * + Возвращаем JSON-объект
          */
         /*
 {
@@ -167,37 +169,81 @@ class PublicCatalogController extends BaseController {
 }
          */
 
+
         CatalogCart::getInstance();
         $goods = CatalogCart::get();
-        Helper::tad($goods);
+        #Helper::tad($goods);
 
         $good = Input::get('good');
-        if (isset($good['hash']) && isset($goods[$good['hash']])) {
 
+        $exists_cart = false;
+        $exists_catalog = false;
+        $product = null;
+        $price = null;
 
+        ## Ищем позицию в корзине по хэшу
+        if (isset($good['hash']) && isset($goods[$good['hash']]) && $good['amount']) {
 
+            $exists_cart = true;
+
+            ## Ищем позицию в каталоге по id
+            if (isset($good['id']))
+                $product = (new CatalogProduct())->find(@$good['id']);
+
+            if (is_object($product)) {
+
+                $exists_catalog = true;
+
+                $product->load(['meta']); ## а надо ли здесь это?
+                $product->extract(true);
+                $price = $product->price ?: null;
+            }
         }
 
+        ## Если товар найден и в корзине, и в каталоге
+        if ($exists_cart && $exists_catalog) {
 
-        $price = null;
-        $product = null;
-        if (isset($good['id']))
-             $product = (new CatalogProduct())->find($good['id']);
-
-        if (is_object($product)) {
-
-            $product->load(['meta']);
-            $product->extract(true);
-            $price = $product->price ?: null;
+            ## Обновляем кол-во товара в позиции (корзина)
+            CatalogCart::update($good['hash'], ['amount' => $good['amount']], true);
 
         } else {
 
+            if (!$exists_cart) {
+
+            } elseif (!$exists_catalog) {
+
+                CatalogCart::delete($good['hash'], true);
+            }
         }
 
+        ## Получаем текущее состояние корзины
+        #$goods = CatalogCart::get();
+        $goods_full = CatalogCart::get_full();
+        #Helper::tad($goods_full);
 
+        ## Формируем массив, считаем полную сумму
+        $items = [];
+        $fullsumm = 0;
+        if (count($goods_full)) {
+            foreach ($goods_full as $good_hash => $good_full) {
+                $summ = $good_full->price * $good_full->_amount;
+                $fullsumm += $summ;
+                $items[] = [
+                    "id" => $good_full->id,
+                    "hash" => $good_full->_hash,
+                    "amount" => $good_full->_amount,
+                    "price" => number_format($good_full->price, 0, '.', ' '),
+                    "summ" => number_format($summ, 0, '.', ' '),
+                ];
+            }
+        }
+
+        $fullsumm = number_format($fullsumm, 0, '.', ' ');
 
         $json_request = [];
         $json_request['responseText'] = '';
+        $json_request['items'] = $items;
+        $json_request['fullsumm'] = $fullsumm;
         $json_request['status'] = TRUE;
 
         return Response::json($json_request, 200);
@@ -214,6 +260,12 @@ class PublicCatalogController extends BaseController {
          * - Отправляем уведомление менеджеру (To, Cc)
          * - Редирект на страницу подтверждения заказа
          */
+
+        Helper::ta(Input::all());
+
+        CatalogCart::getInstance();
+        $goods = CatalogCart::get();
+        Helper::ta($goods);
 
         return '';
     }

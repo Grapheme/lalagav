@@ -15,6 +15,26 @@ class Catalog extends BaseController {
 	}
 
 
+    /**
+     * @param array $array
+     * @return bool|CatalogOrder
+     */
+    /*
+    Catalog::create_order([
+        'client_name' => 'Ivanov Ivan Ivanovich',
+        'delivery_info' => 'Russia, Rostov-on-Don, Suvorova st. 52a, office 300',
+        'comment' => 'Comment from customer to order',
+        'status' => 1,
+        'products' => [
+            '123_97d170e1550eee4afc0af065b78cda302a97674c' => [
+                'id' => 123,
+                'count' => 1,
+                'price' => 3000,
+                'attributes' => [],
+            ],
+        ],
+    ]);
+     */
     public static function create_order(array $array) {
 
         if (!isset($array) || !is_array($array))
@@ -35,6 +55,10 @@ class Catalog extends BaseController {
         }
         if (isset($array['delivery_info']) && $array['delivery_info'] != '') {
             $order->delivery_info = $array['delivery_info'];
+            $order->save();
+        }
+        if (isset($array['comment']) && $array['comment'] != '') {
+            $order->comment = $array['comment'];
             $order->save();
         }
 
@@ -95,7 +119,7 @@ class Catalog extends BaseController {
             /**
              * Перебираем все переданные товары
              */
-            foreach ($array['products'] as $order_product_id => $order_product) {
+            foreach ($array['products'] as $order_product_hash => $order_product) {
 
                 /**
                  * Если не указаны кол-во или цена - пропускаем товар
@@ -111,9 +135,16 @@ class Catalog extends BaseController {
                 )
                     continue;
 
+                /**
+                 * Добавляем запись о товаре в заказ
+                 */
                 $product = new CatalogOrderProduct();
+                $product->order_id = $order->id;
+                $product->product_id = $order_product['id'];
+                $product->order_product_hash = $order_product_hash;
                 $product->count = $order_product['count'];
                 $product->price = $order_product['price'];
+                $product->product_cache = NULL; ## FIX IT!
                 $product->save();
 
                 /**

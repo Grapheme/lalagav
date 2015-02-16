@@ -40,12 +40,40 @@ class CatalogCart {
         return self::$goods;
     }
 
-    public static function update($hash, $fields) {
+    public static function clear() {
 
-        $good_data = isset(self::goods[$hash]) ? self::goods[$hash] : null;
-        #if () {
+        Session::forget(self::$session_key);
+    }
 
-        #}
+    public static function update($hash, $fields, $save = false) {
+
+        #Helper::ta($hash);
+        #Helper::tad($fields);
+        #Helper::ta($hash);
+
+        if (isset(self::$goods[$hash])) {
+
+            $fields = (array)$fields;
+
+            if (isset($fields['amount']) && $fields['amount'] == -1) {
+
+                unset(self::$goods[$hash]);
+
+            } else {
+
+                foreach ($fields as $key => $value) {
+                    self::$goods[$hash][$key] = $value;
+                }
+            }
+        }
+
+        if ($save)
+            self::save();
+    }
+
+    public static function delete($hash, $save = false) {
+
+        self::update($hash, -1, $save);
     }
 
     public static function get_full($load = false) {
@@ -94,7 +122,7 @@ class CatalogCart {
                 $good->_amount = $good_variant['amount'];
                 if (isset($good_variant['options']) && is_array($good_variant['options']) && count($good_variant['options']))
                     $good->_options = $good_variant['options'];
-                $return[] = $good;
+                $return[$good->_hash] = $good;
             #}
         }
         #Helper::tad($return);
@@ -116,7 +144,12 @@ class CatalogCart {
         }
         */
 
-        $amount = count(self::$goods);
+        $amount = 0;
+        foreach (self::$goods as $good) {
+            $amount += @(int)$good['amount'];
+        }
+
+        #$amount = count(self::$goods);
 
         return $amount;
     }
