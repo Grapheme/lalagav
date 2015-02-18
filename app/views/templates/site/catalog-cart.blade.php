@@ -30,7 +30,7 @@
                             <td class="margin"></td>
                             <td class="visual-wrapper"><a href="{{ URL::route('catalog-detail', [$good->id]) }}" class="unit">
                                     <div class="mask"><img src="{{ Config::get('site.theme_path') }}/images/mask-main-slider.svg"></div></a>
-                                <div style="background-image:url('http://dummyimage.com/752x456');" class="visual"></div>
+                                <div style="background-image:url('{{ is_object($good->image_id) ? $good->image_id->thumb() : '' }}');" class="visual"></div>
                             </td>
                             <td class="title"><a href="{{ URL::route('catalog-detail', [$good->id]) }}">{{ $good->name }}</a></td>
                             <td class="count">
