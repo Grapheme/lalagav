@@ -13,7 +13,7 @@
 
 @section('content')
 
-    <form action="{{ URL::route('catalog.cart.make-order') }}" method="POST" class="cart-detail">
+    <form action="{{ URL::route('catalog-make-order') }}" method="POST" class="cart-detail">
         <h1>Оформление заказа</h1>
         <div class="bar top"><a href="#n-1">Товары в корзине</a><img src="{{ Config::get('site.theme_path') }}/images/ico-paginator-right.svg"><a href="#n-2">Данные питомца</a><img src="{{ Config::get('site.theme_path') }}/images/ico-paginator-right.svg"><a href="#n-3">Контактные данные</a><img src="{{ Config::get('site.theme_path') }}/images/ico-paginator-right.svg"><a href="#n-4">Способ оплаты</a><img src="{{ Config::get('site.theme_path') }}/images/ico-paginator-right.svg"><a href="#n-5">Подтверждение</a></div>
         <section class="n-1">

@@ -141,7 +141,7 @@ class Catalog extends BaseController {
                 $product = new CatalogOrderProduct();
                 $product->order_id = $order->id;
                 $product->product_id = $order_product['id'];
-                $product->order_product_hash = $order_product_hash;
+                $product->product_hash = $order_product_hash;
                 $product->count = $order_product['count'];
                 $product->price = $order_product['price'];
                 $product->product_cache = NULL; ## FIX IT!

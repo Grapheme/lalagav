@@ -28,13 +28,14 @@ class PublicCatalogController extends BaseController {
 
         /**
          * Отправка всех данных из корзины и создание нового заказа
+         * !!! Это должно происходить в контроллере приложения!
          */
-        Route::post('checkout/make-order', array('as' => $class::$group . '.' . $class::$name . '.make-order', 'uses' => $class."@postMakeOrder"));
+        #Route::post('checkout/make-order', array('as' => $class::$group . '.' . $class::$name . '.make-order', 'uses' => $class."@postMakeOrder"));
 
         /**
          * Страница с подтверждением успешного создания заказа
          */
-        Route::get('order/success', array('as' => $class::$group . '.' . $class::$name . '.order-success', 'uses' => $class."@getOrderSuccess"));
+        #Route::get('order/success', array('as' => $class::$group . '.' . $class::$name . '.order-success', 'uses' => $class."@getOrderSuccess"));
     }
 
     ## Shortcodes of module
@@ -260,12 +261,6 @@ class PublicCatalogController extends BaseController {
          * - Отправляем уведомление менеджеру (To, Cc)
          * - Редирект на страницу подтверждения заказа
          */
-
-        Helper::ta(Input::all());
-
-        CatalogCart::getInstance();
-        $goods = CatalogCart::get();
-        Helper::ta($goods);
 
         return '';
     }
