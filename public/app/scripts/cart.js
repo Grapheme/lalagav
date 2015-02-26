@@ -30,11 +30,12 @@ $(function() {
       success: function(data){
         if (data.status == true) {
           $('.total .number').text(data.fullsumm);
-        }
+        };
+        
         data.items.forEach(function(item){
           var $tr = $cartGoodsList.find('tr.hash-'+item.hash);
           $tr.find('.current-total .number').text(item.summ);
-          $tr.find('.count input').attr('data-price').text(item.price);
+          $tr.find('.count input').attr('data-price', item.price);
         });
       }
     });
@@ -137,6 +138,43 @@ $(function() {
     };
   });
   
+  
+  function renderConfirmPage(){
+    if (Modernizr.localstorage) {
+      if (localStorage.getItem('formstate')) {
+        var state = JSON.parse(localStorage.getItem('formstate'));
+        state.forEach(function(input){
+          $sections.filter('.n-5').find('.'+input.name).html(input.value.replace(/\n\r?/g, '<br>'))
+          console.log(input.name, input.value)
+        });
+        var $cont = $sections.filter('.n-5').find('.consist');
+        $cont.find('.row').remove();
+        
+        $cartGoodsList.find('tr').each(function(){
+          var title = $(this).find('td.title').text(),
+              amount = $(this).find('td.count input').val(),
+              price = $(this).find('td.count input').attr('data-price'),
+              total = $(this).find('td.сurrent-total .number').text();
+          $cont.append(
+            '<div class="row"> \
+              <div class="key">'+title+'</div> \
+              <div class="val">'+amount+' шт. X '+price+' РУБ.-</div> \
+            </div>'
+          );          
+        });
+        
+        var fullSumm = $bigForm.find('.total').text(),
+            serviceSumm = $sections.find('.pay-types input:checked').attr('data-service-price') || 0,
+            total = parseInt(fullSumm.replace(/\s/g, ''))+parseInt(serviceSumm);
+        
+        $sections.filter('.n-5').find('.total-conf .full-summ .val').text(fullSumm);
+        $sections.filter('.n-5').find('.total-conf .service-summ .val').text(serviceSumm+' руб.-');
+        $sections.filter('.n-5').find('.total-conf .numbers').text(total+' руб.-');
+        
+      }
+    }
+  }
+  
   loadState();
   
   function loadState() {
@@ -151,11 +189,12 @@ $(function() {
               $(this).val(input.value);
             };
           });
+
         });
+        renderConfirmPage();
       };
     };
   };
-  
   
   
   function loadSteps(){
@@ -192,6 +231,12 @@ $(function() {
       $thisSection.addClass('visible');
       addStep(n);
       $links.removeClass('active').filter('[href='+n+']').addClass('active enabled');
+      renderConfirmPage();
+      if ($thisSection.is('.n-5')) {
+        $('.bar.bottom').slideUp();
+      } else {
+        $('.bar.bottom').slideDown();
+      }
     };
   };
   
