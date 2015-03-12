@@ -194,11 +194,11 @@
                 <section class="total-conf">
                     <h3>Ваш заказ</h3>
                     <h3 class="numbers">4 923 руб.-</h3>
-                    <div class="row">
+                    <div class="row full-summ">
                         <div class="key">Сумма заказа</div>
                         <div class="val">4 800 руб.-</div>
                     </div>
-                    <div class="row">
+                    <div class="row service-summ">
                         <div class="key">Доставка и обслуживание</div>
                         <div class="val">123 руб.-</div>
                     </div>

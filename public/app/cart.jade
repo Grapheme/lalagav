@@ -25,7 +25,7 @@ block content
           td.title
             a(href="catalog-detail.html") Платье тайландское
           td.count
-            input(value="1" name="id-8" autocomplete="off")
+            input(value="1" name="id-8" data-price="1600" autocomplete="off")
           td.current-total <span class="number">1 600</span>&nbsp;руб.-
           td.del
             a(href="")
@@ -41,7 +41,7 @@ block content
           td.title
             a(href="catalog-detail.html") Платье тайландское
           td.count
-            input(value="2" name="id-6" autocomplete="off")
+            input(value="2" name="id-6" data-price="1600" autocomplete="off")
           td.current-total <span class="number">3 200</span>&nbsp;руб.-
           td.del
             a(href="")
@@ -92,7 +92,7 @@ block content
             При заказе одновременно трех и&nbsp;более моделей пересылка осуществляется бесплатно.
           .pay-types
             label
-              input(type="radio" name="pay_type" value=1)
+              input(type="radio" name="pay_type" data-service-price="150" value=1)
               .label-wrapper
                 .ico 
                   img(src="images/ico-visa.svg")
@@ -103,7 +103,7 @@ block content
                     - Стоимость 150 руб<br>
                     - Предоплата
             label
-              input(type="radio" name="pay_type" value=2)
+              input(type="radio" name="pay_type" data-service-price="123" value=2)
               .label-wrapper
                 .ico
                   img(src="images/ico-russiapost.svg")
@@ -113,7 +113,7 @@ block content
                     - Доставка по всей России<br>
                     - Стоимость 123 руб
             label
-              input(type="radio" name="pay_type" value=3)
+              input(type="radio" name="pay_type" data-service-price="100" value=3)
               .label-wrapper
                 .ico
                   img(src="images/ico-curier.svg")
@@ -161,10 +161,10 @@ block content
         section.total-conf
           h3 Ваш заказ
           h3.numbers 4 923 руб.-
-          .row
+          .row.full-summ
             .key Сумма заказа
             .val 4 800 руб.-
-          .row
+          .row.service-summ
             .key Доставка и обслуживание
             .val 123 руб.-
         center
