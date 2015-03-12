@@ -154,9 +154,9 @@ class AdminPagesPageController extends BaseController {
 
         $element = $this->essence->where('id', $id)
             #->with('metas.seo')
-            ->with('metas', 'seos')
+            ->with(['metas', 'seos'])
             ->with('blocks')
-            ->with('versions', 'original_version.versions')
+            ->with(['versions', 'original_version.versions'])
             ->first();
 
         if (!isset($element) || !is_object($element) || !$element->id) {
