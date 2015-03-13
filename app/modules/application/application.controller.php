@@ -205,6 +205,7 @@ class ApplicationController extends BaseController {
 
         if (is_object($order) && $order->id) {
 
+            CatalogCart::clear();
             return Redirect::route('mainpage');
             #return Redirect::route('catalog-order-success');
 
