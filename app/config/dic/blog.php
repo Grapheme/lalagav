@@ -20,7 +20,7 @@ return array(
         );
     },
 
-    'seo' => 0,
+    'seo' => true,
 
     'versions' => 0,
 
