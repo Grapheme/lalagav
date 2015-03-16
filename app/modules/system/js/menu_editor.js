@@ -101,6 +101,7 @@ var menu_editor = {
         switch (type) {
             case 'page':
                 var title = params.text;
+                //params.text = (addslashes(params.text));
                 var mark = 'Страница';
                 block = str_replace('%page_id%', params.page_id, block);
                 block = str_replace('++page_id++', params.page_id, block);
@@ -356,3 +357,22 @@ $(document).on("click", ".use_active_regexp", function(e) {
 function str_replace(search, replace, subject) {
     return subject.split(search).join(replace);
 }
+
+function htmlentities(s){	// Convert all applicable characters to HTML entities
+    //
+    // +   original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+
+    var div = document.createElement('div');
+    var text = document.createTextNode(s);
+    div.appendChild(text);
+    return div.innerHTML;
+}
+
+function addslashes(str) {
+    str=str.replace(/\\/g,'\\\\');
+    str=str.replace(/\'/g,'\\\'');
+    str=str.replace(/\"/g,'\\"');
+    str=str.replace(/\0/g,'\\0');
+    return str;
+}
+
