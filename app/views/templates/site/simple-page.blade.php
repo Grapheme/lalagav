@@ -4,6 +4,10 @@
  */
 ?>
 @extends(Helper::layout())
+<?
+if (isset($page) && is_object($page))
+    $seo = $page->seo;
+?>
 
 
 @section('style')
