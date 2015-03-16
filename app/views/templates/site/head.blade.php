@@ -47,6 +47,8 @@ if (isset($page) && is_object($page) && isset($page->seo) && is_object($page->se
     $page_h1 = $seo->h1;
 } elseif (!isset($page_h1) && isset($page) && is_object($page)) {
     $page_h1 = $page->name;
+} else {
+    $page_h1 = NULL;
 }
 ?>
 @section('title'){{{ $page_title }}}@stop
