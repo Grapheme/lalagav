@@ -7,7 +7,7 @@
 @extends(Helper::layout())
 <?
 $seo = $post->seo;
-$page_title = $post->name;
+$page_title = $seo->title ?: $post->name;
 ?>
 
 @section('style')
@@ -22,7 +22,7 @@ $page_title = $post->name;
             <div class="mask"><img src="{{ Config::get('site.theme_path') }}/images/mask-main-slider.svg"></div>
             <div style="background-image:url('{{ is_object($post->image_id) ? $post->image_id->thumb() : '' }}');" class="visual"></div>
         </div>
-        <h1>{{ $post->name }}</h1>
+        <h1>{{ $seo->h1 ?: $post->name }}</h1>
         <time datetime="{{ $post->created_at->format('Y-m-d') }}">
             {{ Helper::rdate('j M Y', $post->created_at) }}
             г.
