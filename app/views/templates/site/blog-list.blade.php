@@ -84,11 +84,13 @@ $blog = DicLib::loadImages($blog, 'image_id');
 
         @endif
 
+        @if (0)
         <div class="paginator">
             <a href="?page-prev"><img src="{{ Config::get('site.theme_path') }}/images/ico-paginator-left.svg"></a>
             <a href="?page-1" class="active">1</a><a href="?page-2">2</a><a href="?page-3">3</a><a href="?page-4">4</a><a href="?page-5">5</a><span class="dots">...</span><a href="?page-16">16</a><a href="?page-17">17</a><a href="?page-18">18</a>
             <a href="?page-next"><img src="{{ Config::get('site.theme_path') }}/images/ico-paginator-right.svg"></a>
         </div>
+        @endif
 
         <div class="clrfx"></div>
 
