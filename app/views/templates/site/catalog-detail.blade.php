@@ -7,7 +7,7 @@
 @extends(Helper::layout())
 <?
 $seo = $product->seo;
-$page_title = $seo->title ?: $product->name;
+#$page_title = $seo->title ?: $product->name;
 ?>
 
 
