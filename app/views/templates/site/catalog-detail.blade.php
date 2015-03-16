@@ -5,6 +5,10 @@
  */
 ?>
 @extends(Helper::layout())
+<?
+$seo = $product->seo;
+$page_title = $seo->title ?: $product->name;
+?>
 
 
 @section('style')
