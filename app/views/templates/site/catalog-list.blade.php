@@ -8,6 +8,9 @@
 if (isset($page) && is_object($page))
     $seo = $page->seo;
 
+if (Input::get('dbg-page'))
+    Helper::tad($page);
+
 /**
  * Подготавливаем запрос для выборки
  */
