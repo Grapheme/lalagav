@@ -5,6 +5,10 @@
  */
 ?>
 <?
+if (isset($page) && is_object($page))
+    $seo = $page->seo;
+?>
+<?
 /**
  * Settings
  */
