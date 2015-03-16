@@ -7,8 +7,7 @@
 <?
 if (isset($page) && is_object($page))
     $seo = $page->seo;
-?>
-<?
+
 /**
  * Подготавливаем запрос для выборки
  */
