@@ -17,6 +17,9 @@ if (isset($page) && is_object($page))
 @section('content')
 
     <div class="regular">
+
+        {{ $page_h1 }}
+
         @if (count($page->blocks))
             @foreach ($page->blocks as $block)
                 <h2>{{ $page->block($block->slug, 'name') }}</h2>

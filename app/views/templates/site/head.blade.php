@@ -38,10 +38,21 @@ if (isset($page) && is_object($page) && isset($page->seo) && is_object($page->se
 } elseif (!isset($page_keywords)) {
     $page_keywords = Config::get('site.seo.default_keywords');
 }
+/**
+ * SEO H1
+ */
+if (isset($page) && is_object($page) && isset($page->seo) && is_object($page->seo) && $page->seo->h1) {
+    $page_h1 = $page->seo->h1;
+} elseif (isset($seo) && is_object($seo) && $seo->h1) {
+    $page_h1 = $seo->h1;
+} elseif (!isset($page_h1) && isset($page) && is_object($page)) {
+    $page_h1 = $page->name;
+}
 ?>
 @section('title'){{{ $page_title }}}@stop
 @section('description'){{{ $page_description }}}@stop
 @section('keywords'){{{ $page_keywords }}}@stop
+@section('h1'){{{ $page_h1 }}}@stop
 <meta charset="utf-8">
 <title>@yield('title')</title>
 <meta name="description" content="@yield('description')">
