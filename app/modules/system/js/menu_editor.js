@@ -98,10 +98,10 @@ var menu_editor = {
             var N = temp;
         }
         //alert(N);
+        params.text = htmlentities(params.text);
         switch (type) {
             case 'page':
                 var title = params.text;
-                //params.text = (addslashes(params.text));
                 var mark = 'Страница';
                 block = str_replace('%page_id%', params.page_id, block);
                 block = str_replace('++page_id++', params.page_id, block);
