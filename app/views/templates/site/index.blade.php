@@ -174,7 +174,7 @@ $cat_min_prices = Dic::makeLists($goods, null, 'price', 'category_id');
 
     <div class="info-text">
         <div class="text-wrapper">
-            <h1>{{ mb_strtoupper($page->block('intro', 'name')) }}</h1>
+            <h1>{{ mb_strtoupper($page->h1_or_name()) }}</h1>
             <div class="text">
 
                 {{ $page->block('intro') }}

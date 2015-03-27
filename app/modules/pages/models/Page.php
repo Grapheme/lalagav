@@ -177,4 +177,8 @@ class Page extends BaseModel {
         return $this;
     }
 
+    public function h1_or_name() {
+        return (isset($this->seo) && is_object($this->seo->h1) && isset($this->seo->h1) && $this->seo->h1) ? $this->seo->h1 : $this->name ;
+    }
+
 }
