@@ -75,7 +75,7 @@ class ApplicationController extends BaseController {
             ->where('catalog_products.id', $slug)
             ->with('meta')
             ->references('meta')
-            ->with('category')
+            ->with(['category', 'seo'])
             ->first();
         ;
         #Helper::smartQueries(1);
