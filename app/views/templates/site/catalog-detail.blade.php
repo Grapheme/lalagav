@@ -68,6 +68,8 @@ $page_title = is_object($seo) && $seo->title ? $seo->title : $product->name;
         </div>
         <div class="clrfx"></div>
 
+        {{ $product->full_description }}
+
         @if (isset($products) && is_object($products) && $products->count())
         <div class="recomended">
             <div class="title">Рекомендуем</div>

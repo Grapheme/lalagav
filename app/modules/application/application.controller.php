@@ -73,12 +73,12 @@ class ApplicationController extends BaseController {
          */
         $product = (new CatalogProduct)
             ->where('catalog_products.id', $slug)
-            ->with(['meta', 'category', 'seo', 'seos'])
-            ->references('meta')
+            ->with(['meta', 'category', 'seo'])
+            #->references('meta')
             ->first();
         ;
         #Helper::smartQueries(1);
-        #Helper::ta($product);
+        #Helper::tad($product);
         #return;
 
         if (!is_object($product))

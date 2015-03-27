@@ -188,6 +188,9 @@ class CatalogProduct extends BaseModel {
                 if ($this->meta->description != '')
                     $this->description = $this->meta->description;
 
+                if ($this->meta->full_description != '')
+                    $this->full_description = $this->meta->full_description;
+
                 if ($this->meta->price != '')
                     $this->price = $this->meta->price;
 
