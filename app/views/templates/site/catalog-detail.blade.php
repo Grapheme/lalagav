@@ -60,7 +60,7 @@ $page_title = is_object($seo) && $seo->title ? $seo->title : $product->name;
         @endif
 
         <div class="right">
-            <h1>{{ $product->name }}</h1>
+            <h1>{{ $product->h1_or_name() }}</h1>
             <div class="price">{{ $product->price }} Руб.-</div>
             <div class="text">
                 <p>{{ $product->description }}</p>
