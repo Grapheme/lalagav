@@ -74,6 +74,7 @@ class ApplicationController extends BaseController {
         $product = (new CatalogProduct)
             ->where('catalog_products.id', $slug)
             ->with(['meta', 'category', 'seo'])
+            ->with(['attributes_groups.attributes.meta', 'attributes_groups.meta'])
             #->references('meta')
             ->first();
         ;
@@ -84,21 +85,20 @@ class ApplicationController extends BaseController {
         if (!is_object($product))
             App::abort(404);
 
+        /**
+         * Категория товара, с товарами (??)
+         */
         $product->load(['category.products' => function($query) use ($product){
             $query->limit(6);
             $query->where('id', '!=', $product->id);
             $query->with('meta');
         }]);
-
-        #Helper::ta($product);
-
         $product->extract(1);
 
         #Helper::tad($product);
 
         $product = DicLib::loadImages($product, 'image_id');
         $product = DicLib::loadGallery($product, 'gallery_id');
-        #$product->extract(1);
 
         #Helper::tad($product);
 

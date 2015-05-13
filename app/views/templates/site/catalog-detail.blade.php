@@ -64,37 +64,64 @@ $page_title = is_object($seo) && $seo->title ? $seo->title : $product->name;
             <div class="price">{{ $product->price }} Руб.-</div>
             <div class="text">
                 <p>{{ $product->description }}</p>
-            </div><a href="#" data-href="{{ URL::route('catalog.cart.add') }}" data-id="{{ $product->id }}" class="btn buy">КУПИТЬ</a>
+            </div>
+
+
+            @if ($product->grps())
+                <div class="text">
+                    @foreach ($product->grps() as $grp)
+{{--                        {{ Helper::ta($grp) }}--}}
+                        @foreach ($product->grp_attrs($grp->slug) as $attr)
+{{--                            {{ Helper::ta($attr) }}--}}
+                            @if (isset($attr->settings['selectable']) && $attr->settings['selectable'])
+                                @if ($attr->type == 'select')
+                                    @if (count($attr->settings['values']))
+                                        {{ $attr->name }}
+                                        <select name="attributes['{{ $grp->slug }}']">
+                                            @foreach ($attr->settings['values'] as $value)
+                                                <option value="{{ $value }}">{{ $value }}</option>
+                                            @endforeach
+                                        </select>
+                                    @endif
+                                @endif
+                            @endif
+                        @endforeach
+                    @endforeach
+                </div>
+            @endif
+
+
+            <a href="#" data-href="{{ URL::route('catalog.cart.add') }}" data-id="{{ $product->id }}" class="btn buy">КУПИТЬ</a>
         </div>
         <div class="clrfx"></div>
 
         {{ $product->full_description }}
 
         @if (isset($products) && is_object($products) && $products->count())
-        <div class="recomended">
-            <div class="title">Рекомендуем</div>
-            <div class="corousel">
-                <div class="goods-list-wrapper"><a href="" class="left-arrow"></a>
-                    <div class="holder">
-                        <div class="goods-list"><!--
-                            @foreach ($products as $prod)
-                            --><a href="{{ URL::route('catalog-detail', $prod->id) }}" class="unit{{ $prod->attr('default', 'new') ? ' new' : '' }}">
-                                <div class="mask"><img src="{{ Config::get('site.theme_path') }}/images/mask-main-slider.svg"></div>
-                                <div style="background-image:url('{{ is_object($prod->image_id) ? $prod->image_id->thumb() : '' }}');" class="visual">
-                                    <div class="text">
-                                        <p>{{ $prod->name }}</p>
-                                        <div class="price">{{ $prod->price }} РУБ. -</div>
-                                    </div>
-                                </div>
-                            </a><!--
-                            @endforeach
-                            --><div class="clrfx"></div>
+            <div class="recomended">
+                <div class="title">Рекомендуем</div>
+                <div class="corousel">
+                    <div class="goods-list-wrapper"><a href="" class="left-arrow"></a>
+                        <div class="holder">
+                            <div class="goods-list"><!--
+                                @foreach ($products as $prod)
+                                    --><a href="{{ URL::route('catalog-detail', $prod->id) }}" class="unit{{ $prod->attr('default', 'new') ? ' new' : '' }}">
+                                        <div class="mask"><img src="{{ Config::get('site.theme_path') }}/images/mask-main-slider.svg"></div>
+                                        <div style="background-image:url('{{ is_object($prod->image_id) ? $prod->image_id->thumb() : '' }}');" class="visual">
+                                            <div class="text">
+                                                <p>{{ $prod->name }}</p>
+                                                <div class="price">{{ $prod->price }} РУБ. -</div>
+                                            </div>
+                                        </div>
+                                    </a><!--
+                                @endforeach
+                                --><div class="clrfx"></div>
+                            </div>
                         </div>
+                        <a href="" class="right-arrow"></a>
                     </div>
-                    <a href="" class="right-arrow"></a>
                 </div>
             </div>
-        </div>
         @endif
 
     </div>
