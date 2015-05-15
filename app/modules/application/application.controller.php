@@ -170,10 +170,11 @@ class ApplicationController extends BaseController {
                     'id' => $good->id,
                     'count' => $good->_amount,
                     'price' => $good->price,
-                    'attributes' => [],
+                    'attributes' => (array)$good->_attributes,
                 ];
             }
         }
+        #Helper::ta($products);
 
         $pay_type = @$this->pay_types[Input::get('pay_type')] ?: NULL;
 
@@ -184,10 +185,10 @@ class ApplicationController extends BaseController {
             'client_name' => Input::get('name'),
             'delivery_info' => Input::get('address') . ' ' . Input::get('email') . ' ' . Input::get('tel'),
             'comment' => $pay_type . "\n\n" . Input::get('metrics'),
-            'status' => 1,
+            'status' => 1, ## Статус заказа, нужно подставлять ID статуса наподобие "Новый заказ"
             'products' => $products,
         ];
-        #Helper::ta($order_array);
+        #Helper::tad($order_array);
 
         $order = Catalog::create_order($order_array);
 

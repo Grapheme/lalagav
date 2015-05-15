@@ -77,7 +77,7 @@ $page_title = is_object($seo) && $seo->title ? $seo->title : $product->name;
                                 @if ($attr->type == 'select')
                                     @if (count($attr->settings['values']))
                                         {{ $attr->name }}
-                                        <select name="attributes['{{ $grp->slug }}']">
+                                        <select name="attributes['{{ $grp->slug }}']" required="required">
                                             @foreach ($attr->settings['values'] as $value)
                                                 <option value="{{ $value }}">{{ $value }}</option>
                                             @endforeach
