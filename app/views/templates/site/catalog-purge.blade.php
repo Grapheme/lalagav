@@ -39,7 +39,7 @@ $products = DicLib::loadImages($products, 'image_id');
             <?
             $new = $product->attr('default', 'new');
             ?>
-            <a href="{{ URL::route('catalog-detail', [$product->id]) }}" class="unit{{ $new ? ' new' : '' }}">
+            <a href="{{ URL::route('catalog-detail', [$product->slug]) }}" class="unit{{ $new ? ' new' : '' }}">
                 <div class="mask"><img src="{{ Config::get('site.theme_path') }}/images/mask-main-slider.svg"></div>
                 <div style="background-image:url('{{ is_object($product->image_id) ? $product->image_id->thumb() : '' }}');" class="visual">
                     <div class="text">

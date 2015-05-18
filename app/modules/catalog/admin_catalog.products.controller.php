@@ -125,7 +125,10 @@ class AdminCatalogProductsController extends BaseController {
             Helper::tad($hierarchy);
         }
 
-        $sortable = 1;
+        /**
+         * Запрещаем сортировать список товаров, если не выбрана категория
+         */
+        $sortable = $cat_id ? 1 : 0;
 
         /**
          * Получаем все категории
@@ -262,7 +265,9 @@ class AdminCatalogProductsController extends BaseController {
                     #/*
                     'category', 'seos',
                     'metas', 'meta',
-                    'attributes_groups.meta', 'attributes_groups.attributes.metas',
+                    'attributes_groups.meta',
+                    #'attributes_groups.attributes.metas',
+                    'attributes_groups.attributes.meta',
                     #*/
                     'attributes_groups.attributes.values' => function($query) use ($id) {
                         $query->where('product_id', $id);

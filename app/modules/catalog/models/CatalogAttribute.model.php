@@ -94,7 +94,18 @@ class CatalogAttribute extends BaseModel {
 
                     if ($this->type == 'select') {
                         $settings = $this->meta->settings;
-                        $settings['values'] = explode("\n", $settings['values']);
+
+                        $temp = explode("\n", $settings['values']);
+                        $array = [];
+                        if (count($temp)) {
+                            foreach ($temp as $tmp) {
+                                $tmp = trim($tmp);
+                                $array[$tmp] = $tmp;
+                            }
+                        }
+                        $settings['values'] = $array;
+                        #Helper::tad($settings['values']);
+
                         $this->meta->settings = $settings;
                     }
 

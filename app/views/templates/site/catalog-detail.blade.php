@@ -105,7 +105,7 @@ $page_title = is_object($seo) && $seo->title ? $seo->title : $product->name;
                         <div class="holder">
                             <div class="goods-list"><!--
                                 @foreach ($products as $prod)
-                                    --><a href="{{ URL::route('catalog-detail', $prod->id) }}" class="unit{{ $prod->attr('default', 'new') ? ' new' : '' }}">
+                                    --><a href="{{ URL::route('catalog-detail', $prod->slug) }}" class="unit{{ $prod->attr('default', 'new') ? ' new' : '' }}">
                                         <div class="mask"><img src="{{ Config::get('site.theme_path') }}/images/mask-main-slider.svg"></div>
                                         <div style="background-image:url('{{ is_object($prod->image_id) ? $prod->image_id->thumb() : '' }}');" class="visual">
                                             <div class="text">

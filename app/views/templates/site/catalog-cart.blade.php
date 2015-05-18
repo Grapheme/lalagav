@@ -28,11 +28,11 @@
                         ?>
                         <tr class="hash-{{ $good->_hash }}">
                             <td class="margin"></td>
-                            <td class="visual-wrapper"><a href="{{ URL::route('catalog-detail', [$good->id]) }}" class="unit">
+                            <td class="visual-wrapper"><a href="{{ URL::route('catalog-detail', [$good->slug]) }}" class="unit">
                                     <div class="mask"><img src="{{ Config::get('site.theme_path') }}/images/mask-main-slider.svg"></div></a>
                                 <div style="background-image:url('{{ is_object($good->image_id) ? $good->image_id->thumb() : '' }}');" class="visual"></div>
                             </td>
-                            <td class="title"><a href="{{ URL::route('catalog-detail', [$good->id]) }}">{{ $good->name }}</a></td>
+                            <td class="title"><a href="{{ URL::route('catalog-detail', [$good->slug]) }}">{{ $good->name }}</a></td>
                             <td class="count">
                                 <input value="{{ $good->_amount }}" name="{{ $good->_hash }}" data-id="{{ $good->id }}" data-price="{{ $good->price }}" autocomplete="off">
                             </td>

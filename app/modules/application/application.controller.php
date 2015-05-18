@@ -72,7 +72,7 @@ class ApplicationController extends BaseController {
          * Товар
          */
         $product = (new CatalogProduct)
-            ->where('catalog_products.id', $slug)
+            ->where('catalog_products.slug', $slug)
             ->with(['meta', 'category', 'seo'])
             ->with(['attributes_groups.attributes.meta', 'attributes_groups.meta'])
             #->references('meta')
