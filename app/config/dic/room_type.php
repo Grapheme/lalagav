@@ -21,6 +21,14 @@ return array(
                     #'placeholder' => 'Укажите цену'
                 ),
             ),
+
+            'basic' => array(
+                'no_label' => true,
+                'title' => 'Чекбокс обычный',
+                'type' => 'checkbox',
+                'label_class' => 'normal_checkbox',
+            ),
+
             'description' => array(
                 'title' => 'Описание',
                 'type' => 'textarea_redactor',

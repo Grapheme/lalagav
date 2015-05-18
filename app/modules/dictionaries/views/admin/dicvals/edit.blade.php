@@ -18,7 +18,7 @@
     $edit_title   = "Добавить запись:";
 
     $url =
-        @$element->id
+        $element->id
         ? action(is_numeric($dic_id) ? 'dicval.update' : 'entity.update', array('dic_id' => $dic_id, 'id' => $element->id))
         : action(is_numeric($dic_id) ? 'dicval.store'  : 'entity.store',  array('dic_id' => $dic_id));
     $method     = @$element->id ? 'PUT' : 'POST';
@@ -139,7 +139,7 @@
                             <label class="note first_note">{{ @$field['first_note'] }}</label>
                             @endif
                             <div class="input {{ @$field['type'] }} {{ @$field['label_class'] }}">
-                                {{ Helper::formField('fields[' . @$field_name . ']', @$field, @$element->$field_name, $element) }}
+                                {{ Helper::formField('fields[' . @$field_name . ']', @$field, @$element->$field_name, $element, $field_name) }}
                             </div>
                             @if (@$field['second_note'])
                             <label class="note second_note">{{ @$field['second_note'] }}</label>

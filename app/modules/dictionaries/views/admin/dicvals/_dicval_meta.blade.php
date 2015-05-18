@@ -62,7 +62,7 @@ if (@is_object($element->metas) && $element->metas->count())
 ?>
 
     @foreach ($fields_i18n as $field_name => $field)
-<?
+        <?
         $field_meta = new DicFieldVal();
         foreach ($element_fields as $tmp) {
             #Helper::ta($tmp);
@@ -72,7 +72,7 @@ if (@is_object($element->metas) && $element->metas->count())
                 break;
             }
         }
-        $form_field = Helper::formField('fields_i18n[' . $locale_sign . '][' . $field_name . ']', $field, @$field_meta->value, $element);
+        $form_field = Helper::formField('fields_i18n[' . $locale_sign . '][' . $field_name . ']', $field, @$field_meta->value, $element, $field_name);
         if (!$form_field)
             continue;
 
@@ -86,7 +86,7 @@ if (@is_object($element->metas) && $element->metas->count())
             @if (@$field['first_note'])
             <label class="note">{{ @$field['first_note'] }}</label>
             @endif
-            <div class="input {{ $field['type'] }}">
+            <div class="input {{ $field['type'] }} {{ @$field['label_class'] }}">
                 {{ $form_field }}
             </div>
             @if (@$field['second_note'])
