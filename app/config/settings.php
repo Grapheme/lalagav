@@ -4,9 +4,10 @@ return array(
 
     'sections' => function() {
 
-        return array(
+        $settings = [];
 
-            'main' => array(
+        if (TRUE)
+            $settings['main'] = [
                 'title' => 'Основные',
                 'description' => 'Здесь собраны основные настройки сайта',
                 'options' => array(
@@ -15,9 +16,10 @@ return array(
                         'type' => 'text',
                     ),
                 ),
-            ),
+            ];
 
-            'catalog' => array(
+        if (Allow::action('catalog', 'catalog_allow', true, false))
+            $settings['catalog'] = [
                 'title' => 'Магазин',
                 'options' => array(
                     'name' => array(
@@ -29,8 +31,9 @@ return array(
                         'type' => 'textarea',
                     ),
                 ),
-            ),
-        );
+            ];
+
+        return $settings;
     },
 
 );
