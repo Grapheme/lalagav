@@ -32,6 +32,12 @@ class AdminSettingsController extends BaseController {
                 )
             );
         });
+
+        $settings = Cache::get('cms.settings');
+        Config::set('app.settings', $settings);
+
+        #$temp = Config::get('app.settings.main');
+        #dd($temp);
     }
 
     ## Shortcodes of module
@@ -171,6 +177,8 @@ class AdminSettingsController extends BaseController {
             'value'  => json_encode($settings_values),
         ]);
 
+        ## КЕШИРОВАНИЕ
+        Cache::forever('cms.settings', $settings_values);
 
         $json_request['responseText'] = 'Сохранено';
         $json_request['status'] = TRUE;
