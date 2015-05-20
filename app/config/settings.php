@@ -22,13 +22,17 @@ return array(
             $settings['catalog'] = [
                 'title' => 'Магазин',
                 'options' => array(
-                    'name' => array(
-                        'title' => 'Название магазина',
-                        'type' => 'text',
+                    'allow_products_order' => array(
+                        'no_label' => true,
+                        'title' => 'Разрешить сортировку всех товаров (не рекомендуется)',
+                        'type' => 'checkbox',
+                        'label_class' => 'normal_checkbox',
                     ),
-                    'description' => array(
-                        'title' => 'Описание магазина',
-                        'type' => 'textarea',
+                    'disable_attributes_for_products' => array(
+                        'no_label' => true,
+                        'title' => 'Отключить функционал работы с атрибутами для товаров',
+                        'type' => 'checkbox',
+                        'label_class' => 'normal_checkbox',
                     ),
                 ),
             ];

@@ -129,6 +129,8 @@ class AdminCatalogProductsController extends BaseController {
          * Запрещаем сортировать список товаров, если не выбрана категория
          */
         $sortable = $cat_id ? 1 : 0;
+        if (!$sortable)
+            $sortable = Config::get('app.settings.catalog.allow_products_order');
 
         /**
          * Получаем все категории

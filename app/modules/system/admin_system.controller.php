@@ -49,6 +49,13 @@ class AdminSystemController extends BaseController {
         $menu = array();
         $menu_child = array();
 
+        if (Allow::action('system', 'settings', false, true))
+            $menu_child[] = array(
+                'title' => 'Настройки',
+                'link' => 'system/settings',
+                'class' => 'fa-gear',
+            );
+
         if (Allow::action('system', 'modules', false, true))
             $menu_child[] = array(
                 'title' => 'Модули',
@@ -68,13 +75,6 @@ class AdminSystemController extends BaseController {
                 'title' => 'Пользователи',
                 'link' => 'system/users',
                 'class' => 'fa-user',
-            );
-
-        if (Allow::action('system', 'settings', false, true))
-            $menu_child[] = array(
-                'title' => 'Настройки',
-                'link' => 'system/settings',
-                'class' => 'fa-gear',
             );
 
         if (Allow::action('system', 'menu_editor', false, true))
